@@ -52,54 +52,60 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
                 {
                     sueldos2 += empleado.Sueldo;
                     count2++;
-                    var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == empleado.IdEmpleadoEmpresa).FirstOrDefault();
-                    if (afiliado != null)
+                    if (empleado.SueldoBase > 0)
                     {
-                        if (afiliado.FechaAlta.Year < ddjj.anio)
-                        {
-                            if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
-                            {
-                                //if (empleado.idJornadaLaboral == 1 || empleado.idJornadaLaboral == 2)
-                                //{
-                                //if (empleado.SueldoBase > 0)
-                                //{
-                                sueldos5 += empleado.SueldoBase;
-                                //}
-                                //else
-                                //{
-                                //    sueldos5 += empleado.Sueldo;
-                                //}
-                                //}
-                                //else
-                                //{
-                                //    sueldos5 += empleado.Sueldo;
-                                //}
-                                count5++;
-                            }
-                        }
-                        else if (afiliado.FechaAlta.Year == ddjj.anio && afiliado.FechaAlta.Month <= ddjj.mes)
-                        {
-                            if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
-                            {
-                                //if (empleado.idJornadaLaboral == 1 || empleado.idJornadaLaboral == 2)
-                                //{
-                                //if (empleado.SueldoBase > 0)
-                                //{
-                                sueldos5 += empleado.SueldoBase;
-                                //}
-                                //else
-                                //{
-                                //    sueldos5 += empleado.Sueldo;
-                                //}
-                                //}
-                                //else
-                                //{
-                                //    sueldos5 += empleado.Sueldo;
-                                //}
-                                count5++;
-                            }
-                        }
+                        sueldos5 += empleado.SueldoBase;
+                        count5++;
                     }
+
+                    //var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == empleado.IdEmpleadoEmpresa).FirstOrDefault();
+                    //if (afiliado != null)
+                    //{
+                    //    if (afiliado.FechaAlta.Year < ddjj.anio)
+                    //    {
+                    //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
+                    //        {
+                    //            //if (empleado.idJornadaLaboral == 1 || empleado.idJornadaLaboral == 2)
+                    //            //{
+                    //            //if (empleado.SueldoBase > 0)
+                    //            //{
+                    //            sueldos5 += empleado.SueldoBase;
+                    //            //}
+                    //            //else
+                    //            //{
+                    //            //    sueldos5 += empleado.Sueldo;
+                    //            //}
+                    //            //}
+                    //            //else
+                    //            //{
+                    //            //    sueldos5 += empleado.Sueldo;
+                    //            //}
+                    //            count5++;
+                    //        }
+                    //    }
+                    //    else if (afiliado.FechaAlta.Year == ddjj.anio && afiliado.FechaAlta.Month <= ddjj.mes)
+                    //    {
+                    //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
+                    //        {
+                    //            //if (empleado.idJornadaLaboral == 1 || empleado.idJornadaLaboral == 2)
+                    //            //{
+                    //            //if (empleado.SueldoBase > 0)
+                    //            //{
+                    //            sueldos5 += empleado.SueldoBase;
+                    //            //}
+                    //            //else
+                    //            //{
+                    //            //    sueldos5 += empleado.Sueldo;
+                    //            //}
+                    //            //}
+                    //            //else
+                    //            //{
+                    //            //    sueldos5 += empleado.Sueldo;
+                    //            //}
+                    //            count5++;
+                    //        }
+                    //    }
+                    //}
                 }
 
                 decimal total2 = (sueldos2 / 100) * 2;
@@ -144,54 +150,60 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             {
                 sueldos2 += empleado.Sueldo;
                 count2++;
-                var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == empleado.IdEmpleadoEmpresa).FirstOrDefault();
-                if (afiliado != null)
+                if (empleado.SueldoBase > 0)
                 {
-                    if (afiliado.FechaAlta.Year < ddjj.anio)
-                    {
-                        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
-                        {
-                            //if (empleado.idJornadaLaboral == 1 || empleado.idJornadaLaboral == 2)
-                            //{
-                            //if (empleado.SueldoBase > 0)
-                            //{
-                            sueldos5 += empleado.SueldoBase;
-                            //}
-                            //else
-                            //{
-                            //    sueldos5 += empleado.Sueldo;
-                            //}
-                            //}
-                            //else
-                            //{
-                            //    sueldos5 += empleado.Sueldo;
-                            //}
-                            count5++;
-                        }
-                    }
-                    else if (afiliado.FechaAlta.Year == ddjj.anio && afiliado.FechaAlta.Month <= ddjj.mes)
-                    {
-                        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
-                        {
-                            //if (empleado.idJornadaLaboral == 1 || empleado.idJornadaLaboral == 2)
-                            //{
-                            //if (empleado.SueldoBase > 0)
-                            //{
-                            sueldos5 += empleado.SueldoBase;
-                            //}
-                            //else
-                            //{
-                            //    sueldos5 += empleado.Sueldo;
-                            //}
-                            //}
-                            //else
-                            //{
-                            //    sueldos5 += empleado.Sueldo;
-                            //}
-                            count5++;
-                        }
-                    }
+                    sueldos5 += empleado.SueldoBase;
+                    count5++;
                 }
+
+                //var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == empleado.IdEmpleadoEmpresa).FirstOrDefault();
+                //if (afiliado != null)
+                //{
+                //    if (afiliado.FechaAlta.Year < ddjj.anio)
+                //    {
+                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
+                //        {
+                //            //if (empleado.idJornadaLaboral == 1 || empleado.idJornadaLaboral == 2)
+                //            //{
+                //            //if (empleado.SueldoBase > 0)
+                //            //{
+                //            sueldos5 += empleado.SueldoBase;
+                //            //}
+                //            //else
+                //            //{
+                //            //    sueldos5 += empleado.Sueldo;
+                //            //}
+                //            //}
+                //            //else
+                //            //{
+                //            //    sueldos5 += empleado.Sueldo;
+                //            //}
+                //            count5++;
+                //        }
+                //    }
+                //    else if (afiliado.FechaAlta.Year == ddjj.anio && afiliado.FechaAlta.Month <= ddjj.mes)
+                //    {
+                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
+                //        {
+                //            //if (empleado.idJornadaLaboral == 1 || empleado.idJornadaLaboral == 2)
+                //            //{
+                //            //if (empleado.SueldoBase > 0)
+                //            //{
+                //            sueldos5 += empleado.SueldoBase;
+                //            //}
+                //            //else
+                //            //{
+                //            //    sueldos5 += empleado.Sueldo;
+                //            //}
+                //            //}
+                //            //else
+                //            //{
+                //            //    sueldos5 += empleado.Sueldo;
+                //            //}
+                //            count5++;
+                //        }
+                //    }
+                //}
             }
 
             boletaAportes.TotalSueldos2 = TruncateFunction(sueldos2, 2);
@@ -287,29 +299,34 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
 
                 count2++;
                 sueldos2 += detalle.Sueldo;
-
-                var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == empEmpAux.idEmpleadoEmpresa).FirstOrDefault();
-                if (afiliado != null)
+                if (detalle.SueldoBase > 0)
                 {
-                    if (afiliado.FechaAlta.Year < ddjj.anio)
-                    {
-                        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
-                        {
-                            count5++;
-                            sueldos5 += detalle.SueldoBase;
-                            boletaAportes.TotalSueldos5 += detalle.SueldoBase;
-                        }
-                    }
-                    else if (afiliado.FechaAlta.Year == ddjj.anio && afiliado.FechaAlta.Month <= ddjj.mes)
-                    {
-                        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
-                        {
-                            count5++;
-                            sueldos5 += detalle.SueldoBase;
-                            boletaAportes.TotalSueldos5 += detalle.SueldoBase;
-                        }
-                    }
+                    sueldos5 += detalle.SueldoBase;
+                    count5++;
                 }
+
+                //var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == empEmpAux.idEmpleadoEmpresa).FirstOrDefault();
+                //if (afiliado != null)
+                //{
+                //    if (afiliado.FechaAlta.Year < ddjj.anio)
+                //    {
+                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
+                //        {
+                //            count5++;
+                //            sueldos5 += detalle.SueldoBase;
+                //            boletaAportes.TotalSueldos5 += detalle.SueldoBase;
+                //        }
+                //    }
+                //    else if (afiliado.FechaAlta.Year == ddjj.anio && afiliado.FechaAlta.Month <= ddjj.mes)
+                //    {
+                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
+                //        {
+                //            count5++;
+                //            sueldos5 += detalle.SueldoBase;
+                //            boletaAportes.TotalSueldos5 += detalle.SueldoBase;
+                //        }
+                //    }
+                //}
             }
 
             boletaAportes.CantEmpleados = count2;

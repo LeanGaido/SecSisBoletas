@@ -886,47 +886,52 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             foreach (DetalleDeclaracionJurada detalle in detalleDeclaracionJurada)
             {
                 totalSueldos += Math.Round(detalle.Sueldo, 2);
-                var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == detalle.IdEmpleadoEmpresa).FirstOrDefault();
-                if (afiliado != null)
+                if (detalle.SueldoBase > 0)
                 {
-                    if (afiliado.FechaAlta.Year < declaracionJurada.anio)
-                    {
-                        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > declaracionJurada.anio || (afiliado.FechaBaja.Value.Year == declaracionJurada.anio && afiliado.FechaBaja.Value.Month >= declaracionJurada.mes))
-                        {
-                            if (detalle.idJornadaLaboral == 1 || detalle.idJornadaLaboral == 2)
-                            {
-                                totalAportes += Math.Round(((detalle.SueldoBase / 100) * 5), 2);
-                            }
-                            else
-                            {
-                                totalAportes += Math.Round(((detalle.Sueldo / 100) * 5), 2);
-                            }
-                            totalSueldosBase += detalle.SueldoBase;
-                            detalle.EsAfiliado = true;
-                        }
-                    }
-                    else if (afiliado.FechaAlta.Year == declaracionJurada.anio && afiliado.FechaAlta.Month <= declaracionJurada.mes)
-                    {
-                        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > declaracionJurada.anio || (afiliado.FechaBaja.Value.Year == declaracionJurada.anio && afiliado.FechaBaja.Value.Month >= declaracionJurada.mes))
-                        {
-                            if (detalle.idJornadaLaboral == 1 || detalle.idJornadaLaboral == 2)
-                            {
-                                totalAportes += Math.Round(((detalle.SueldoBase / 100) * 5), 2);
-                            }
-                            else
-                            {
-                                totalAportes += Math.Round(((detalle.Sueldo / 100) * 5), 2);
-                            }
-                            totalSueldosBase += detalle.SueldoBase;
-                            detalle.EsAfiliado = true;
-                        }
-                    }
+                    totalSueldosBase += detalle.SueldoBase;
+                    detalle.EsAfiliado = true;
                 }
-                else
-                {
-                    totalAportes += Math.Round(((detalle.Sueldo / 100) * 2), 2);
-                    detalle.EsAfiliado = false;
-                }
+                //var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == detalle.IdEmpleadoEmpresa).FirstOrDefault();
+                //if (afiliado != null)
+                //{
+                //    if (afiliado.FechaAlta.Year < declaracionJurada.anio)
+                //    {
+                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > declaracionJurada.anio || (afiliado.FechaBaja.Value.Year == declaracionJurada.anio && afiliado.FechaBaja.Value.Month >= declaracionJurada.mes))
+                //        {
+                //            if (detalle.idJornadaLaboral == 1 || detalle.idJornadaLaboral == 2)
+                //            {
+                //                totalAportes += Math.Round(((detalle.SueldoBase / 100) * 5), 2);
+                //            }
+                //            else
+                //            {
+                //                totalAportes += Math.Round(((detalle.Sueldo / 100) * 5), 2);
+                //            }
+                //            totalSueldosBase += detalle.SueldoBase;
+                //            detalle.EsAfiliado = true;
+                //        }
+                //    }
+                //    else if (afiliado.FechaAlta.Year == declaracionJurada.anio && afiliado.FechaAlta.Month <= declaracionJurada.mes)
+                //    {
+                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > declaracionJurada.anio || (afiliado.FechaBaja.Value.Year == declaracionJurada.anio && afiliado.FechaBaja.Value.Month >= declaracionJurada.mes))
+                //        {
+                //            if (detalle.idJornadaLaboral == 1 || detalle.idJornadaLaboral == 2)
+                //            {
+                //                totalAportes += Math.Round(((detalle.SueldoBase / 100) * 5), 2);
+                //            }
+                //            else
+                //            {
+                //                totalAportes += Math.Round(((detalle.Sueldo / 100) * 5), 2);
+                //            }
+                //            totalSueldosBase += detalle.SueldoBase;
+                //            detalle.EsAfiliado = true;
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    totalAportes += Math.Round(((detalle.Sueldo / 100) * 2), 2);
+                //    detalle.EsAfiliado = false;
+                //}
                 detalle.LicenciaEmpleado = false;
                 foreach (var licencia in db.LicenciaEmpleado.Where(x => x.IdEmpleadoEmpresa == detalle.IdEmpleadoEmpresa))
                 {

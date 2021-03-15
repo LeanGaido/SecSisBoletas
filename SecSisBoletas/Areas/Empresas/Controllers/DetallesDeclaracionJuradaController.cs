@@ -103,26 +103,32 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
                 #endregion
                 detalle.EsAfiliado = false;
                 sueldos2 += detalle.Sueldo;
-                var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == detalle.IdEmpleadoEmpresa).FirstOrDefault();
-                if (afiliado != null)
+                if (detalle.SueldoBase > 0)
                 {
-                    if (afiliado.FechaAlta.Year < detalle.DeclaracionJurada.anio)
-                    {
-                        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > detalle.DeclaracionJurada.anio || (afiliado.FechaBaja.Value.Year == detalle.DeclaracionJurada.anio && afiliado.FechaBaja.Value.Month >= detalle.DeclaracionJurada.mes))
-                        {
-                            sueldos5 += detalle.SueldoBase;
-                            detalle.EsAfiliado = true;
-                        }
-                    }
-                    else if (afiliado.FechaAlta.Year == detalle.DeclaracionJurada.anio && afiliado.FechaAlta.Month <= detalle.DeclaracionJurada.mes)
-                    {
-                        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > detalle.DeclaracionJurada.anio || (afiliado.FechaBaja.Value.Year == detalle.DeclaracionJurada.anio && afiliado.FechaBaja.Value.Month >= detalle.DeclaracionJurada.mes))
-                        {
-                            sueldos5 += detalle.SueldoBase;
-                            detalle.EsAfiliado = true;
-                        }
-                    }
+                    sueldos5 += detalle.SueldoBase;
+                    detalle.EsAfiliado = true;
                 }
+
+                //var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == detalle.IdEmpleadoEmpresa).FirstOrDefault();
+                //if (afiliado != null)
+                //{
+                //    if (afiliado.FechaAlta.Year < detalle.DeclaracionJurada.anio)
+                //    {
+                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > detalle.DeclaracionJurada.anio || (afiliado.FechaBaja.Value.Year == detalle.DeclaracionJurada.anio && afiliado.FechaBaja.Value.Month >= detalle.DeclaracionJurada.mes))
+                //        {
+                //            sueldos5 += detalle.SueldoBase;
+                //            detalle.EsAfiliado = true;
+                //        }
+                //    }
+                //    else if (afiliado.FechaAlta.Year == detalle.DeclaracionJurada.anio && afiliado.FechaAlta.Month <= detalle.DeclaracionJurada.mes)
+                //    {
+                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > detalle.DeclaracionJurada.anio || (afiliado.FechaBaja.Value.Year == detalle.DeclaracionJurada.anio && afiliado.FechaBaja.Value.Month >= detalle.DeclaracionJurada.mes))
+                //        {
+                //            sueldos5 += detalle.SueldoBase;
+                //            detalle.EsAfiliado = true;
+                //        }
+                //    }
+                //}
 
                 detalle.LicenciaEmpleado = false;
                 foreach (var licencia in db.LicenciaEmpleado.Where(x => x.IdEmpleadoEmpresa == detalle.IdEmpleadoEmpresa))
