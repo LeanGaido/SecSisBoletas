@@ -630,10 +630,10 @@
             $('#toggleAfiliadoNo').removeClass("btn-danger");
             $('#toggleAfiliadoNo').addClass("btn-default");
         } else {
-            $('#toggleAfiliadoSi').removeClass("btn-default");
-            $('#toggleAfiliadoSi').addClass("btn-danger");
-            $('#toggleAfiliadoNo').removeClass("btn-success");
-            $('#toggleAfiliadoNo').addClass("btn-default");
+            $('#toggleAfiliadoSi').removeClass("btn-success");
+            $('#toggleAfiliadoSi').addClass("btn-default");
+            $('#toggleAfiliadoNo').removeClass("btn-default");
+            $('#toggleAfiliadoNo').addClass("btn-danger");
         }
     })
     //$('#lblLunesManana').click(function () {
@@ -717,10 +717,10 @@
     });
     $('#toggleAfiliadoNo').click(function (e) {
         e.preventDefault();
-        $('#toggleAfiliadoSi').removeClass("btn-default");
-        $('#toggleAfiliadoSi').addClass("btn-danger");
-        $('#toggleAfiliadoNo').removeClass("btn-success");
-        $('#toggleAfiliadoNo').addClass("btn-default");
+        $('#toggleAfiliadoSi').removeClass("btn-success");
+        $('#toggleAfiliadoSi').addClass("btn-default");
+        $('#toggleAfiliadoNo').removeClass("btn-default");
+        $('#toggleAfiliadoNo').addClass("btn-danger");
         $('#EsAfiliado').attr("checked", false);
     });
 

@@ -340,33 +340,48 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, DateTime FechaBaja)
         {
+            bool error = false;
             Afiliado afiliado = db.Afiliado.Find(id);
 
-            if (afiliado.FechaAlta > FechaBaja || FechaBaja > DateTime.Today)
+            if (afiliado.FechaAlta > FechaBaja)
             {
-                if (afiliado.FechaAlta > FechaBaja)
-                {
-                    ViewBag.MensajeError = "La Fecha de Baja no puede ser menor a la fecha de alta del afiliado";
-                }
-                else
-                {
-                    ViewBag.MensajeError = "La Fecha de Baja no puede ser mayor a la fecha de hoy";
-                }
-
-                return View(afiliado);
+                error = true;
+                ViewBag.MensajeError = "La Fecha de Baja no puede ser menor a la fecha de alta del afiliado";
+            }
+            if(FechaBaja > DateTime.Today)
+            {
+                error = true;
+                ViewBag.MensajeError = "La Fecha de Baja no puede ser mayor a la fecha de hoy";
             }
 
-            afiliado.FechaBaja = FechaBaja;//DateTime.Today;
+            int mesAux = FechaBaja.Month, anioAux  = FechaBaja.Year;
 
-            var claim = ((ClaimsIdentity)User.Identity).FindFirst("IdEmpresa");
-            int IdEmpresa = Convert.ToInt32(claim.Value);
+            var DeclaracionJurada = db.DeclaracionJurada.Where(x => x.mes >= mesAux && x.anio >= anioAux).FirstOrDefault();
 
-            EmpleadoEmpresa empEmp = db.EmpleadoEmpresa.Where(x => x.idEmpleadoEmpresa == afiliado.IdEmpleadoEmpresa).FirstOrDefault();
-            empEmp.EsAfiliado = false;
+            if(DeclaracionJurada  != null)
+            {
+                error = true;
+                ViewBag.MensajeError = "La Fecha de Baja no puede ser menor a la fecha de la ultima DDJJ generada";
+            }
 
-            //db.Afiliado.Remove(afiliado);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (!error)
+            {
+                afiliado.FechaBaja = FechaBaja;//DateTime.Today;
+
+                var claim = ((ClaimsIdentity)User.Identity).FindFirst("IdEmpresa");
+                int IdEmpresa = Convert.ToInt32(claim.Value);
+
+                EmpleadoEmpresa empEmp = db.EmpleadoEmpresa.Where(x => x.idEmpleadoEmpresa == afiliado.IdEmpleadoEmpresa).FirstOrDefault();
+                empEmp.EsAfiliado = false;
+
+                //db.Afiliado.Remove(afiliado);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(afiliado);
+            }
         }
 
         public ActionResult DeleteMessage()
