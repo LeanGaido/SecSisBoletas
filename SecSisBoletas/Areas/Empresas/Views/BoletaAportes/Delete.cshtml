@@ -1,0 +1,84 @@
+﻿@model DAL.Models.BoletaAportes
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>¿Estas Seguro que deseas eliminar esta Boleta de Aportes?</h3>
+<div>
+    <h4>BoletaAportes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("Mes")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MesBoleta)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Anio")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnioBoleta)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Vencimiento")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaVencimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Recargo por Mora")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecargoMora)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Boleta Pagada")
+        </dt>
+
+        <dd>
+            @if (Model.BoletaPagada)
+            {
+                <span>SI</span>
+            }
+            else
+            {
+                <span>NO</span>
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Fecha de Pago")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaPago)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+         <div class="form-actions no-color">
+            <div class="col-md-2">
+                <input type="submit" id="submit" value="ELIMINAR" class="btn btn-default" />
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("VOLVER", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    }
+</div>

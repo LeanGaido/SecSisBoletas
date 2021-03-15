@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="row bg-title">
+            <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+                <h1 class="page-title text-center"><b>Bienvenidos a XindicoAdmin</b></h1>
+                <h2 class="text-center"><b>Administrador del Sistema Web de Generación de Boletas de Aportes Sindicales</b></h2>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row row-in">
+            @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion"))
+            {
+                <!--col -->
+                <div class="col-lg-3 col-sm-6">
+                    <a href="@Url.Action("IndexEmpresa", "Listados", new { Area = "Administrador" })">
+                        <div class="white-box">
+                            <div class="col-in row">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i>
+                                    <h5 class="text-muted vb">LISTADOS DE <BR> EMPRESAS</h5>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <h3 class="counter text-right m-t-15 text-primary"> <i class="fa fa-arrow-right"></i> </h3>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- /.col -->
+                <!--col -->
+                <div class="col-lg-3 col-sm-6">
+                    <a href="@Url.Action("IndexEmpleados", "Listados", new { Area = "Administrador" })">
+                        <div class="white-box">
+                            <div class="col-in row">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i>
+                                    <h5 class="text-muted vb">LISTADO DE <BR>EMPLEADOS</h5>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <h3 class="counter text-right m-t-15 text-primary"> <i class="fa fa-arrow-right"></i> </h3>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- /.col -->
+                <!--col -->
+                <div class="col-lg-3 col-sm-6">
+                    <a href="@Url.Action("IndexAfiliados", "Listados", new { Area = "Administrador" })">
+                        <div class="white-box">
+                            <div class="col-in row">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i>
+                                    <h5 class="text-muted vb">LISTADO DE <BR>AFILIADOS</h5>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <h3 class="counter text-right m-t-15 text-primary"> <i class="fa fa-arrow-right"></i> </h3>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- /.col -->
+                <!--col -->
+                <div class="col-lg-3 col-sm-6">
+                    <a href="@Url.Action("index", "Reclamos", new { Area = "Administrador" })">
+                        <div class="white-box">
+                            <div class="col-in row">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <i data-icon="&#xe00b;" class="linea-icon linea-basic fa-fw"></i>
+                                    <h5 class="text-muted vb">CONSULTA DE <BR>RECLAMOS</h5>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <h3 class="counter text-right m-t-15 text-primary"> <i class="fa fa-arrow-right"></i> </h3>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- /.col -->
+            }
+
+            <!--col -->
+            <div class="col-lg-3 col-sm-6">
+                <a href="@Url.Action("IndexDeclaracionesJuradas", "Listados", new { Area = "Administrador" })">
+                    <div class="white-box">
+                        <div class="col-in row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i>
+                                <h5 class="text-muted vb">LISTADO DE <BR>DDJJ</h5>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <h3 class="counter text-right m-t-15 text-primary"> <i class="fa fa-arrow-right"></i> </h3>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- /.col -->
+
+            @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion") || User.IsInRole("Finanzas"))
+            {
+                <!--col -->
+                <div class="col-lg-3 col-sm-6">
+                    <a href="@Url.Action("IndexBoletaAportes", "Listados", new { Area = "Administrador" })">
+                        <div class="white-box">
+                            <div class="col-in row">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i>
+                                    <h5 class="text-muted vb">LISTADO DE <BR>BOLETAS</h5>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <h3 class="counter text-right m-t-15 text-primary"> <i class="fa fa-arrow-right"></i> </h3>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- /.col -->
+                <!--col -->
+                <div class="col-lg-3 col-sm-6">
+                    <a href="@Url.Action("RendicionBcoNacion", "Rendicion", new { Area = "Administrador" })">
+                        <div class="white-box">
+                            <div class="col-in row">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <i data-icon="&#xe00b;" class="linea-icon linea-basic fa-fw"></i>
+                                    <h5 class="text-muted vb">RENDICION <BR>BANCO NACION</h5>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <h3 class="counter text-right m-t-15 text-primary"> <i class="fa fa-arrow-right"></i> </h3>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- /.col -->
+                <!--col -->
+                <div class="col-lg-3 col-sm-6">
+                    <a href="@Url.Action("RendicionBcoHipotecario", "Rendicion", new { Area = "Administrador" })">
+                        <div class="white-box">
+                            <div class="col-in row">
+                                <div class="col-md-8 col-sm-6 col-xs-6">
+                                    <i data-icon="&#xe00b;" class="linea-icon linea-basic fa-fw"></i>
+                                    <h5 class="text-muted vb">RENDICION <BR>BANCO HIPOTECARIO</h5>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <h3 class="counter text-right m-t-15 text-primary"> <i class="fa fa-arrow-right"></i> </h3>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- /.col -->
+            }
+
+        </div>
+        <!-- /.row -->
+    </div>
+</div>
+

@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNet.Identity
+@using System.Security.Claims;
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="nav navbar-top-links navbar-right pull-right">
+            <li class="dropdown">
+                @{
+                    var claimIdEmpresa = ((ClaimsIdentity)User.Identity).FindFirst("IdEmpresa");
+                    int IdEmpresa = (claimIdEmpresa != null) ? int.Parse(claimIdEmpresa.Value) : 0;
+                    DAL.SecModel secModel = new DAL.SecModel();
+                    var empresa = secModel.Empresa.Find(IdEmpresa);
+                    if (empresa != null)
+                    {
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><b class="hidden-xs">Bienvenido @empresa.RazonSocial  </b><img src="~/Areas/Administrador/Content/images/icon_logout.png" alt="user-img" width="36" class="img-circle"></a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"><b class="hidden-xs">Bienvenido Usuario </b><img src="~/Areas/Administrador/Content/images/icon_logout.png" alt="user-img" width="36" class="img-circle"></a>
+                    }
+                }
+                <ul class="dropdown-menu dropdown-user animated flipInY">
+                    @if (User.IsInRole("Empresa"))
+                    {
+                        <li>
+                            @Html.ActionLink("Mi Perfil", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" })
+                        </li>
+                    }
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: new { area = "" }, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

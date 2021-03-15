@@ -1,0 +1,42 @@
+﻿@model DAL.Models.Localidad
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle de Localidad</h2>
+
+<div>
+    <h4>Localidad</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Provincia.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Provincia.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodPostal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodPostal)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("EDITAR", "Edit", new { id = Model.IdLocalidad }) |
+    @Html.ActionLink("VOLVER", "Index")
+</p>

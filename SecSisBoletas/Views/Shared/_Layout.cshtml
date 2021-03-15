@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @if (User.IsInRole("Admin"))
+    {
+        <!--Bootstrap Core CSS -->
+        <link href="~/Areas/Administrador/Content/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Menu CSS -->
+        <link href="~/Areas/Administrador/Content/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+        <!-- toast CSS -->
+        <link href="~/Areas/Administrador/Content/plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
+        <!-- animation CSS -->
+        <link rel="stylesheet" href="~/Areas/Administrador/Content/css/animate.css" />
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="~/Areas/Administrador/Content/css/style.css" />
+        <!-- color CSS -->
+        <link href="~/Areas/Administrador/Content/css/colors/blue.css" id="theme" rel="stylesheet">
+        <!-- bootstrap-select CSS-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    }
+    else
+    {
+        <!--Bootstrap Core CSS -->
+        <link href="~/Areas/Empresas/Content/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Menu CSS -->
+        <link href="~/Areas/Empresas/Content/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+        <!-- toast CSS -->
+        <link href="~/Areas/Empresas/Content/plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
+        <!-- animation CSS -->
+        <link rel="stylesheet" href="~/Areas/Empresas/Content/css/animate.css" />
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="~/Areas/Empresas/Content/css/style.css" />
+        <!-- color CSS -->
+        <link href="~/Areas/Empresas/Content/css/colors/blue.css" id="theme" rel="stylesheet">
+        <!-- bootstrap-select CSS-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    }
+
+
+</head>
+    <body>
+        <div class="preloader">
+            <div class="cssload-speeding-wheel"></div>
+        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div id="wrapper">
+                @if (User.IsInRole("Empresa"))
+                {
+                    <nav class="navbar navbar-default navbar-static-top m-b-0">
+                        <div class="navbar-header">
+                            <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+                            <div class="top-left-part"><a class="logo" href="~/Empresas/home/index"><b><img src="~/Areas/Empresas/Content/images/XindicoWeb-isologo.png" alt="home" /></b><span class="hidden-xs"><img src="~/Areas/Empresas/Content/images/XindicoWeb-texto.png" alt="home" /></span></a></div>
+                            <ul class="nav navbar-top-links navbar-left hidden-xs">
+                                <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+                            </ul>
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                        <!-- /.navbar-header -->
+                    </nav>
+                    <!-- Left navbar-header -->
+                    <div class="navbar-default sidebar" role="navigation">
+                        <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+                            <ul class="nav" id="side-menu">
+                                <li class="nav-small-cap m-t-10">--- Menú Principal</li>
+                                <li><a href="~/Empresas/home/index" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu">HOME</span></a></li>
+                                <li>
+                                    <a href="#" class="waves-effect"><i data-icon="A" class="linea-icon linea-elaborate fa-fw"></i> <span class="hide-menu">INSTRUCTIVO DE USO<span class="fa arrow"></span></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>@Html.ActionLink("Importacion de Empleados", "IntructivoImportacionEmpleados", "InstructivoDeUso", new { area = "Empresas" }, null)</li>
+                                        <li>@Html.ActionLink("Importacion DDJJ", "IntructivoImportacionDDJJ", "InstructivoDeUso", new { area = "Empresas" }, null)</li>
+                                        <li>@Html.ActionLink("Tabla Localidades", "indexLocalidades", "InstructivoDeUso", new { area = "Empresas" }, null)</li>
+                                        <li>@Html.ActionLink("Tabla Provincias", "indexProvincias", "InstructivoDeUso", new { area = "Empresas" }, null)</li>
+                                        @*<li>@Html.ActionLink("Tabla Actividades", "indexActividades", "InstructivoDeUso", null, null)</li>*@
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" class="waves-effect"><i data-icon="7" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">EMPLEADOS<span class="fa arrow"></span></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>@Html.ActionLink("Cargar Empleado", "create", "Empleados", new { area = "Empresas" }, null)</li>
+                                        <li>@Html.ActionLink("Gestionar Empleados", "index", "Empleados", new { area = "Empresas" }, null)</li>
+                                        <li>@Html.ActionLink("Gestionar Licencias", "index", "LicenciasEmpleados", new { area = "Empresas" }, null)</li>
+                                        <li>@Html.ActionLink("Importar Empleado/s", "UploadFile", "Empleados", new { area = "Empresas" }, null)</li>
+                                    </ul>
+                                </li>
+                                <li> <a href="/Empresas/Afiliados" class="waves-effect"><i data-icon="7" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">AFILIADOS</span></a></li>
+                                <li>
+                                    <a href="#" class="waves-effect"><i data-icon="F" class="linea-icon linea-software fa-fw"></i> <span class="hide-menu">DDJJ<span class="fa arrow"></span></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>@Html.ActionLink("Generar DDJJ", "create", "DeclaracionesJuradas", new { area = "Empresas" }, null)</li>
+                                        <li>@Html.ActionLink("Gestionar DDJJ", "index", "DeclaracionesJuradas", new { area = "Empresas" }, null)</li>
+                                        <li>@Html.ActionLink("Importar DDJJ", "UploadFile", "DeclaracionesJuradas", new { area = "Empresas" }, null)</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" class="waves-effect"><i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">BOLETAS DE APORTES<span class="fa arrow"></span></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>@Html.ActionLink("Generar Boleta", "create", "BoletaAportes", new { area = "Empresas" }, null)</li>
+                                        <li>@Html.ActionLink("Gestionar Boleta", "index", "BoletaAportes", new { area = "Empresas" }, null)</li>
+                                    </ul>
+                                </li>
+                                <li> <a href="/Empresas/Reclamos/create" class="waves-effect"><i data-icon="&#xe00b;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">RECLAMOS</span></a></li>
+
+                            </ul>
+                        </div>
+                        <!-- /.right-sidebar -->
+                    </div>
+                }
+                else if (User.IsInRole("Admin"))
+                {
+                    <!-- Navigation -->
+                    <nav class="navbar navbar-default navbar-static-top m-b-0">
+                        <div class="navbar-header">
+                            <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+                            <div class="top-left-part"><a class="logo" href="/Administrador/Home/"><b><img src="~/Areas/Administrador/Content/images/XindicoAdmin-isologo.png" alt="home" /></b><span class="hidden-xs"><img src="~/Areas/Administrador/Content/images/XIndicoAdmin-texto.png" alt="home" /></span></a></div>
+                            <ul class="nav navbar-top-links navbar-left hidden-xs">
+                                <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+                            </ul>
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                        <!-- /.navbar-header -->
+                    </nav>
+                    <!-- Left navbar-header -->
+                    <div class="navbar-default sidebar" role="navigation">
+                        <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+                            <ul class="nav" id="side-menu">
+
+                                <li class="nav-small-cap m-t-10">--- Menú Principal</li>
+
+                                <li><a href="/Administrador/Home/" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu">HOME</span></a></li>
+                                <li>
+                                    <a href="#" class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">ABMs<span class="fa arrow"></span></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li> <a href="/Administrador/Actividades/" class="waves-effect"> <span class="hide-menu">Actividades</span></a></li>
+                                        <li> <a href="/Administrador/Categorias/" class="waves-effect"> <span class="hide-menu">Categorías</span></a></li>
+                                        <li> <a href="/Administrador/SueldosBasicos/" class="waves-effect"> <span class="hide-menu">Sueldos Basicos</span></a></li>
+                                        <li> <a href="/Administrador/Jornadas/" class="waves-effect"> <span class="hide-menu">Jornadas Laborales</span></a></li>
+                                        <li> <a href="/Administrador/FechasVencimientos/" class="waves-effect"> <span class="hide-menu">Fechas Vencimientos</span></a></li>
+                                        <li> <a href="/Administrador/LicenciasLaborales/" class="waves-effect"> <span class="hide-menu">Licencias Laborales</span></a></li>
+                                        <li> <a href="/Administrador/LiquidacionesProporcionales/" class="waves-effect"> <span class="hide-menu">Liquidaciones</span></a></li>
+                                        <li> <a href="/Administrador/Localidades/" class="waves-effect"> <span class="hide-menu">Localidades</span></a></li>
+                                        <li> <a href="/Administrador/Provincias/" class="waves-effect"> <span class="hide-menu">Provincias</span></a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" class="waves-effect"><i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">LISTADOS<span class="fa arrow"></span></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li><a href="/Administrador/Listados/IndexEmpresa" class="waves-effect"> <span class="hide-menu">Empresas</span></a></li>
+                                        <li> <a href="/Administrador/Listados/IndexEmpleados" class="waves-effect"> <span class="hide-menu">Empleados</span></a></li>
+                                        <li> <a href="/Administrador/Listados/IndexAfiliados" class="waves-effect"> <span class="hide-menu">Afiliados</span></a></li>
+                                        <li> <a href="/Administrador/Listados/IndexDeclaracionesJuradas" class="waves-effect"> <span class="hide-menu">DDJJ</span></a></li>
+                                        <li> <a href="/Administrador/Listados/IndexBoletaAportes" class="waves-effect"> <span class="hide-menu">Boleta de Aportes</span></a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#" class="waves-effect"><i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Rendicion<span class="fa arrow"></span></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li><a href="/Administrador/Rendicion/RendicionBcoNacion" class="waves-effect"> <span class="hide-menu">Banco Nacion</span></a></li>
+                                        <li><a href="/Administrador/Rendicion/RendicionBcoHipotecario" class="waves-effect"> <span class="hide-menu">Banco Hipotecario</span></a></li>
+                                    </ul>
+                                </li>
+                                <li> <a href="/Administrador/Reclamos/" class="waves-effect"><i data-icon="&#xe00b;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">RECLAMOS</span></a></li>
+                            </ul>
+                        </div>
+                        <!-- /.right-sidebar -->
+                    </div>
+                }
+
+                <div id="page-wrapper">
+                    <div class="container-fluid">
+                        <!-- /.row -->
+                        <div class="row">
+                            @RenderBody()
+                            <hr />
+                        </div>
+                        <!--row -->
+                    </div>
+                </div>
+
+                <!-- /.container-fluid -->
+                @if (User.IsInRole("Empresa"))
+                {
+                    <footer class="footer text-center"> 2019 &copy; XindicoWeb - Sistema de Generación de Boletas de Aportes - Sindicato de Empleados de Comercio de San Francisco y Zona - Desarrollado por <a href="">StartNet</a></footer>
+                }
+                else if (User.IsInRole("Admin"))
+                {
+                    <footer class="footer text-center"> 2019 &copy; XINDICO ADMIN - Administrador del Sistema de Generación de Boletas de Aportes Sindicales - Sindicato de Empleados de Comercio de San Francisco - Desarrollado por <a href="http://www.stnt.com.ar/" target="_blank">StartNet</a></footer>
+                }
+            </div>
+            <!-- /#page-wrapper -->
+        }
+        else
+        {
+            <div class="container-fluid">
+                <!-- /.row -->
+                <div class="row">
+                    @RenderBody()
+                    <hr />
+                </div>
+                <!--row -->
+            </div>
+        }
+
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+        <!-- Bootstrap-Select Javascript-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+        <!-- Menu Plugin JavaScript -->
+        <script src="~/Areas/Empresas/Content/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+        <!--slimscroll JavaScript -->
+        <script src="~/Areas/Empresas/Content/js/jquery.slimscroll.js"></script>
+        <!--Wave Effects -->
+        <script src="~/Areas/Empresas/Content/js/waves.js"></script>
+        <!--Counter js -->
+        <script src="~/Areas/Empresas/Content/plugins/bower_components/waypoints/lib/jquery.waypoints.js"></script>
+        <script src="~/Areas/Empresas/Content/plugins/bower_components/counterup/jquery.counterup.min.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="~/Areas/Empresas/Content/js/custom.min.js"></script>
+        <!-- Sparkline chart JavaScript -->
+        <script src="~/Areas/Empresas/Content/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+        <script src="~/Areas/Empresas/Content/plugins/bower_components/jquery-sparkline/jquery.charts-sparkline.js"></script>
+        <script src="~/Areas/Empresas/Content/plugins/bower_components/toast-master/js/jquery.toast.js"></script>
+        <!--Style Switcher -->
+        <script src="~/Areas/Empresas/Content/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
+    </body>
+</html>

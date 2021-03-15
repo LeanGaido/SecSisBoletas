@@ -1,0 +1,44 @@
+﻿@model DAL.Models.FechaVencimiento
+
+@{
+    ViewBag.Title = "Edit";
+}
+<br />
+<h2 class="text-center">Fecha de Vencimiento</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdFechaVencimiento)
+        <div class="form-group">
+            <select class="selectpicker col-md-1" name="mesBoleta" id="mesBoleta">
+                <option selected value="@Model.mesBoleta">@Model.mesBoleta</option>
+            </select>
+            <select class="selectpicker col-md-1" name="anioBoleta" id="anioBoleta">
+                <option selected value="@Model.anioBoleta">@Model.anioBoleta</option>
+            </select>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaVto, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @*@Html.EditorFor(model => model.FechaVto, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.TextBoxFor(model => model.FechaVto, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", type = "date" })
+                @Html.ValidationMessageFor(model => model.FechaVto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-offset-4 col-xs-2 col-md-offset-5 col-md-1">
+                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-default" })
+            </div>
+            <div class="col-xs-2 col-md-1">
+                <input type="submit" value="Editar" class = "btn btn-default" />
+            </div>
+        </div>
+        <br /><br />
+    </div>
+}

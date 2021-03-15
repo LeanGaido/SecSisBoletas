@@ -1,0 +1,774 @@
+﻿@model DAL.Models.Empleado
+
+@{
+    ViewBag.Title = "Editar Empleado";
+}
+
+<h2 class="text-left" style="margin-top:15px;">Editar Empleado</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdEmpleado)
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.Cuil, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Cuil, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.Cuil, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.Calle, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Calle, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.Calle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.Altura, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Altura, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.Altura, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.IdProvincia, "Provincia", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.DropDownList("IdProvincia", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = true, @readonly = true })
+                @Html.ValidationMessageFor(model => model.IdProvincia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.IdLocalidad, "Localidad", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.DropDownList("IdLocalidad", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = true, @readonly = true })
+                @Html.ValidationMessageFor(model => model.IdLocalidad, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.FechaAlta, "Fecha de Alta", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.TextBoxFor(model => model.FechaAlta, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", type = "date", required = true, @readonly = true })
+                @Html.ValidationMessageFor(model => model.FechaAlta, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.IdCategoria, "Categoria", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.DropDownList("IdCategoria", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = true, @readonly = true })
+                @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.IdJornada, "Jornada", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.DropDownList("IdJornada", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = true, @readonly = true })
+                @Html.ValidationMessageFor(model => model.IdJornada, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.FechaBaja, "Fecha de Baja", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.TextBoxFor(model => model.FechaBaja, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", type = "date", required = true })
+                @Html.ValidationMessageFor(model => model.FechaBaja, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group" id="panelTurno" style="display:none">
+                <div class="panel panel-default col-md-8">
+                    <div class="panel-body">
+                        <div class="col-md-2">
+                            @Html.LabelFor(model => model.Turno, "Turno", htmlAttributes: new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-10">
+                            <select class="form-control selectpicker" name="Turno" id="Turno">
+                                @if (Model.Turno != null && Model.Turno == "Mañana")
+                                {
+                                    <option selectd value="Mañana">Mañana</option>
+                                    <option value="Tarde">Tarde</option>
+                                }
+                                else if (Model.Turno != null && Model.Turno == "Tarde")
+                                {
+                                    <option value="Mañana">Mañana</option>
+                                    <option selected value="Tarde">Tarde</option>
+                                }
+                                else
+                                {
+                                    <option value="Mañana">Mañana</option>
+                                    <option value="Tarde">Tarde</option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(model => model.Turno, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="panelHorarios"  style="display:none">
+                <div class="panel panel-default col-md-8">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Horarios Entrada y Salida</div>
+                    <span class="text text-warning">Para Habilitar/Desabilitar dias, haga click en el texto del dia que quiera Habilitar/Deshabilitar</span>
+                    <!-- List group -->
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblLunesManana">Lunes Por la Mañana: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeLunesManana">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeLunesManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaLunesManana">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaLunesManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblLunesTarde">Lunes Por la Tarde: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeLunesTarde">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeLunesTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaLunesTarde">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaLunesTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblMartesManana">Martes Por la Mañana: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeMartesManana">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeMartesManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaMartesManana">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaMartesManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblMartesTarde">Martes Por la Tarde: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeMartesTarde">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeMartesTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaMartesManana">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaMartesTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblMiercolesManana">Miercoles Por la Mañana: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeMiercolesManana">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeMiercolesManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaMiercolesManana">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaMiercolesManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblMiercolesTarde">Miercoles Por la Tarde: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeMiercolesTarde">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeMiercolesTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaMiercolesTarde">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaMiercolesTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblJuevesManana">Jueves Por la Mañana: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeJuevesManana">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeJuevesManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaJuevesManana">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaJuevesManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblJuevesTarde">Jueves Por la Tarde: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeJuevesTarde">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeJuevesTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaJuevesTarde">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaJuevesTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblViernesManana">Viernes Por la Mañana: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeViernesManana">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeViernesManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaViernesManana">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaViernesManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblViernesTarde">Viernes Por la Tarde: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeViernesTarde">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeViernesTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaViernesTarde">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaViernesTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblSabadoManana">Sabado Por la Mañana: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeSabadoManana">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeSabadoManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaSabadoManana">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaSabadoManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblSabadoTarde">Sabado Por la Tarde: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeSabadoTarde">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeSabadoTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaSabadoTarde">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaSabadoTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblDomingoManana">Domingo Por la Mañana: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeDomingoManana">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeDomingoManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaDomingoManana">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaDomingoManana, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label style="font-size:16px" id="lblDomingoTarde">Domingo Por la Tarde: </label>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="desdeDomingoTarde">Desde:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.desdeDomingoTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hastaDomingoTarde">Hasta:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        @Html.EditorFor(model => model.hastaDomingoTarde, new { htmlAttributes = new { @class = "form-control input-small timepicker" } })
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.EsAfiliado, "Afiliado", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox" style="display:none">
+                    @Html.CheckBox("EsAfiliado")
+                    @Html.ValidationMessageFor(model => model.IdJornada, "", new { @class = "text-danger" })
+                </div>
+                <div class="btn-group">
+                    <button name="toggleAfiliadoSi" id="toggleAfiliadoSi" class="btn btn-default">Si</button>
+                    <button name="toggleAfiliadoNo" id="toggleAfiliadoNo" class="btn btn-danger">No</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                <input type="submit" value="GUARDAR CAMBIOS" class="btn btn-default" />
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("VOLVER", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+    <br />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //if ($('#IdJornada').val() == 2) {
+        //    $('#panelTurno').show();
+        //    $('#panelHorarios').hide();
+        //} else if ($('#IdJornada').val() == 1) {
+        //    $('#panelHorarios').show();
+        //    $('#panelTurno').hide();
+        //} else {
+        //    $('#panelTurno').hide();
+        //    $('#panelHorarios').hide();
+        //}
+
+        //if ($('#desdeLunesManana').val() == "") {
+        //    $('#lblLunesManana').click();
+        //}
+        //if ($('#desdeLunesTarde').val() == "") {
+        //    $('#lblLunesTarde').click();
+        //}
+        //if ($('#desdeMartesManana').val() == "") {
+        //    $('#lblMartesManana').click();
+        //}
+        //if ($('#desdeMartesTarde').val() == "") {
+        //    $('#lblMartesTarde').click();
+        //}
+        //if ($('#desdeMiercolesManana').val() == "") {
+        //    $('#lblMiercolesManana').click();
+        //}
+        //if ($('#desdeMiercolesTarde').val() == "") {
+        //    $('#lblMiercolesTarde').click();
+        //}
+        //if ($('#desdeJuevesManana').val() == "") {
+        //    $('#lblJuevesManana').click();
+        //}
+        //if ($('#desdeJuevesTarde').val() == "") {
+        //    $('#lblJuevesTarde').click();
+        //}
+        //if ($('#desdeViernesManana').val() == "") {
+        //    $('#lblViernesManana').click();
+        //}
+        //if ($('#desdeViernesTarde').val() == "") {
+        //    $('#lblViernesTarde').click();
+        //}
+        //if ($('#desdeSabadoManana').val() == "") {
+        //    $('#lblSabadoManana').click();
+        //}
+        //if ($('#desdeSabadoTarde').val() == "") {
+        //    $('#lblSabadoTarde').click();
+        //}
+        //if ($('#desdeDomingoManana').val() == "") {
+        //    $('#lblDomingoManana').click();
+        //}
+        //if ($('#desdeDomingoTarde').val() == "") {
+        //    $('#lblDomingoTarde').click();
+        //}
+
+        //$('.timepicker').timepicker();
+
+        if ($('#EsAfiliado').attr('checked')) {
+            $('#toggleAfiliadoSi').removeClass("btn-default");
+            $('#toggleAfiliadoSi').addClass("btn-success");
+            $('#toggleAfiliadoNo').removeClass("btn-danger");
+            $('#toggleAfiliadoNo').addClass("btn-default");
+        } else {
+            $('#toggleAfiliadoNo').removeClass("btn-default");
+            $('#toggleAfiliadoNo').addClass("btn-danger");
+            $('#toggleAfiliadoSi').removeClass("btn-success");
+            $('#toggleAfiliadoSi').addClass("btn-default");
+        }
+    })
+    //$('#lblLunesManana').click(function () {
+    //    $('#desdeLunesManana').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaLunesManana').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblLunesTarde').click(function () {
+    //    $('#desdeLunesTarde').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaLunesTarde').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblMartesManana').click(function () {
+    //    $('#desdeMartesManana').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaMartesManana').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblMartesTarde').click(function () {
+    //    $('#desdeMartesTarde').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaMartesTarde').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblMiercolesManana').click(function () {
+    //    $('#desdeMiercolesManana').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaMiercolesManana').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblMiercolesTarde').click(function () {
+    //    $('#desdeMiercolesTarde').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaMiercolesTarde').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblJuevesManana').click(function () {
+    //    $('#desdeJuevesManana').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaJuevesManana').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblJuevesTarde').click(function () {
+    //    $('#desdeJuevesTarde').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaJuevesTarde').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblViernesManana').click(function () {
+    //    $('#desdeViernesManana').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaViernesManana').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblViernesTarde').click(function () {
+    //    $('#desdeViernesTarde').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaViernesTarde').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblSabadoManana').click(function () {
+    //    $('#desdeSabadoManana').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaSabadoManana').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblSabadoTarde').click(function () {
+    //    $('#desdeSabadoTarde').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaSabadoTarde').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblDomingoManana').click(function () {
+    //    $('#desdeDomingoManana').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaDomingoManana').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$('#lblDomingoTarde').click(function () {
+    //    $('#desdeDomingoTarde').prop('disabled', function (i, v) { return !v; });
+    //    $('#hastaDomingoTarde').prop('disabled', function (i, v) { return !v; });
+    //});
+    //$(".timepicker").keydown(function (event) {
+    //    return false;
+    //});
+    //$('#IdJornada').change(function () {
+    //    if ($('#IdJornada').val() == 2) {
+    //        $('#panelTurno').show();
+    //        $('#panelHorarios').hide();
+    //    } else if ($('#IdJornada').val() == 1) {
+    //        $('#panelHorarios').show();
+    //        $('#panelTurno').hide();
+    //    } else {
+    //        $('#panelTurno').hide();
+    //        $('#panelHorarios').hide();
+    //    }
+    //});
+    $('#toggleAfiliadoSi').click(function (e) {
+        e.preventDefault();
+        $('#toggleAfiliadoSi').removeClass("btn-default");
+        $('#toggleAfiliadoSi').addClass("btn-success");
+        $('#toggleAfiliadoNo').removeClass("btn-danger");
+        $('#toggleAfiliadoNo').addClass("btn-default");
+        $('#EsAfiliado').attr("checked", true);
+    });
+    $('#toggleAfiliadoNo').click(function (e) {
+        e.preventDefault();
+        $('#toggleAfiliadoNo').removeClass("btn-default");
+        $('#toggleAfiliadoNo').addClass("btn-danger");
+        $('#toggleAfiliadoSi').removeClass("btn-success");
+        $('#toggleAfiliadoSi').addClass("btn-default");
+        $('#EsAfiliado').attr("checked", false);
+    });
+
+    $("#IdProvincia").change(function () {
+        $("#IdLocalidad").empty();
+        $("#CodPostal").val("");
+        $.ajax({
+            type: "POST",
+            traditional: true,
+            async: false,
+            cache: false,
+            url: '@Url.Action("GetLocalidades", "Localidades")',
+            data: {
+                IdProvincia: $("#IdProvincia").val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (i, data) {
+                    $("#IdLocalidad").append('<option value="'
+                        + data.IdLocalidad + '">'
+                        + data.Nombre + '</option>');
+                    $('#CodPostal').val(data.CodPostal);
+                });
+            },
+            error: function (ex) {
+                alert('Selecciona una Provincia Valida.');
+            }
+        });
+        return false;
+    })
+    $("#IdLocalidad").change(function () {
+        $("#CodPostal").empty();
+        $.ajax({
+            type: "POST",
+            traditional: true,
+            async: false,
+            cache: false,
+            url: '@Url.Action("GetCodPostal", "Localidades")',
+            data: {
+                IdLocalidad: $("#IdLocalidad").val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('#CodPostal').val(data.CodPostal);
+            },
+            error: function (ex) {
+                alert('A ocurrido un error, intente nuevamente.');
+            }
+        });
+        return false;
+    })
+</script>

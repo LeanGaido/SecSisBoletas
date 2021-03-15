@@ -1,0 +1,176 @@
+﻿@model IEnumerable<DAL.Models.BoletaAportesEspecial>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<hr />
+
+<div class="form-inline">
+    @using (Html.BeginForm("Index", "BoletasAportesEspeciales", FormMethod.Get, new { @class = "col-md-6" }))
+    {
+        <select class="selectpicker col-md-1" title="Mes" name="mes" id="mes">
+            <option value="0">Mes</option>
+            @for (int i = 1; i <= 12; i++)
+            {
+                if (ViewBag.Mes == i)
+                {
+                    <option selected value="@i">@i</option>
+                }
+                else
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+
+        <select class="selectpicker col-md-1" title="Año" name="anio" id="anio">
+            <option value="0">Año</option>
+            @for (int i = 2015; i < 2030; i++)
+            {
+                if (ViewBag.Anio == i)
+                {
+                    <option selected value="@i">@i</option>
+                }
+                else
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+
+        <select class="selectpicker col-md-1" name="estadoPago" id="estadoPago">
+            @if (ViewBag.estadoPago == 0)
+            {
+                <option selected value="0">Todas</option>
+            }
+            else
+            {
+                <option value="0"> Todas </option>
+            }
+            @if (ViewBag.estadoPago == 1)
+            {
+                <option selected value="1">Pagas</option>
+            }
+            else
+            {
+                <option value="1">Pagas</option>
+            }
+            @if (ViewBag.estadoPago == 2)
+            {
+                <option selected value="2">Impagas</option>
+            }
+            else
+            {
+                <option value="2">Impagas</option>
+            }
+        </select>
+
+        @Html.DropDownList("IdEmpresa", null, new { @class = "selectpicker", data_live_search = "true" })
+
+        <button class="btn btn-default" type="submit">Buscar</button>
+    }
+
+    <a href="@Url.Action("create", "BoletasAportesEspeciales")" class="btn btn-default pull-right" type="submit">Nueva Boleta de Aportes Especial</a>
+</div>
+<br />
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RazonSocial)
+        </th>
+        <th>
+            Periodo
+        </th>
+        <th>
+            @Html.DisplayName("Recargo por Mora")
+        </th>
+        <th>
+            @Html.DisplayName("Total a Pagar")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BoletaPagada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaPago)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazonSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Periodo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecargoMora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @if (item.BoletaPagada)
+                {
+                    <span>Si</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </td>
+            <td>
+                @if (item.FechaPago == null)
+                {
+                    <span>No hay fecha de Pago</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.FechaPago)
+                }
+            </td>
+            <td>
+                @*@if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion"))
+                {*@
+                    @if (!item.BoletaPagada)
+                    {
+                        <div class="mytooltip tooltip-effect-4">
+                            <a href="@Url.Action("Edit", "BoletasAportesEspeciales",new { id = item.IdBoleta})" class="glyphicon glyphicon-edit"></a> <span> | </span>
+                            <span class="tooltip-content5 tooltip-item" style="color:black">Editar</span>
+                        </div>
+
+                        <div class="mytooltip tooltip-effect-4">
+                            <a href="@Url.Action("Pagar", "BoletasAportesEspeciales",new { id = item.IdBoleta})" class="glyphicon glyphicon-usd"></a> <span> | </span>
+                            <span class="tooltip-content5 tooltip-item" style="color:black">Pagar Boleta</span>
+                        </div>
+
+                        <div class="mytooltip tooltip-effect-4">
+                            <a href="@Url.Action("Delete", "BoletasAportesEspeciales",new { id = item.IdBoleta})" class="fa fa-remove"></a> <span> | </span>
+                            <span class="tooltip-content5 tooltip-item" style="color:black">Eliminar Boleta</span>
+                        </div>
+                    }
+                    @if (item.BoletaPagada)
+                    {
+                        <div class="mytooltip tooltip-effect-4">
+                            <a href="@Url.Action("AnularPago", "BoletasAportesEspeciales",new { id = item.IdBoleta})" class="glyphicon glyphicon-ban-circle"></a> <span> | </span>
+                            <span class="tooltip-content5 tooltip-item" style="color:black">Anular Pago</span>
+                        </div>
+                    }
+                @*}*@
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("Details", "BoletasAportesEspeciales",new { id = item.IdBoleta})" class="glyphicon glyphicon-plus"></a> |
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Detalles</span>
+                </div>
+                <div class="mytooltip tooltip-effect-4">
+                    <a class="glyphicon glyphicon-print" href="@Url.Action("ImpresionBoletaEspecial", "ImpresionBoleta", new { area = "Empresas", idBoletaEspecial = item.IdBoleta, _banco = "5525" })" target="_blank"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Imprimir</span>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

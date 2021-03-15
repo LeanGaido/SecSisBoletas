@@ -1,0 +1,111 @@
+﻿@model DAL.Models.FechaVencimiento
+
+@{
+    ViewBag.Title = "Create";
+}
+<br />
+<h2 class="text-center">Fecha de Vencimiento</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <select class="selectpicker col-md-1" name="mesBoleta" id="mesBoleta">
+                @for (int i = 01; i <= 12; i++)
+                {
+                    if (ViewBag.mesBoleta == i)
+                    {
+                        <option selected value="@i">@i</option>
+                    }
+                    else
+                    {
+                        <option value="@i">@i</option>
+                    }
+                }
+            </select>
+            <select class="selectpicker col-md-1" name="anioBoleta" id="anioBoleta">
+                @for (int i = 2015; i < 2030; i++)
+                {
+                    if (ViewBag.anioBoleta == i)
+                    {
+                        <option selected value="@i">@i</option>
+                    }
+                    else
+                    {
+                        <option value="@i">@i</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                @*@Html.EditorFor(model => model.FechaVto, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.TextBoxFor(model => model.FechaVto, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", type = "date" })
+                @Html.ValidationMessageFor(model => model.FechaVto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-offset-4 col-xs-2 col-md-offset-5 col-md-1">
+                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-default" })
+            </div>
+            <div class="col-xs-2 col-md-1">
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
+        </div>
+        <br /><br />
+    </div>
+}
+
+<script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        cambiarFecha()
+    });
+    $('#mesBoleta').change(function () {
+        cambiarFecha();
+    });
+    $('#anioBoleta').change(function () {
+        cambiarFecha();
+    });
+    function cambiarFecha() {
+
+        var day = 15;
+        var mes = $('#mesBoleta').val();
+        var anio = 2019;
+
+        //Obtener Mes y Año de la Fecha de Vencimiento
+        if (mes != 12) {
+            anio = $('#anioBoleta').val();
+            mes = (parseInt($('#mesBoleta').val()) + 1).toString();
+            mes = (mes.length < 2 ? "0" : "") + mes;
+        } else {
+            anio = parseInt($('#anioBoleta').val()) + 1;
+            mes = "01";
+        }
+
+        //Fecha de Vencimiento Temportal
+        var today = anio + "-" + mes + "-" + day;
+        var date = new Date(today);
+
+        //Si el dia de la fecha de vencimiento es sabado o domingo, se pasa la 
+        //fecha de vencimiento al siguiente lunes
+        if (date.getDay() == 6) {
+            day = parseInt(day) + 1;
+        }
+        if (date.getDay() == 5) {
+            day = parseInt(day) + 2;
+        }
+
+        today = anio + "-" + mes + "-" + day;
+
+        $('#FechaVto').val(today);
+    }
+
+
+</script>

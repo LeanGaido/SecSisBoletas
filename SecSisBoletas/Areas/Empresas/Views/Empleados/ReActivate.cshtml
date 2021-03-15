@@ -1,0 +1,253 @@
+﻿@model DAL.Models.Empleado
+
+@{
+    ViewBag.Title = "ReActivate";
+}
+
+<h2>Volver a dar de Alta</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdEmpleado)
+
+        <div class="form-group" style="display:none">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.Cuil, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Cuil, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cuil, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.Calle, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Calle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Calle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.Altura, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Altura, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Altura, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.IdProvincia, "Provincia", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.DropDownList("IdProvincia", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = true })
+                @Html.ValidationMessageFor(model => model.IdProvincia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.IdLocalidad, "Localidad", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.DropDownList("IdLocalidad", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = true })
+                @Html.ValidationMessageFor(model => model.IdLocalidad, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.IdCategoria, "Categoria", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.DropDownList("IdCategoria", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = true })
+                @Html.ValidationMessageFor(model => model.IdCategoria, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.IdJornada, "Jornada", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-7">
+                @Html.DropDownList("IdJornada", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = true })
+                @Html.ValidationMessageFor(model => model.IdJornada, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            <div class="col-md-1">
+                @Html.LabelFor(model => model.EsAfiliado, "Afiliado", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox" style="display:none">
+                    @Html.CheckBox("EsAfiliado", false)
+                    @Html.ValidationMessageFor(model => model.IdJornada, "", new { @class = "text-danger" })
+                </div>
+                <div class="btn-group">
+                    <button name="toggleAfiliadoSi" id="toggleAfiliadoSi" class="btn btn-default">Si</button>
+                    <button name="toggleAfiliadoNo" id="toggleAfiliadoNo" class="btn btn-danger">No</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReActivate, "Alta", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                <div class="checkbox" style="display:none">
+                    @Html.EditorFor(model => model.ReActivate)
+                    @Html.ValidationMessageFor(model => model.ReActivate, "", new { @class = "text-danger" })
+                </div>
+                <div class="btn-group">
+                    <button name="ReActivateSi" id="ReActivateSi" class="btn btn-default">Si</button>
+                    <button name="ReActivateNo" id="ReActivateNo" class="btn btn-danger">No</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                <input type="submit" value="GRABAR" class="btn btn-default" />
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("VOLVER", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('#EsAfiliado').attr('checked')) {
+            $('#toggleAfiliadoSi').removeClass("btn-default");
+            $('#toggleAfiliadoSi').addClass("btn-success");
+            $('#toggleAfiliadoNo').removeClass("btn-danger");
+            $('#toggleAfiliadoNo').addClass("btn-default");
+        } else {
+            $('#toggleAfiliadoNo').removeClass("btn-default");
+            $('#toggleAfiliadoNo').addClass("btn-danger");
+            $('#toggleAfiliadoSi').removeClass("btn-success");
+            $('#toggleAfiliadoSi').addClass("btn-default");
+        }
+    })
+    $('#toggleAfiliadoSi').click(function (e) {
+        e.preventDefault();
+        $('#toggleAfiliadoSi').removeClass("btn-default");
+        $('#toggleAfiliadoSi').addClass("btn-success");
+        $('#toggleAfiliadoNo').removeClass("btn-danger");
+        $('#toggleAfiliadoNo').addClass("btn-default");
+        $('#EsAfiliado').attr("checked", true);
+    });
+    $('#toggleAfiliadoNo').click(function (e) {
+        e.preventDefault();
+        $('#toggleAfiliadoNo').removeClass("btn-default");
+        $('#toggleAfiliadoNo').addClass("btn-danger");
+        $('#toggleAfiliadoSi').removeClass("btn-success");
+        $('#toggleAfiliadoSi').addClass("btn-default");
+        $('#EsAfiliado').attr("checked", false);
+    });
+    $("#IdProvincia").change(function () {
+        $("#IdLocalidad").empty();
+        $("#CodPostal").val("");
+        $.ajax({
+            type: "POST",
+            traditional: true,
+            async: false,
+            cache: false,
+            url: '@Url.Action("GetLocalidades", "Localidades")',
+            data: {
+                IdProvincia: $("#IdProvincia").val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (i, data) {
+                    $("#IdLocalidad").append('<option value="'
+                        + data.IdLocalidad + '">'
+                        + data.Nombre + '</option>');
+                    $('#CodPostal').val(data.CodPostal);
+                });
+            },
+            error: function (ex) {
+                alert('Selecciona una Provincia Valida.');
+            }
+        });
+        return false;
+    })
+    $("#IdLocalidad").change(function () {
+        $("#CodPostal").empty();
+        $.ajax({
+            type: "POST",
+            traditional: true,
+            async: false,
+            cache: false,
+            url: '@Url.Action("GetCodPostal", "Localidades")',
+            data: {
+                IdLocalidad: $("#IdLocalidad").val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('#CodPostal').val(data.CodPostal);
+            },
+            error: function (ex) {
+                alert('A ocurrido un error, intente nuevamente.');
+            }
+        });
+        return false;
+    })
+
+    $('#ReActivateSi').click(function (e) {
+        e.preventDefault();
+        checkBoxSi('#ReActivate', '#ReActivateSi', '#ReActivateNo');
+    });
+    $('#ReActivateNo').click(function (e) {
+        e.preventDefault();
+        checkBoxNo('#ReActivate', '#ReActivateSi', '#ReActivateNo');
+    });
+
+    function checkBoxSi(text, textSi, textNo) {
+        $(textSi).removeClass("btn-default");
+        $(textSi).addClass("btn-success");
+        $(textNo).removeClass("btn-danger");
+        $(textNo).addClass("btn-default");
+        $(text).attr("checked", true);
+    };
+
+    function checkBoxNo(text, textSi, textNo) {
+        $(textNo).removeClass("btn-default");
+        $(textNo).addClass("btn-danger");
+        $(textSi).removeClass("btn-success");
+        $(textSi).addClass("btn-default");
+        $(text).attr("checked", true);
+    };
+</script>

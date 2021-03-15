@@ -1,0 +1,63 @@
+﻿@model DAL.Models.BoletaAportes
+
+@{
+    ViewBag.Title = "AnularPagoBoletaAportes";
+}
+
+<h2>Anular Pago Boleta Aportes</h2>
+
+<h3>¿Estas Seguro de marcar como no pagada esta boleta de aportes?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MesBoleta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MesBoleta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AnioBoleta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnioBoleta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaVencimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaVencimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecargoMora)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecargoMora)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+
+            <div class="col-md-2">
+                @Html.ActionLink("Volver a la lista", "IndexBoletaAportes", null, new { @class = "btn btn-default" })
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Anular Pago" class="btn btn-default" />
+            </div>
+        </div>
+        <br />
+    }
+</div>

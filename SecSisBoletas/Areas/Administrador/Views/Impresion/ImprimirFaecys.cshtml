@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "ImprimirFaecys";
+}
+
+<h2>ImprimirFaecys</h2>
+
+@using (Html.BeginForm())
+{
+    <select class="selectpicker col-md-1" title="Mes" name="mes" id="mes">
+        <option value="0">Mes</option>
+        @for (int i = 1; i <= 12; i++)
+        {
+            if (ViewBag.Mes == i)
+            {
+                <option selected value="@i">@i</option>
+            }
+            else
+            {
+                <option value="@i">@i</option>
+            }
+        }
+    </select>
+
+    <select class="selectpicker col-md-1" title="Año" name="anio" id="anio">
+        <option value="0">Año</option>
+        @for (int i = 2015; i < 2030; i++)
+        {
+            if (ViewBag.Anio == i)
+            {
+                <option selected value="@i">@i</option>
+            }
+            else
+            {
+                <option value="@i">@i</option>
+            }
+        }
+    </select>
+
+    <input type="submit" value="Imprimir"/>
+}

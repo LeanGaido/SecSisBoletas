@@ -1,0 +1,62 @@
+﻿@model DAL.Models.BoletaAportes
+
+@{
+    ViewBag.Title = "PagarBoletaAportes";
+}
+
+<h2>Pagar Boleta Aportes</h2>
+
+<h3>¿Estas Seguro de marcar como pagada esta boleta de aportes?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("Mes")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MesBoleta)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Año")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnioBoleta)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Fecha de Vencimiento")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaVencimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Recargo por Mora")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecargoMora)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            
+            <div class="col-md-2">
+                @Html.ActionLink("Volver a la lista", "IndexBoletaAportes", null, new { @class = "btn btn-default" })
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Pagar" class="btn btn-default" />
+            </div>
+        </div>
+        <br />
+    }
+</div>

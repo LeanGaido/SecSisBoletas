@@ -1,0 +1,113 @@
+﻿@model DAL.ViewModels.VmEmpleados
+
+@{
+    ViewBag.Title = "DetailsEmpleados";
+}
+<br />
+<h2>Empleado</h2>
+<br />
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("Nombre de la Empresa")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreEmpresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Cuit de la Empresa")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CuitEmpresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Nombre")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Apellido")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApellidoEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Cuil")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CuilEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Fecha de Alta")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaAltaEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Categoria")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoríaEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Jornada")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JornadaEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Localidad")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocalidadEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Calle")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CalleEmpleado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Altura")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlturaEmpleado)
+        </dd>
+
+    </dl>
+</div>
+
+<div class="col-md-2">
+    @if (ViewBag.DeBaja)
+    {
+        @Html.ActionLink("Volver a la lista", "IndexEmpleadosBaja", null, new { @class = "btn btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("Volver a la lista", "IndexEmpleados", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, page = ViewBag.Page, idEmpresa = ViewBag.idEmpresaSeleccionada }, new { @class = "btn btn-default" })
+    }
+</div>
+<br />

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<DAL.Models.BoletaAportes>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DeclaracionJurada.IdDeclaracionJurada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MesBoleta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnioBoleta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaVencimiento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalSueldos2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalSueldos5)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPagado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RecargoMora)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BoletaPagada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaPago)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaBoleta)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeclaracionJurada.IdDeclaracionJurada)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MesBoleta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AnioBoleta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaVencimiento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalSueldos2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalSueldos5)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalPagado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RecargoMora)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BoletaPagada)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaPago)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaBoleta)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdBoleta }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdBoleta }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdBoleta })
+        </td>
+    </tr>
+}
+
+</table>

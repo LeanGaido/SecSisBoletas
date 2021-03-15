@@ -1,0 +1,289 @@
+﻿@model DAL.Models.Empleado
+
+@{
+    /**/
+    ViewBag.Title = "Detalles Empleado";
+}
+
+<h2 class="text-center" style="margin-top:15px">Detalles Empleado</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cuil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cuil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Calle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Calle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Altura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Altura)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Provincia")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Localidad.Provincia.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Localidad")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Localidad.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Categoria")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Jornada")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jornada)
+        </dd>
+
+        @if (Model.Jornada == "Jornada por Horas")
+        {
+            <dt>
+                Horarios
+            </dt>
+            <dd></dd>
+            if (!string.IsNullOrEmpty(Model.desdeLunesManana))
+            {
+                <dt>
+                    @Html.DisplayName("Lunes Por la mañana")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeLunesManana) Salida: @Html.DisplayFor(model => model.hastaLunesManana)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeLunesTarde))
+            {
+                <dt>
+                    @Html.DisplayName("Lunes Por la tarde")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeLunesTarde) Salida: @Html.DisplayFor(model => model.hastaLunesTarde)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeMartesManana))
+            {
+                <dt>
+                    @Html.DisplayName("Martes Por la Mañana")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeMartesManana) Salida: @Html.DisplayFor(model => model.hastaMartesManana)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeMartesTarde))
+            {
+                <dt>
+                    @Html.DisplayName("Martes Por la Tarde")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeMartesTarde) Salida: @Html.DisplayFor(model => model.hastaMartesTarde)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeMiercolesManana))
+            {
+                <dt>
+                    @Html.DisplayName("Miercoles Por la Mañana")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeMiercolesManana) Salida: @Html.DisplayFor(model => model.hastaMiercolesManana)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeMiercolesTarde))
+            {
+                <dt>
+                    @Html.DisplayName("Miercoles Por la Tarde")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeMiercolesTarde) Salida: @Html.DisplayFor(model => model.hastaMiercolesTarde)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeJuevesManana))
+            {
+                <dt>
+                    @Html.DisplayName("Jueves Por la Mañana")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeJuevesManana) Salida: @Html.DisplayFor(model => model.hastaJuevesManana)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeJuevesTarde))
+            {
+                <dt>
+                    @Html.DisplayName("Jueves Por la Tarde")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeJuevesTarde) Salida: @Html.DisplayFor(model => model.hastaJuevesTarde)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeViernesManana))
+            {
+                <dt>
+                    @Html.DisplayName("Viernes Por la Mañana")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeViernesManana) Salida: @Html.DisplayFor(model => model.hastaViernesManana)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeViernesTarde))
+            {
+                <dt>
+                    @Html.DisplayName("Viernes Por la Tarde")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeViernesTarde) Salida: @Html.DisplayFor(model => model.hastaViernesTarde)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeSabadoManana))
+            {
+                <dt>
+                    @Html.DisplayName("Sabado Por la Mañana")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeSabadoManana) Salida: @Html.DisplayFor(model => model.hastaSabadoManana)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeSabadoTarde))
+            {
+                <dt>
+                    @Html.DisplayName("Sabado Por la Tarde")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeSabadoTarde) Salida: @Html.DisplayFor(model => model.hastaSabadoTarde)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeDomingoManana))
+            {
+                <dt>
+                    @Html.DisplayName("Domingo Por la Mañana")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeDomingoManana) Salida: @Html.DisplayFor(model => model.hastaDomingoManana)
+                </dd>
+            }
+
+            if (!string.IsNullOrEmpty(Model.desdeDomingoTarde))
+            {
+                <dt>
+                    @Html.DisplayName("Domingo Por la Tarde")
+                </dt>
+
+                <dd>
+                    Entrada: @Html.DisplayFor(model => model.desdeDomingoTarde) Salida: @Html.DisplayFor(model => model.hastaDomingoTarde)
+                </dd>
+            }
+
+        }
+        else if (Model.Jornada == "Media Jornada")
+        {
+
+            <dt>
+                @Html.DisplayName("Turno")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Turno)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayName("Es Afiliado")
+        </dt>
+
+        <dd>
+            @if (Model.EsAfiliado == true)
+            {
+                <span>Si</span>
+            }
+            else
+            {
+                <span>No</span>
+            }
+        </dd>
+    </dl>
+</div>
+@if(Model.FechaBaja != DateTime.MinValue)
+{
+    <div class="col-md-2">
+        @Html.ActionLink("EDITAR", "EditFechaBaja", new { id = Model.IdEmpleado }, new { @class = "btn btn-default" })
+    </div>
+}
+else
+{
+    <div class="col-md-2">
+        @Html.ActionLink("EDITAR", "Edit", new { id = Model.IdEmpleado }, new { @class = "btn btn-default" })
+    </div>
+}
+<div class="col-md-2">
+    @Html.ActionLink("VOLVER", "Index", null, new { @class = "btn btn-default" })
+</div>
+<br /><br />

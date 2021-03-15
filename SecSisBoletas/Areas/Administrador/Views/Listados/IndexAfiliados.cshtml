@@ -1,0 +1,70 @@
+﻿@model PagedList.IPagedList<DAL.Models.Afiliado>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Afiliados";
+}
+
+<hr />
+
+
+@using (Html.BeginForm("IndexAfiliados", "Listados", FormMethod.Get, new { @class = "col-md-12" }))
+{
+    <p style="display:inline-block">
+        @Html.DropDownList("idEmpresa", null, new { @class = "selectpicker", data_width = "auto", title = "Seleccione una Emprea para Filtrar", data_live_search = true })
+    </p>
+    <p style="display:inline-block">
+        @Html.ActionLink("Imprimir", "ImprimirAfiliados", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, idEmpresa = ViewBag.idEmpresaSeleccionada }, new { @class = "btn btn-default" })
+    </p>
+    <p class="pull-right" style="display:inline-block">
+        <label for="SearchString" style="margin-right:10px">Buscar por Apellido: </label>
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, null, new { @Class = "form-control", style = "width:200px;display:inline-block" })
+        <input type="submit" value="Buscar" class="btn btn-default" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Apellido", "IndexAfiliados", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().EmpleadoEmpresa.Empleado.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().FechaAlta)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoEmpresa.Empleado.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoEmpresa.Empleado.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAlta)
+            </td>
+            <td>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("DetailsAfiliados", "Listados",new { id = item.IdAfiliado})" class="glyphicon glyphicon-plus"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Detalles</span>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<span class="clearfix"></span>
+<div style="position :relative;left: 40%;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("IndexAfiliados",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

@@ -1,0 +1,91 @@
+﻿@model PagedList.IPagedList<DAL.Models.Empleado>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2><b>EMPLEADOS</b></h2>
+
+<hr />
+
+<p style="display:inline-block">
+    @Html.ActionLink("NUEVO EMPLEADO", "Create", null, new { @class = "btn btn-default" })
+</p>
+
+@using (Html.BeginForm("Index", "Empleados", FormMethod.Get, new { @class = "pull-right", style = "display:inline-block" }))
+{
+    <p>
+        <label for="SearchString" style="margin-right:10px">Buscar por Apellido: </label>
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, null, new { @Class = "form-control", style = "width:200px;display:inline-block" })
+        <input type="submit" value="Search" class="btn btn-default" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Apellido", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.DisplayName("Nombre")
+        </th>
+        <th>
+            @Html.DisplayName("Cuil")
+        </th>
+        <th>
+            @Html.DisplayName("Localidad")
+        </th>
+        <th>
+            @Html.DisplayName("Calle")
+        </th>
+        <th>
+            @Html.DisplayName("Altura")
+        </th>
+        <th>
+            @Html.DisplayName("Fecha Alta")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cuil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Localidad.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Altura)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAlta)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", "Empleados",new { id = item.IdEmpleado})" class="glyphicon glyphicon-plus"></a> |
+                <a href="@Url.Action("EditFechaBaja", "Empleados",new { id = item.IdEmpleado})" class="glyphicon glyphicon-edit"></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<span class="clearfix"></span>
+<div style="position :relative;left: 40%;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

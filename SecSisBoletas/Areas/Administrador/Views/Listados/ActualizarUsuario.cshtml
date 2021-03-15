@@ -1,0 +1,72 @@
+﻿@model DAL.ViewModels.VmUsuario
+
+@{
+    ViewBag.Title = "ActualizarUsuario";
+}
+
+<div class="row">
+    <br />
+
+    <h2 class="text-center">Usuario</h2>
+
+    <br />
+    <hr />
+    <br />
+
+    <div class="col-md-offset-2 col-md-8">
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(model => Model.Id)
+            @Html.HiddenFor(model => Model.IdEmpresa)
+
+            <div class="col-xs-12">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    @Html.LabelFor(model => Model.RazonSocial)
+                    @Html.EditorFor(model => Model.RazonSocial, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => Model.RazonSocial)
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    @Html.LabelFor(model => Model.NombreFantasia)
+                    @Html.EditorFor(model => Model.NombreFantasia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => Model.NombreFantasia)
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    @Html.LabelFor(model => Model.Cuit)
+                    @Html.EditorFor(model => Model.Cuit, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                    @Html.ValidationMessageFor(model => Model.RazonSocial)
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    @Html.LabelFor(model => Model.Email)
+                    @Html.EditorFor(model => Model.Email, new { htmlAttributes = new { @class = "form-control", type = "Email" } })
+                    @Html.ValidationMessageFor(model => Model.RazonSocial)
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    @Html.LabelFor(model => Model.Telefono)
+                    @Html.EditorFor(model => Model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => Model.RazonSocial)
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    @Html.LabelFor(model => Model.Celular)
+                    @Html.EditorFor(model => Model.Celular, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => Model.RazonSocial)
+                </div>
+            </div>
+
+            <div class="col-xs-12" style="margin-top:25px">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <input type="submit" value="Guardar" class="btn btn-default pull-right" />
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <a role="button" class="btn btn-warning" href="@Url.Action("Usuarios", new { page = Model.Page, currentFilter = Model.CurrentFilter })">Cancelar</a>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

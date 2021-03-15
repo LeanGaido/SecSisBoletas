@@ -1,0 +1,65 @@
+﻿@model PagedList.IPagedList<DAL.Models.Localidad>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2><b>Tabla de Localidades</b></h2>
+
+<hr />
+
+@using (Html.BeginForm("IndexLocalidades", "InstructivoDeUso", FormMethod.Get, new { @class = "pull-right", style = "display:inline-block" }))
+{
+    <div>
+        @Html.DropDownList("idProvincia", null, new { @class = "selectpicker", style = "display:inline-block" })
+        <label for="SearchString" style="margin-right:10px;display:inline-block">Buscar por Nombre: </label>
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, null, new { @Class = "form-control", style = "width:200px;display:inline-block" })
+        <input type="submit" value="Search" class="btn btn-default" />
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Id Localidad")
+        </th>
+        <th>
+            @Html.ActionLink("Nombre", "IndexLocalidades", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, idProvincia = ViewBag.idProvinciaSeleccionada })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().CodPostal)
+        </th>
+        <th>
+            @Html.DisplayName("Provincia")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdLocalidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodPostal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Provincia.Nombre)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<span class="clearfix"></span>
+<div style="position :relative;left: 40%;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("IndexLocalidades",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, idProvincia = ViewBag.idProvinciaSeleccionada }))
+</div>

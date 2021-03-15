@@ -1,0 +1,95 @@
+﻿@model IEnumerable<DAL.Models.DeclaracionJurada>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<hr />
+
+<div class="form-inline">
+    @using (Html.BeginForm("IndexDeclaracionesJuradas", "Listados", FormMethod.Get, new { @class = "col-md-6" }))
+    {
+        <select class="selectpicker col-md-1" title="Mes" name="mes" id="mes">
+            <option value="0">Mes</option>
+            @for (int i = 1; i <= 12; i++)
+            {
+                if (ViewBag.Mes == i)
+                {
+                    <option selected value="@i">@i</option>
+                }
+                else
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+
+        <select class="selectpicker col-md-1" title="Año" name="anio" id="anio">
+            <option value="0">Año</option>
+            @for (int i = 2015; i < 2030; i++)
+            {
+                if (ViewBag.Anio == i)
+                {
+                    <option selected value="@i">@i</option>
+                }
+                else
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+
+        @Html.DropDownList("IdEmpresa", null, new { @class = "selectpicker", data_live_search = "true" })
+
+        <button class="btn btn-default" type="submit">Buscar</button>
+    }
+</div>
+
+<br/><br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Razon Social")
+        </th>
+        <th>
+            @Html.DisplayName("Mes Declarado")
+        </th>
+        <th>
+            @Html.DisplayName("Año Declarado")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Empresa.RazonSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.anio)
+            </td>
+            <td>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("IndexDetallesDeclaracionJurada", "Listados",new { id = item.IdDeclaracionJurada})" class="glyphicon glyphicon-plus"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Detalles</span>
+                </div>
+                |
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("ImprimirDDJJPorEmpresas", "Listados", new { id = item.IdDeclaracionJurada })" class="glyphicon glyphicon-print"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Imprimir</span>
+                </div>
+                |
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("DeleteDeclaracionJurada", "Listados",new { id = item.IdDeclaracionJurada})" class="fa fa-remove"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Eliminar Boleta</span>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,40 @@
+﻿@model DAL.Models.Provincia
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<br />
+<h2 class="text-center">Provincia</h2>
+
+<h3>¿Estás seguro que quieres eliminar esta Provincia?</h3>
+
+<div>
+    <h4>Provincia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <div class="col-xs-offset-4 col-xs-2 col-md-offset-5 col-md-1">
+                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-default" })
+            </div>
+            <div class="col-xs-2 col-md-1">
+                <input type="submit" value="Eliminar" class="btn btn-default" />
+            </div>
+            <br /><br />
+        </div>
+    }
+</div>

@@ -1,0 +1,194 @@
+﻿
+@{
+    ViewBag.Title = "ImpresionResumenEmpleados";
+}
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Empresa Municipal de Gas de San Francisco Cordoba que provee servicios de gas natural de uso residencial, comercios y PYMES">
+    <meta name="KEYWORDS" content="empresa municipal de gas, servicio de gas, gas natural, servicio de gas natural, empresa distribuidora de gas, gasista, gas natural licuado, gasista matriculado, instalación de gas natural, empresa gas natural, distribuidora de gas, gas natural comprimido, fuga de gas, instalaciones de gas, gas licuado, gas natural precio, gas envasado, san francisco, cordoba">
+    <title>Sitio Web de Carga e Impresion de Formularios de instalacion de Gas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <meta name="theme-color" content="#ffffff">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        body {
+            color: #000;
+        }
+
+        .outer-border {
+            border: solid 1px #000;
+            height: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .renglon-caja {
+            border: solid 1px #000;
+            height: 100%;
+            margin: 0;
+        }
+
+        .renglon-tabla {
+            border: solid 1px #000;
+            height: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+            .renglon-tabla > table {
+                margin-bottom: 0;
+            }
+
+        .caja-texto {
+            border-left: solid 1px #000;
+            border-right: solid 1px #000;
+        }
+
+        .caja-firma {
+            position: relative;
+            float: right;
+            border: solid 1px #000;
+            height: 75px;
+            width: 150px;
+            text-align: center;
+            top: -35px;
+            z-index: 2;
+            background-color: #fff;
+        }
+
+        .renglon-cajas {
+            padding: 0;
+            margin: 0;
+            height: 140px;
+        }
+
+        .renglon-caja-izquierda {
+            border: solid 1px #000;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .renglon-caja-derecha {
+            border: solid 1px #000;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .caja-texto-derecha {
+            border-left: solid 1px #000;
+        }
+
+        .caja-texto-arriba {
+            padding-left: 15px;
+            border-bottom: solid 1px #000;
+            z-index: 1;
+        }
+
+        .caja-texto-abajo {
+            padding-left: 15px;
+            z-index: 1;
+        }
+
+        .titular {
+            background-color: #808080;
+        }
+
+        p.saltodepagina {
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="outer-border col-xs-12">
+            <div class="renglon-caja col-xs-12">
+                <div class="col-xs-offset-1 col-xs-9 text-center caja-texto" style="font-size:18px;"><b>Sindicato de Empleados de Comercio</b></div>
+                <div class="col-xs-2"><b>@DateTime.Today.ToShortDateString()</b></div>
+            </div>
+            <div class="renglon-tabla col-xs-12">
+                <br />
+            </div>
+            <div class="renglon-caja col-xs-12">
+                <div class="col-xs-12 text-center" style="font-size:24px;"><b>Resumen General de Empleados</b></div>
+            </div>
+            <div class="renglon-tabla col-xs-12">
+                <br />
+            </div>
+            <div class="renglon-tabla col-xs-12">
+                <b>Periodo: </b> @ViewBag.Mes / @ViewBag.Anio
+            </div>
+            <div class="renglon-tabla col-xs-12">
+                <br />
+            </div>
+        </div>
+
+        <div class="renglon-tabla col-xs-12">
+            <div class="form-control">
+                <label>
+                    <b>2%</b>
+                </label>
+            </div>
+            <div class="form-group col-md-offset-1">
+                <div class="form-control">
+                    <label>
+                        <b>Cant de Empleados:</b>
+                    </label>
+                    @ViewBag.TotalEmpleados
+                </div>
+                <div class="form-control">
+                    <label>
+                        <b>Cant de Empleados de Alta:</b>
+                    </label>
+                    @ViewBag.TotalEmpleadosAlta
+                </div>
+                <div class="form-control">
+                    <label>
+                        <b>Cant de Empleados de baja:</b>
+                    </label>
+                    @ViewBag.TotalEmpleadosBaja
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label>
+                    <b>5%</b>
+                </label>
+            </div>
+            <div class="form-group col-md-offset-1">
+                <div class="form-control">
+                    <label>
+                        <b>Cant de Afiliados:</b>
+                    </label>
+                    @ViewBag.TotalAfiliados
+                </div>
+                <div class="form-control">
+                    <label>
+                        <b>Cant de Empleados de Alta:</b>
+                    </label>
+                    @ViewBag.TotalAfiliadosAlta
+                </div>
+                <div class="form-control">
+                    <label>
+                        <b>Cant de Empleados de baja:</b>
+                    </label>
+                    @ViewBag.TotalAfiliadosBaja
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

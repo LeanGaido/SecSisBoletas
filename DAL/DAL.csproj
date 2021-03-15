@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B447329F-4458-40A3-B11E-E593632796FF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DAL</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Migrations\201903192059038_initial.cs" />
+    <Compile Include="Migrations\201903192059038_initial.Designer.cs">
+      <DependentUpon>201903192059038_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903201944479_RemoveTelefonoCelularEmailFromEmpleado.cs" />
+    <Compile Include="Migrations\201903201944479_RemoveTelefonoCelularEmailFromEmpleado.Designer.cs">
+      <DependentUpon>201903201944479_RemoveTelefonoCelularEmailFromEmpleado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903272108266_BoletaAportes.cs" />
+    <Compile Include="Migrations\201903272108266_BoletaAportes.Designer.cs">
+      <DependentUpon>201903272108266_BoletaAportes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904101942378_tblFechaVencimiento.cs" />
+    <Compile Include="Migrations\201904101942378_tblFechaVencimiento.Designer.cs">
+      <DependentUpon>201904101942378_tblFechaVencimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904112126375_tblReclamo.cs" />
+    <Compile Include="Migrations\201904112126375_tblReclamo.Designer.cs">
+      <DependentUpon>201904112126375_tblReclamo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904121433264_FixTableName.cs" />
+    <Compile Include="Migrations\201904121433264_FixTableName.Designer.cs">
+      <DependentUpon>201904121433264_FixTableName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904162044598_fixtblReclamos.cs" />
+    <Compile Include="Migrations\201904162044598_fixtblReclamos.Designer.cs">
+      <DependentUpon>201904162044598_fixtblReclamos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904291332162_DoubleToDecimal.cs" />
+    <Compile Include="Migrations\201904291332162_DoubleToDecimal.Designer.cs">
+      <DependentUpon>201904291332162_DoubleToDecimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904291347208_DecimalToDouble.cs" />
+    <Compile Include="Migrations\201904291347208_DecimalToDouble.Designer.cs">
+      <DependentUpon>201904291347208_DecimalToDouble.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905071151501_registerFix.cs" />
+    <Compile Include="Migrations\201905071151501_registerFix.Designer.cs">
+      <DependentUpon>201905071151501_registerFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905171938407_TurnoEmpleado.cs" />
+    <Compile Include="Migrations\201905171938407_TurnoEmpleado.Designer.cs">
+      <DependentUpon>201905171938407_TurnoEmpleado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905202008108_HorariosEmpleados.cs" />
+    <Compile Include="Migrations\201905202008108_HorariosEmpleados.Designer.cs">
+      <DependentUpon>201905202008108_HorariosEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906121936000_ActividadesFix.cs" />
+    <Compile Include="Migrations\201906121936000_ActividadesFix.Designer.cs">
+      <DependentUpon>201906121936000_ActividadesFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909241213160_fixLengthRazonSocialNombreFantasia.cs" />
+    <Compile Include="Migrations\201909241213160_fixLengthRazonSocialNombreFantasia.Designer.cs">
+      <DependentUpon>201909241213160_fixLengthRazonSocialNombreFantasia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909261214346_DoubleToDecimal1.cs" />
+    <Compile Include="Migrations\201909261214346_DoubleToDecimal1.Designer.cs">
+      <DependentUpon>201909261214346_DoubleToDecimal1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910021951526_fix-Horarios.cs" />
+    <Compile Include="Migrations\201910021951526_fix-Horarios.Designer.cs">
+      <DependentUpon>201910021951526_fix-Horarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910091943550_totalPagadoBoleta.cs" />
+    <Compile Include="Migrations\201910091943550_totalPagadoBoleta.Designer.cs">
+      <DependentUpon>201910091943550_totalPagadoBoleta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910111155173_totalSueldos2Y5.cs" />
+    <Compile Include="Migrations\201910111155173_totalSueldos2Y5.Designer.cs">
+      <DependentUpon>201910111155173_totalSueldos2Y5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911121930250_FixAfiliado.cs" />
+    <Compile Include="Migrations\201911121930250_FixAfiliado.Designer.cs">
+      <DependentUpon>201911121930250_FixAfiliado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004151254339_FechaVencimiento.cs" />
+    <Compile Include="Migrations\202004151254339_FechaVencimiento.Designer.cs">
+      <DependentUpon>202004151254339_FechaVencimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006021316065_tblBoletaAportesEspeciales.cs" />
+    <Compile Include="Migrations\202006021316065_tblBoletaAportesEspeciales.Designer.cs">
+      <DependentUpon>202006021316065_tblBoletaAportesEspeciales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006021343051_tblBoletasAportesEspeciales_BoletaPagada.cs" />
+    <Compile Include="Migrations\202006021343051_tblBoletasAportesEspeciales_BoletaPagada.Designer.cs">
+      <DependentUpon>202006021343051_tblBoletasAportesEspeciales_BoletaPagada.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006021519451_tblBoletaAportesEspecial_CamposEmpresa_NoRequeridos.cs" />
+    <Compile Include="Migrations\202006021519451_tblBoletaAportesEspecial_CamposEmpresa_NoRequeridos.Designer.cs">
+      <DependentUpon>202006021519451_tblBoletaAportesEspecial_CamposEmpresa_NoRequeridos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006031318183_tblBoletasEspeciales_Periodo.cs" />
+    <Compile Include="Migrations\202006031318183_tblBoletasEspeciales_Periodo.Designer.cs">
+      <DependentUpon>202006031318183_tblBoletasEspeciales_Periodo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006031439380_tblBoletasEspeciales_FechaVencimiento.cs" />
+    <Compile Include="Migrations\202006031439380_tblBoletasEspeciales_FechaVencimiento.Designer.cs">
+      <DependentUpon>202006031439380_tblBoletasEspeciales_FechaVencimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006101613455_tblBoletas_cantEmpleados_Aportes2_cantAfiliados_aportes5.cs" />
+    <Compile Include="Migrations\202006101613455_tblBoletas_cantEmpleados_Aportes2_cantAfiliados_aportes5.Designer.cs">
+      <DependentUpon>202006101613455_tblBoletas_cantEmpleados_Aportes2_cantAfiliados_aportes5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006111505163_DatosDeBaja_tblBoletas-tblBoletasEspeciales.cs" />
+    <Compile Include="Migrations\202006111505163_DatosDeBaja_tblBoletas-tblBoletasEspeciales.Designer.cs">
+      <DependentUpon>202006111505163_DatosDeBaja_tblBoletas-tblBoletasEspeciales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011051315038_DeclaracionJurada-DeBaja.cs" />
+    <Compile Include="Migrations\202011051315038_DeclaracionJurada-DeBaja.Designer.cs">
+      <DependentUpon>202011051315038_DeclaracionJurada-DeBaja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Actividad.cs" />
+    <Compile Include="Models\Afiliado.cs" />
+    <Compile Include="Models\BoletaAportes.cs" />
+    <Compile Include="Models\BoletaAportesEspecial.cs" />
+    <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\DeclaracionJurada.cs" />
+    <Compile Include="Models\DetalleDeclaracionJurada.cs" />
+    <Compile Include="Models\Empleado.cs" />
+    <Compile Include="Models\EmpleadoEmpresa.cs" />
+    <Compile Include="Models\Empresa.cs" />
+    <Compile Include="Models\FechaVencimiento.cs" />
+    <Compile Include="Models\HorarioEmpleado.cs" />
+    <Compile Include="Models\Jornada.cs" />
+    <Compile Include="Models\LicenciaEmpleado.cs" />
+    <Compile Include="Models\LicenciaLaboral.cs" />
+    <Compile Include="Models\LiquidacionProporcional.cs" />
+    <Compile Include="Models\LiquidacionProporcionalEmpleado.cs" />
+    <Compile Include="Models\Localidad.cs" />
+    <Compile Include="Models\Reclamo.cs" />
+    <Compile Include="Models\TurnoEmpleado.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Provincia.cs" />
+    <Compile Include="Models\SueldoBasico.cs" />
+    <Compile Include="SecModel.cs" />
+    <Compile Include="ViewModels\Boleta.cs" />
+    <Compile Include="ViewModels\BoletaEspecial.cs" />
+    <Compile Include="ViewModels\MessageVm.cs" />
+    <Compile Include="ViewModels\VmBoletaAportes.cs" />
+    <Compile Include="ViewModels\VmEmpleados.cs" />
+    <Compile Include="ViewModels\VmEmpleadosEmpresas.cs" />
+    <Compile Include="ViewModels\VmEmpresa.cs" />
+    <Compile Include="ViewModels\VmFaecys.cs" />
+    <Compile Include="ViewModels\VmPadron.cs" />
+    <Compile Include="ViewModels\VmUsuario.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201903192059038_initial.resx">
+      <DependentUpon>201903192059038_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201944479_RemoveTelefonoCelularEmailFromEmpleado.resx">
+      <DependentUpon>201903201944479_RemoveTelefonoCelularEmailFromEmpleado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903272108266_BoletaAportes.resx">
+      <DependentUpon>201903272108266_BoletaAportes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904101942378_tblFechaVencimiento.resx">
+      <DependentUpon>201904101942378_tblFechaVencimiento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904112126375_tblReclamo.resx">
+      <DependentUpon>201904112126375_tblReclamo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904121433264_FixTableName.resx">
+      <DependentUpon>201904121433264_FixTableName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904162044598_fixtblReclamos.resx">
+      <DependentUpon>201904162044598_fixtblReclamos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904291332162_DoubleToDecimal.resx">
+      <DependentUpon>201904291332162_DoubleToDecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904291347208_DecimalToDouble.resx">
+      <DependentUpon>201904291347208_DecimalToDouble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905071151501_registerFix.resx">
+      <DependentUpon>201905071151501_registerFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905171938407_TurnoEmpleado.resx">
+      <DependentUpon>201905171938407_TurnoEmpleado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905202008108_HorariosEmpleados.resx">
+      <DependentUpon>201905202008108_HorariosEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906121936000_ActividadesFix.resx">
+      <DependentUpon>201906121936000_ActividadesFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909241213160_fixLengthRazonSocialNombreFantasia.resx">
+      <DependentUpon>201909241213160_fixLengthRazonSocialNombreFantasia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909261214346_DoubleToDecimal1.resx">
+      <DependentUpon>201909261214346_DoubleToDecimal1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910021951526_fix-Horarios.resx">
+      <DependentUpon>201910021951526_fix-Horarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910091943550_totalPagadoBoleta.resx">
+      <DependentUpon>201910091943550_totalPagadoBoleta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910111155173_totalSueldos2Y5.resx">
+      <DependentUpon>201910111155173_totalSueldos2Y5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911121930250_FixAfiliado.resx">
+      <DependentUpon>201911121930250_FixAfiliado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004151254339_FechaVencimiento.resx">
+      <DependentUpon>202004151254339_FechaVencimiento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006021316065_tblBoletaAportesEspeciales.resx">
+      <DependentUpon>202006021316065_tblBoletaAportesEspeciales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006021343051_tblBoletasAportesEspeciales_BoletaPagada.resx">
+      <DependentUpon>202006021343051_tblBoletasAportesEspeciales_BoletaPagada.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006021519451_tblBoletaAportesEspecial_CamposEmpresa_NoRequeridos.resx">
+      <DependentUpon>202006021519451_tblBoletaAportesEspecial_CamposEmpresa_NoRequeridos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006031318183_tblBoletasEspeciales_Periodo.resx">
+      <DependentUpon>202006031318183_tblBoletasEspeciales_Periodo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006031439380_tblBoletasEspeciales_FechaVencimiento.resx">
+      <DependentUpon>202006031439380_tblBoletasEspeciales_FechaVencimiento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006101613455_tblBoletas_cantEmpleados_Aportes2_cantAfiliados_aportes5.resx">
+      <DependentUpon>202006101613455_tblBoletas_cantEmpleados_Aportes2_cantAfiliados_aportes5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006111505163_DatosDeBaja_tblBoletas-tblBoletasEspeciales.resx">
+      <DependentUpon>202006111505163_DatosDeBaja_tblBoletas-tblBoletasEspeciales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011051315038_DeclaracionJurada-DeBaja.resx">
+      <DependentUpon>202011051315038_DeclaracionJurada-DeBaja.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

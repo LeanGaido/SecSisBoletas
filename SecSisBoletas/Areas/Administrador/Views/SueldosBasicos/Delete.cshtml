@@ -1,0 +1,62 @@
+﻿@model DAL.Models.SueldoBasico
+
+@{
+    ViewBag.Title = "Delete";
+}
+<br />
+<h2 class="text-center">Actividad</h2>
+
+<h3>¿Estás seguro que quieres eliminar este Sueldo Basico?</h3>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Categoria.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categoria.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Monto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Monto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Desde)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Desde)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Hasta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hasta)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group no-color">
+            <div class="col-xs-offset-4 col-xs-2 col-md-offset-5 col-md-1">
+                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-default" })
+            </div>
+            <div class="col-xs-2 col-md-1">
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
+        </div>
+        <br /><br />
+    }
+</div>

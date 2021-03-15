@@ -1,0 +1,351 @@
+﻿@model IEnumerable<DAL.Models.DetalleDeclaracionJurada>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+
+<h2><b>EMPLEADOS DE DDJJ</b></h2>
+
+<hr />
+
+@using (Html.BeginForm("create", "DetallesDeclaracionJurada", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4 class="text-center">Declarar Empleado</h4>
+        <label id="mensajeError" class="text text-danger">@ViewBag.Errores</label>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group" style="display:none">
+            @Html.Label("IdDeclaracionJurada", "IdDeclaracionJurada", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdDeclaracionJurada", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessage("IdDeclaracionJurada", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("IdEmpleadoEmpresa", "Empleado", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownList("IdEmpleadoEmpresa", null, htmlAttributes: new { @class = "form-control selectpicker show-tick", data_live_search = "true" })
+                @Html.ValidationMessage("IdEmpleadoEmpresa", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("idCategoria", "Categoria", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <select class="form-control selectpicker" name="idCategoria" id="idCategoria"></select>
+                @Html.ValidationMessage("idCategoria", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("idJornadaLaboral", "Jornada Laboral", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <select class="form-control selectpicker" name="idJornadaLaboral" id="idJornadaLaboral"></select>
+                @Html.ValidationMessage("idJornadaLaboral", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("IdLiquidacionProporcional", "Liquidacion Proporcional", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownList("IdLiquidacionProporcional", null, htmlAttributes: new { @class = "form-control selectpicker" })
+                @Html.ValidationMessage("IdLiquidacionProporcional", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Sueldo 2%", htmlAttributes: new { @class = "control -label col-md-2" })
+            <div class="col-md-4">
+                @Html.Editor("Sueldo", new { htmlAttributes = new { @class = "form-control", required = "true" } })
+                @Html.ValidationMessage("Sueldo", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Sueldo 5%", htmlAttributes: new { @class = "control -label col-md-2" })
+            <div class="col-md-4">
+                @Html.Editor("SueldoBase", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessage("SueldoBase", "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <span class="text text-danger">Cargar solo para Empleados Afiliados al Sindicato de empleados de Comercio</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                <button class="btn btn-default" id="btnSubmit">GRABAR</button>
+                <input type="submit" id="submitOk" value="GRABAR" class="btn btn-default" style="display:none" />
+            </div>
+        </div>
+    </div>
+}
+<h4 class="">Declaracion Jurada del Mes @ViewBag.Mes y del Año @ViewBag.Anio</h4>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Empleado")
+        </th>
+        <th>
+            ¿Es Afiliado?
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Jornada.Descripcion)
+        </th>
+        <th>
+            ¿En Licencia?
+        </th>
+        <th>
+            ¿Liquidacion Proporcional?
+        </th>
+        <th>
+            @Html.DisplayName("Sueldo 2%")
+        </th>
+        <th>
+            @Html.DisplayName("Sueldo 5%")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoEmpresa.Empleado.Apellido)<span>, </span>  @Html.DisplayFor(modelItem => item.EmpleadoEmpresa.Empleado.Nombre)
+            </td>
+            <td>
+                @if (item.EsAfiliado)
+                {
+                    <span>Si</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jornada.Descripcion)
+            </td>
+            <td>
+                @if (item.LicenciaEmpleado)
+                {
+                    <span>Si</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </td>
+            <td>
+                @if (item.LiquidacionProporcional)
+                {
+                    <span>Si</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sueldo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SueldoBase)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "DetallesDeclaracionJurada",new { id = item.IdDetalleDeclaracionJurada})" class="fa fa-edit"></a> |
+                @*<a href="@Url.Action("Details", "DetallesDeclaracionJurada",new { id = item.IdDetalleDeclaracionJurada})" class="fa fa-plus"></a> |*@
+                <a href="@Url.Action("Delete", "DetallesDeclaracionJurada",new { id = item.IdDetalleDeclaracionJurada})" class="fa fa-remove"></a>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="6">
+            Totales
+        </td>
+        <td>
+            @ViewBag.Sueldos2
+        </td>
+        <td>
+            @ViewBag.Sueldos5
+        </td>
+        <td></td>
+    </tr>
+</table>
+
+<div>
+    @Html.ActionLink("Volver", "Index", "DeclaracionesJuradas")
+</div>
+
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">¡Importante!</h4>
+            </div>
+            <div class="modal-body">
+                <h3>
+                    El Empleado <span id="empleado">x</span> que esta declarando con $<span id="sueldo5">x</span> no es afiliado, por favor revisar el empleado y/o el sueldo que se esta cargando
+                </h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Continuar</button>
+                @*<button type="button" class="btn btn-primary" id="submitOk">GRABAR</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        CargarCategoriaJornada();
+    });
+
+    $('#btnSubmit').click(function (e) {
+        e.preventDefault();
+        CheckAfiliado();
+    });
+
+    $("#IdEmpleadoEmpresa").change(function () {
+        CargarCategoriaJornada();
+    });
+
+    $('#IdLiquidacionProporcional').change(function () {
+        if ($('#IdLiquidacionProporcional').val() != 1) {
+            $('#Sueldo').val();
+        }
+    });
+
+    $('#Sueldo').keyup(function () {
+        var content = $(this).val();
+        $(this).val(content.replace(/[\.]+/g, ','));
+    });
+
+    $('#SueldoBase').keyup(function () {
+        var content = $(this).val();
+        $(this).val(content.replace(/[\.]+/g, ','));
+    });
+
+    function CargarCategoriaJornada() {
+        $("#idCategoria").empty();
+        $("#idJornadaLaboral").empty();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetEmpleadoJornadaCategoria", "Empleados")',
+            data: {
+                id: $("#IdEmpleadoEmpresa").val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (i, data) {
+                    $("#idCategoria").append('<option value="' + data.IdCategoria + '">' + data.NombreCategoria + '</option>');
+                    $("#idJornadaLaboral").append('<option value="' + data.IdJornada + '">' + data.NombreJornada + '</option>');
+                    $('#IdLiquidacionProporcional').val(1)
+                    GetSueldoBasico();
+                    GetSueldoBase();
+                    //$('#SueldoBase').val('0');
+                });
+                $("#idCategoria").selectpicker('refresh');
+                $("#idJornadaLaboral").selectpicker('refresh');
+                $("#IdLiquidacionProporcional").selectpicker('refresh');
+            },
+            error: function () {
+            }
+        });
+    };
+
+    function CheckAfiliado() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("CheckAfiliado", "Empleados")',
+            data: {
+                IdEmpleadoEmpresa: $("#IdEmpleadoEmpresa").val(),
+                IdDeclaracionJurada: $('#IdDeclaracionJurada').val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data) {
+                    $('#submitOk').click();
+                } else {
+                    if (parseFloat($('#SueldoBase').val()) > 0) {
+                        $('#basicModal').modal('show');
+                        var modal = $('#basicModal');
+                        modal.find('#empleado').text($("#IdEmpleadoEmpresa option:selected").text());
+                        modal.find('#sueldo5').text($('#SueldoBase').val());
+                    }
+                    else {
+                        $('#submitOk').click();
+                    }
+                }
+            },
+            error: function () {
+            }
+        });
+    };
+
+    function GetSueldoBase() {
+        $('#SueldoBase').val('');
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetSueldoBase", "Empleados")',
+            data: {
+                IdEmpleadoEmpresa: $("#IdEmpleadoEmpresa").val(),
+                IdDeclaracionJurada: $('#IdDeclaracionJurada').val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data == -1) {
+                    alert("No hay Sueldo Minimo Registrado para la Fecha que quiere Declarar");
+                }
+                else {
+                    var sueldo = data.toString();
+                    sueldo = sueldo.replace('.', ',');
+                    $('#SueldoBase').val(sueldo);
+                }
+            },
+            error: function () {
+            }
+        });
+    };
+
+    function GetSueldoBasico() {
+        $('#Sueldo').val('');
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetSueldoBasico", "Empleados")',
+            data: {
+                IdEmpleadoEmpresa: $("#IdEmpleadoEmpresa").val(),
+                IdDeclaracionJurada: $('#IdDeclaracionJurada').val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data == -1) {
+                    alert("No hay Sueldo Minimo Registrado para la Fecha que quiere Declarar");
+                }
+                else {
+                    var sueldo = data.toString();
+                    sueldo = sueldo.replace('.', ',');
+                    $('#Sueldo').val(sueldo);
+                }
+            },
+            error: function () {
+            }
+        });
+    };
+</script>

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<DAL.Models.DeclaracionJurada>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-left"><b>DECLARACIONES JURADAS</b></h2>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.ActionLink("Nueva Declaracion Jurada", "Create", null, new { @class = "btn btn-default" })
+    </div>
+
+    @using (Html.BeginForm("Index", "DeclaracionesJuradas", FormMethod.Get, new { @class = "col-md-6" }))
+    {
+        <select class="selectpicker" data-width="auto" title="Mes" name="mes" id="mes">
+            <option value="0">Mes</option>
+            @for (int i = 1; i <= 12; i++)
+            {
+                if (ViewBag.Mes == i)
+                {
+                    <option selected value="@i">@i</option>
+                }
+                else
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+
+        <select class="selectpicker" data-width="auto" title="Año" name="anio" id="anio">
+            <option value="0">Año</option>
+            @for (int i = 2015; i < 2030; i++)
+            {
+                if (ViewBag.Anio == i)
+                {
+                    <option selected value="@i">@i</option>
+                }
+                else
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+
+        <button class="btn btn-default" type="submit">Buscar</button>
+    }
+</div>
+<br />
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Mes Declarado")
+            </th>
+            <th>
+                @Html.DisplayName("Año Declarado")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreMes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.anio)
+                </td>
+                <td>
+                    @*<a href="@Url.Action("Create", "DetallesDeclaracionJurada",new { id = item.IdDeclaracionJurada})" class="fa fa-plus"></a> |*@
+                    <a href="@Url.Action("Index", "DetallesDeclaracionJurada",new { id = item.IdDeclaracionJurada})" class="fa fa-edit"></a> |
+                    @*<a href="@Url.Action("Delete", "DeclaracionesJuradas",new { id = item.IdDeclaracionJurada})" class="fa fa-remove"></a> |*@
+                    <a href="@Url.Action("ImprimirDDJJPorEmpresas", "DeclaracionesJuradas", new { id = item.IdDeclaracionJurada })" class="fa fa-print"></a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

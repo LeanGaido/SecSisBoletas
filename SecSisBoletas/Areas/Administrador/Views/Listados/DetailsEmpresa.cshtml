@@ -1,0 +1,114 @@
+﻿@model DAL.Models.Empresa
+
+@{
+    ViewBag.Title = "DetailsEmpresa";
+}
+<br />
+<h2>Empresa</h2>
+<br />
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RazonSocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RazonSocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreFantasia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreFantasia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cuit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cuit)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Actividad")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actividad.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Localidad")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Localidad.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Calle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Calle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Altura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Altura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelefonoFijo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelefonoFijo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelefonoCelular)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelefonoCelular)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaAltaEmpresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaAltaEmpresa)
+        </dd>
+        @if (Model.FechaBajaEmpresa != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaBajaEmpresa)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaBajaEmpresa)
+            </dd>
+        }
+    </dl>
+</div>
+
+<div class="col-md-2">
+    @Html.ActionLink("Volver a la lista", "IndexEmpresa", null, new { @class = "btn btn-default" })
+</div>

@@ -1,0 +1,123 @@
+﻿@using SecSisBoletas.Models
+
+@model LoginViewModel
+@{
+    ViewBag.Title = "Iniciar sesión";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>XINDICO WEB - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Areas/Empresas/Content/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="~/Areas/Empresas/Content/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <!-- toast CSS -->
+    <link href="~/Areas/Empresas/Content/plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <!-- animation CSS -->
+    <link rel="stylesheet" href="~/Areas/Empresas/Content/css/animate.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/Areas/Empresas/Content/css/style.css" />
+    <!-- color CSS -->
+    <link href="~/Areas/Empresas/Content/css/colors/blue.css" id="theme" rel="stylesheet">
+    <!-- bootstrap-select CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+    <!-- certificado SSL-->
+    <script type="text/javascript">const tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/"); document.write(unescape("<script src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript' %3E%3C/script%3E"));</script>
+</head>
+<body>
+    <div class="preloader">
+        <div class="cssload-speeding-wheel"></div>
+    </div>
+    <div class="row" id="wrapper-usuario">
+        <div class="col-md-6" id="inner-wrapper-usuario">
+            <img src="~/Areas/Empresas/Content/images/XindicoWeb-logo-min.png" class="img-responsive">
+            <br>
+            <h3 class="text-justify">Sistema de Generación de Boletas de Aportes del Sindicato de Empleados de Comercio de San Francisco</h3>
+            <br />
+            <div class="alert">
+                <h4><b>LOS PAGOS DE INACAP Y FAECYS NO SE DEBEN ABONAR EN LAS CUENTAS DEL SINDICATO</b></h4>
+
+                @*Sr. Contribuyente: ya puede ver el historial de pagos actualizado desde su usuario a partir del 15/05/2020.
+
+                <br /><br />
+                SI UD. OBSERVA QUE EL PERIODO ABONADO NO FUE REGISTRADO EN SU HISTORIAL DE PAGOS EN 48HS. DEBERÁ COMUNICARSE CON EL SINDICATO.
+                No es necesario que envíe el comprobante de transferencia por email si colocó todos los datos cuando realizó el pago (referencia donde informa cuit de la  empresa que esta abonando). En caso de ser necesario, nos comunicaremos con Ud. a los fines de solicitarle información.*@
+            </div>
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary()
+                <h4 class="box-title m-b-20"><b>Login de Usuario</b></h4>
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input class="form-control" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="UserName" id="UserName" required placeholder="Número de CUIT (sin guiones)" autocomplete="new-password">
+                        <span class="text text-danger">@Html.ValidationMessageFor(model => model.UserName)</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="password" name="Password" id="Password" required placeholder="Contraseña" autocomplete="new-password">
+                        <span class="text text-danger">@Html.ValidationMessageFor(model => model.Password)</span>
+                    </div>
+                </div>
+                <div class="form-group text-center m-t-20">
+                    <div class="col-xs-12">
+                        <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">ENTRAR</button>
+                    </div>
+                </div>
+                <HR>
+                <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <i class="fa fa-lock m-r-5"></i> <a href="forgotpassword"><B>Olvidó su Contraseña?</B></a>
+                        <br><br>
+                        <i class="fa fa-user m-r-5"></i> ¿No Dispones de una cuenta?. <a href="register"><b>Crear Cuenta</b></a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="text-center">
+                            @*Comunicarse con <b>Juan Sanchez</b> a - <i class="fa fa-whatsapp"></i> <b>3564-505497</b> -*@ Para Consultas por Boletas de Aportes. Comunicarse al 03564-425340, Interno 102-<br />
+                            <span style="display:inline-block;width:200px">Horarios de atencion: </span><b>LUNES A VIERNES: <span>09:00 a 12:30 HORAS<br /><span style="display: inline-block;width:370px"></span><span style="color:red">16:00 a 19:30 HORAS</span></span></b>
+                            <br />
+                            <span style="display:inline-block;width:270px"></span><b>SABADOS: <span>08:30 a 12:30 HORAS<br /></span></b>
+                        </h4>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="text-center">
+                    <script language="JavaScript" type="text/javascript">TrustLogo("https://micuenta.donweb.com/img/sectigo_positive_md.png", "CL1", "none");</script>
+                </div>
+            }
+        </div>
+        <div class="col-md-6" id="background-usuario"></div>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+    <!-- jQuery -->
+    <script src="~/Areas/Empresas/Content/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Areas/Empresas/Content/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="~/Areas/Empresas/Content/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="~/Areas/Empresas/Content/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="~/Areas/Empresas/Content/js/waves.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Areas/Empresas/Content/js/custom.min.js"></script>
+    <!--Style Switcher -->
+    <script src="~/Areas/Empresas/Content/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
+</body>
+</html>

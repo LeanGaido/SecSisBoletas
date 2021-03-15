@@ -1,0 +1,51 @@
+﻿@model DAL.Models.DeclaracionJurada
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle DDJJ</h2>
+
+<div>
+    <h4>DeclaracionJurada</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Empresa.Cuit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empresa.Cuit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.anio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.anio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("EDITAR", "Edit", new { id = Model.IdDeclaracionJurada }) |
+    @Html.ActionLink("VOLVER", "Index")
+</p>
+

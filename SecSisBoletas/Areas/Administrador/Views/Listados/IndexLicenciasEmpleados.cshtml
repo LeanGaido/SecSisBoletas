@@ -1,0 +1,52 @@
+﻿@model IEnumerable<DAL.Models.LicenciaEmpleado>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpleadoEmpresa.idEmpleadoEmpresa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicenciaLaboral.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaAltaLicencia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaBajaLicencia)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmpleadoEmpresa.idEmpleadoEmpresa)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LicenciaLaboral.Descripcion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FechaAltaLicencia)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FechaBajaLicencia)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.IdLicenciaEmpleado }) |
+        @Html.ActionLink("Details", "Details", new { id = item.IdLicenciaEmpleado }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.IdLicenciaEmpleado })
+    </td>
+</tr>
+}
+
+</table>

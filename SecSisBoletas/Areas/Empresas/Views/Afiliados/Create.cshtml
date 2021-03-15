@@ -1,0 +1,65 @@
+﻿@model DAL.Models.Afiliado
+
+@{
+    ViewBag.Title = "Dar De Alta";
+}
+
+<br />
+<h2 class="text-left">Dar De Alta Afiliado</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Afiliado</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-1">
+                @Html.LabelFor(model => model.IdEmpleadoEmpresa, "Empleado", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-6">
+                @Html.DropDownList("IdEmpleadoEmpresa", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdEmpleadoEmpresa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-1">
+                @Html.LabelFor(model => model.FechaAlta, htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-6">
+                @*@Html.EditorFor(model => model.FechaAlta, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.TextBoxFor(model => model.FechaAlta, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", type = "date" })
+                @Html.ValidationMessageFor(model => model.FechaAlta, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <span class="label label-default col-md-offset-4 col-md-4" style="border-radius:0;position:absolute;right:28%;font-size:14px">
+            Antes de ingresar una Fecha de Alta, consulte <br />con el Sindicato de Empleados de Comercio <br />para obtener fechas correctas
+        </span>
+        
+         <div class="form-group">
+            <div class="col-md-2">
+                <input type="submit" id="submit" value="GRABAR" class="btn btn-default" />
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("VOLVER", "Index", new { id = ViewBag.idDeclaracion }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            <div class="col-md-offset-2 col-md-2">
+                <input type="submit" id="submit" value="Guardar" class="btn btn-default" />
+            </div>
+            <div class="col-md-offset-4 col-md-1 ">
+                @Html.ActionLink("Volver", "Index", new { id = ViewBag.idDeclaracion }, new { @class = "btn btn-default pull-right" })
+            </div>
+        </div>*@
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

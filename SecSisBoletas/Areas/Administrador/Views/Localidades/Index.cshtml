@@ -1,0 +1,74 @@
+﻿@model PagedList.IPagedList<DAL.Models.Localidad>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">Localidades</h2>
+
+<p style="display:inline-block">
+    @Html.ActionLink("Nueva Localidad", "Create", null, new { @class = "btn btn-default" })
+</p>
+
+@using (Html.BeginForm("Index", "Localidades", FormMethod.Get, new { @class = "pull-right", style = "display:inline-block" }))
+{
+    <p>
+        <label for="SearchString" style="margin-right:10px">Buscar por Nombre: </label>
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, null, new { @Class = "form-control", style = "width:200px;display:inline-block" })
+        <input type="submit" value="Buscar" class="btn btn-default" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Nombre", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().CodPostal)
+        </th>
+        <th>
+            @Html.DisplayName("Provincia")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodPostal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Provincia.Nombre)
+            </td>
+            <td>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("Edit",new { id = item.IdLocalidad })" class="glyphicon glyphicon-edit"></a> |
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Editar</span>
+                </div>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("Details",new { id = item.IdLocalidad })" class="glyphicon glyphicon-plus"></a> |
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Detalles</span>
+                </div>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("Delete", new { id = item.IdLocalidad })" class="glyphicon glyphicon-remove"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Eliminar</span>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<span class="clearfix"></span>
+<div class="text-center" style="position :relative;">
+    Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

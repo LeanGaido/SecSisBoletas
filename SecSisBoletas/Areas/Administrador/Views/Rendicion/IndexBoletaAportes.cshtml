@@ -1,0 +1,179 @@
+﻿@model IEnumerable<DAL.Models.BoletaAportes>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<hr />
+
+<div class="form-inline">
+    <div class="col-md-2">
+        <input type="button" class="btnPagarEImprimir btn btn-default" value="Pagar e Imprimir" />
+    </div>
+    @using (Html.BeginForm("IndexBoletaAportes", "Rendicion", FormMethod.Get, new { @class = "col-md-6" }))
+    {
+        <select class="selectpicker col-md-1" title="Mes" name="mes" id="mes">
+            <option value="0">Mes</option>
+            @for (int i = 1; i <= 12; i++)
+            {
+                if (ViewBag.Mes == i)
+                {
+                    <option selected value="@i">@i</option>
+                }
+                else
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+
+        <select class="selectpicker col-md-1" title="Año" name="anio" id="anio">
+            <option value="0">Año</option>
+            @for (int i = 2015; i < 2030; i++)
+            {
+                if (ViewBag.Anio == i)
+                {
+                    <option selected value="@i">@i</option>
+                }
+                else
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+
+        <select class="selectpicker col-md-1" name="estadoPago" id="estadoPago">
+            @if (ViewBag.estadoPago == 0)
+            {
+                <option selected value="0">Todas</option> }
+            else
+            {
+                <option value="0"> Todas </option>}
+            @if (ViewBag.estadoPago == 1)
+            {
+                <option selected value="1">Pagas</option> }
+            else
+            {
+                <option value="1">Pagas</option>}
+            @if (ViewBag.estadoPago == 2)
+            {
+                <option selected value="2">Impagas</option> }
+            else
+            {
+                <option value="2">Impagas</option>}
+        </select>
+
+        @Html.DropDownList("IdEmpresa", null, new { @class = "selectpicker", data_live_search = "true" })
+
+        <button class="btn btn-default" type="submit">Buscar</button>
+    }
+
+</div>
+
+<br /><br />
+
+@using (Html.BeginForm("ImprimirBoletasPagadas", "Rendicion", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="BoletasPagadas" name="BoletasPagadas" value="" />
+
+    <input type="submit" class="btn btn-primary" value="Imprimir" id="btnPagarEImprimir" style="display:none" />
+}
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeclaracionJurada.Empresa.RazonSocial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MesBoleta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnioBoleta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaVencimiento)
+        </th>
+        <th>
+            @Html.DisplayName("Recargo por Mora")
+        </th>
+        <th>
+            @Html.DisplayName("Total a Pagar")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BoletaPagada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaPago)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <input type="checkbox" class="boletasAPagarEImprimir" value="@item.IdBoleta" name="IdsBoletas[]" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeclaracionJurada.Empresa.RazonSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MesBoleta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnioBoleta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaVencimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecargoMora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalDepositado)
+            </td>
+            <td>
+                @if (item.BoletaPagada)
+                {
+                    <span>Si</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </td>
+            <td>
+                @if (item.FechaPago == null)
+                {
+                    <span>No hay fecha de Pago</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.FechaPago)
+                }
+            </td>
+            <td>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("DetailsBoletaAportes", "Listados",new { id = item.IdBoleta})" class="glyphicon glyphicon-plus"></a> |
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Detalles</span>
+                </div>
+                <div class="dropdown" style="display:inline-block">
+                    <div class="mytooltip tooltip-effect-4">
+                        <a class="dropdown-toggle glyphicon glyphicon-print" role="button" id="dropdownMenu" data-toggle="dropdown"></a>
+                        <span class="tooltip-content5 tooltip-item" style="color:black">Imprimir</span>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                            @Html.ActionLink("Banco Nacion", "ImpresionBoleta", "ImpresionBoleta", new { area = "Empresas", idBoleta = item.IdBoleta, _banco = "5525" }, new { @class = "btn", target = "_blank" })
+                            @Html.ActionLink("Banco Hipotecario", "ImpresionBoleta", "ImpresionBoleta", new { area = "Empresas", idBoleta = item.IdBoleta, _banco = "2354" }, new { @class = "btn", target = "_blank" })
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="col-md-12">
+    <input type="button" class="btnPagarEImprimir btn btn-default" value="Pagar e Imprimir" />
+</div>

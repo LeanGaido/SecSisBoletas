@@ -1,0 +1,361 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/favicon.png">
+    <title>XindicoAdmin - Administrador Sistema de Generación de Boletas de Aportes Sindicales del Sindicato de Empleados de Comercio de San Francisco</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!--Bootstrap Core CSS -->
+    <link href="~/Areas/Administrador/Content/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="~/Areas/Administrador/Content/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <!-- toast CSS -->
+    <link href="~/Areas/Administrador/Content/plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <!-- animation CSS -->
+    <link rel="stylesheet" href="~/Areas/Administrador/Content/css/animate.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/Areas/Administrador/Content/css/style.css" />
+    <!-- color CSS -->
+    <link href="~/Areas/Administrador/Content/css/colors/blue.css" id="theme" rel="stylesheet">
+    <!-- bootstrap-select CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+    <!-- Bootstrap-datepicker Javascript-->
+    @*<link rel="stylesheet" href="~/Areas/Administrador/Content/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css">*@
+
+</head>
+<body>
+    <div class="preloader">
+        <div class="cssload-speeding-wheel"></div>
+    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div id="wrapper">
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top m-b-0">
+                <div class="navbar-header">
+                    <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+                    <div class="top-left-part"><a class="logo" href="/Administrador/Home/"><b><img src="~/Areas/Administrador/Content/images/XindicoAdmin-isologo.png" alt="home" /></b><span class="hidden-xs"><img src="~/Areas/Administrador/Content/images/XIndicoAdmin-texto.png" alt="home" /></span></a></div>
+                    <ul class="nav navbar-top-links navbar-left hidden-xs">
+                        <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+                <!-- /.navbar-header -->
+            </nav>
+            <!-- Left navbar-header -->
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+                    <ul class="nav" id="side-menu">
+
+                        <li class="nav-small-cap m-t-10">--- Menú Principal</li>
+
+                        <li><a href="@Url.Action("index","Home", new { Area = "Administrador" })" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu">HOME</span></a></li>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion"))
+                        {
+                            <li>
+                                <a href="#" class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">ABMs<span class="fa arrow"></span></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li> <a href="@Url.Action("index","Actividades", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Actividades</span></a></li>
+                                    <li> <a href="@Url.Action("index","Categorias", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Categorías</span></a></li>
+                                    <li> <a href="@Url.Action("index","SueldosBasicos", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Sueldos Basicos</span></a></li>
+                                    <li> <a href="@Url.Action("index","Jornadas", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Jornadas Laborales</span></a></li>
+                                    <li> <a href="@Url.Action("index","FechasVencimientos", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Fechas Vencimientos</span></a></li>
+                                    <li> <a href="@Url.Action("index","LicenciasLaborales", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Licencias Laborales</span></a></li>
+                                    <li> <a href="@Url.Action("index","LiquidacionesProporcionales", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Liquidaciones</span></a></li>
+                                    <li> <a href="@Url.Action("index","Localidades", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Localidades</span></a></li>
+                                    <li> <a href="@Url.Action("index","Provincias", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Provincias</span></a></li>
+                                    <li><a href="@Url.Action("CrearUsuario","Account", new { Area = "" })" class="waves-effect"> <span class="hide-menu">Crear Usuarios</span></a></li>
+                                </ul>
+                            </li>
+                        }
+                        <li>
+                            <a href="#" class="waves-effect"><i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">LISTADOS<span class="fa arrow"></span></span></a>
+                            <ul class="nav nav-second-level">
+                                @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion"))
+                                {
+                                    <li><a href="@Url.Action("Usuarios","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Usuarios</span></a></li>
+                                    <li><a href="@Url.Action("IndexEmpresa","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empresas</span></a></li>
+                                    <li> <a href="@Url.Action("IndexEmpleados","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empleados</span></a></li>
+                                    <li> <a href="@Url.Action("IndexEmpleadosBaja","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empleados de Baja</span></a></li>
+                                    <li> <a href="@Url.Action("IndexAfiliados","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Afiliados</span></a></li>
+                                }
+
+                                <li> <a href="@Url.Action("IndexDeclaracionesJuradas","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">DDJJ</span></a></li>
+                                
+                                @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion") || User.IsInRole("Finanzas"))
+                                {
+                                    <li> <a href="@Url.Action("IndexBoletaAportes","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Boleta de Aportes</span></a></li>
+                                    <li> <a href="@Url.Action("Index","BoletasAportesEspeciales", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Boleta de Aportes Especiales</span></a></li>
+                                }
+                            </ul>
+                        </li>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion") || User.IsInRole("Finanzas"))
+                        {
+                            <li>
+                                <a href="#" class="waves-effect"><i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Rendicion<span class="fa arrow"></span></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li> <a href="@Url.Action("IndexBoletaAportes","Rendicion", new { Area = "Administrador", estadoPago = 2 })" class="waves-effect"> <span class="hide-menu">Boleta de Aportes</span></a></li>
+                                    <li><a href="@Url.Action("RendicionBcoNacion","Rendicion", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Banco Nacion</span></a></li>
+                                    <li><a href="@Url.Action("RendicionBcoHipotecario","Rendicion", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Banco Hipotecario</span></a></li>
+                                </ul>
+                            </li>
+                        }
+                        <li>
+                            <a href="#" class="waves-effect"><i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Imprimir<span class="fa arrow"></span></span></a>
+                            <ul class="nav nav-second-level">
+
+                                <li><a href="@Url.Action("ImprimirFaecys","Listados")" class="waves-effect"> <span class="hide-menu">Imprimir Faecys</span><span id="MesAnioFaesys" class="glyphicon glyphicon-calendar pull-right"></span></a></li>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion"))
+                                {
+                                    <li><a href="@Url.Action("ImprimirEmpresas","Listados")" class="waves-effect"> <span class="hide-menu">Todas las Empresas</span></a></li>
+                                    <li><a href="@Url.Action("ImprimirEmpleados","Listados")" class="waves-effect"> <span class="hide-menu">Todos los Empleados</span></a></li>
+                                    <li><a href="@Url.Action("ImprimirResumenEmpleados","Listados")" class="waves-effect"> <span class="hide-menu">Resumen General Empleados</span><span id="MesAnioResumenEmpleados" class="glyphicon glyphicon-calendar pull-right"></span></a></li>
+                                    <li><a href="@Url.Action("ImprimirPadron2","Listados")" class="waves-effect"> <span class="hide-menu">Padron 2%</span><span id="MesAnioPadron" class="glyphicon glyphicon-calendar pull-right"></span></a></li>
+                                    <li><a href="@Url.Action("ImprimirAportesMenoresAlMinimo", "Listados")" class="waves-effect"><span class="hide-menu">Empleados Con Aportes Menores al Minimo</span><span id="calendarioAportesMinimo" class="glyphicon glyphicon-calendar pull-right"></span></a></li>
+                                    <li><a href="@Url.Action("ImprimirAltasEmpleados","Listados")" class="waves-effect"> <span class="hide-menu">Altas Empleados</span><span id="calendarioAltasEmpleados" class="glyphicon glyphicon-calendar pull-right"></span></a></li>
+                                    <li><a href="@Url.Action("ImprimirBajasEmpleados","Listados")" class="waves-effect"> <span class="hide-menu">Bajas Empleados</span><span id="calendarioBajasEmpleados" class="glyphicon glyphicon-calendar pull-right"></span></a></li>
+                                    @*<li><a href="@Url.Action("ImprimirEmpleadosNoAfiliados","Listados")" class="waves-effect"> <span class="hide-menu">Empleados No Afiliados</span></a></li>*@
+                                    <li><a href="@Url.Action("ImprimirAfiliados","Listados")" class="waves-effect"> <span class="hide-menu">Afiliados</span></a></li>
+                                    <li><a href="@Url.Action("ImprimirAltasAfiliados","Listados")" class="waves-effect"><span class="hide-menu">Altas Afiliados</span><span id="calendarioAltasAfiliados" class="glyphicon glyphicon-calendar pull-right"></span></a></li>
+                                    <li><a href="@Url.Action("ImprimirBajasAfiliados","Listados")" class="waves-effect"> <span class="hide-menu">Bajas Afiliados</span><span id="calendarioBajasAfiliados" class="glyphicon glyphicon-calendar pull-right"></span></a></li>
+                                    <li><a href="@Url.Action("ImpresionEmpleadosEnLicenciaPorMaternidad","Listados")" class="waves-effect"> <span class="hide-menu">Empleados En Licencia por Maternidad</span></a></li>
+                                }
+                                <li><a href="@Url.Action("ImprimirBoletasPagadas", "Listados")" class="waves-effect"><span class="hide-menu">Boletas Pagadas</span><span id="calendarioBoletasPagadas" class="glyphicon glyphicon-calendar pull-right"></span></a></li>
+                            </ul>
+                        </li>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion"))
+                        {
+                            <li> <a href="@Url.Action("index","Reclamos", new { Area = "Administrador" })" class="waves-effect"><i data-icon="&#xe00b;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">RECLAMOS</span></a></li>
+                        }
+                    </ul>
+                </div>
+                <!-- /.right-sidebar -->
+            </div>
+            <!-- /.container-fluid -->
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <!-- /.row -->
+                    <div class="row">
+                        @RenderBody()
+                        <hr />
+                    </div>
+                    <!--row -->
+                </div>
+
+                <footer class="footer text-center"> 2019 &copy; XINDICO ADMIN - Administrador del Sistema de Generación de Boletas de Aportes Sindicales - Sindicato de Empleados de Comercio de San Francisco - Desarrollado por <a href="http://www.stnt.com.ar/" target="_blank">StartNet</a></footer>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="FormularioImprimir" method="get">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="tituloModal" style="display:inline-block">Modal title</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:inline-block">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group input-group-sm">
+                                <input type="date" name="Desde" id="Desde" />
+                                @*<div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="Desde" id="Desde" class="form-control">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>*@
+                            </div>
+                            <div class="form-group input-group-sm">
+                                <input type="date" name="Hasta" id="Hasta" />
+                                @*<div class="input-group date" data-provide="datepicker">
+                                    <input type="text" name="Hasta" id="Hasta" class="form-control">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>*@
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="btnCerrarModal" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Imprimir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="modalMesAnio" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="FormularioImprimirMesAnio" method="get">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="tituloModalMesAnio" style="display:inline-block">Modal title</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display:inline-block">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group input-group-sm">
+                                <select class="form-control" name="Mes">
+                                    <option value="1">Enero</option>
+                                    <option value="2">Frebrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                            </div>
+                            <div class="form-group input-group-sm">
+                                <select class="form-control" name="Anio">
+                                    @for (int i = 2015; i < DateTime.Today.Year + 5; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="btnCerrarModal" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Imprimir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    }
+    else
+    {
+        <div class="container-fluid">
+            <div class="row">
+                @RenderBody()
+                <hr />
+            </div>
+        </div>
+    }
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <!-- Bootstrap-Select Javascript-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+    <!-- Bootstrap-datepicker Javascript-->
+    @*<script src="~/Areas/Administrador/Content/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>*@
+    <!-- Menu Plugin JavaScript -->
+    <script src="~/Areas/Empresas/Content/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="~/Areas/Empresas/Content/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="~/Areas/Empresas/Content/js/waves.js"></script>
+    <!--Counter js -->
+    <script src="~/Areas/Empresas/Content/plugins/bower_components/waypoints/lib/jquery.waypoints.js"></script>
+    <script src="~/Areas/Empresas/Content/plugins/bower_components/counterup/jquery.counterup.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Areas/Empresas/Content/js/custom.min.js"></script>
+    <!-- Sparkline chart JavaScript -->
+    <script src="~/Areas/Empresas/Content/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/Areas/Empresas/Content/plugins/bower_components/jquery-sparkline/jquery.charts-sparkline.js"></script>
+    <script src="~/Areas/Empresas/Content/plugins/bower_components/toast-master/js/jquery.toast.js"></script>
+    <!--Style Switcher -->
+    <script src="~/Areas/Empresas/Content/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
+    <script>
+        //$(document).ready(function () {
+        //    $('.datepicker').datepicker({
+        //        autoclose: true,
+        //        format: "dd/mm/yyyy"
+        //    });
+        //});
+        $('a>#MesAnioFaesys').on('click', function (e) {
+            e.preventDefault();
+            $('#tituloModalMesAnio').empty();
+            $('#tituloModalMesAnio').text('Imprimir Faecys');
+            $('#FormularioImprimirMesAnio').attr('action', '@Url.Action("ImprimirFaecys", "Listados")');
+            $('#modalMesAnio').modal('toggle');
+        });
+        $('a>#MesAnioPadron').on('click', function (e) {
+            e.preventDefault();
+            $('#tituloModalMesAnio').empty();
+            $('#tituloModalMesAnio').text('Imprimir Padron 2%');
+            $('#FormularioImprimirMesAnio').attr('action', '@Url.Action("ImprimirPadron2", "Listados")');
+            $('#modalMesAnio').modal('toggle');
+        });
+        $('#MesAnioResumenEmpleados').on('click', function (e) {
+            e.preventDefault();
+            $('#tituloModalMesAnio').empty();
+            $('#tituloModalMesAnio').text('Imprimir Resumen General de Empleados');
+            $('#FormularioImprimirMesAnio').attr('action', '@Url.Action("ImprimirResumenEmpleados", "Listados")');
+            $('#modalMesAnio').modal('toggle');
+        });
+        $('a>#calendarioAportesMinimo').on('click', function (e) {
+            e.preventDefault();
+            $('#tituloModal').empty();
+            $('#tituloModal').text('Imprimir Empleados con salarios Menores al Minimo');
+            $('#FormularioImprimir').attr('action', '@Url.Action("ImprimirAportesMenoresAlMinimo", "Listados")');
+            $('#exampleModal').modal('toggle');
+        });
+        $('a>#calendarioAltasAfiliados').on('click', function (e) {
+            e.preventDefault();
+            $('#tituloModal').empty();
+            $('#tituloModal').text('Imprimir Altas de Afiliados');
+            $('#FormularioImprimir').attr('action', '@Url.Action("ImprimirAltasAfiliados", "Listados")');
+            $('#exampleModal').modal('toggle');
+        });
+        $('a>#calendarioBajasAfiliados').on('click', function (e) {
+            e.preventDefault();
+            $('#tituloModal').empty();
+            $('#tituloModal').text('Imprimir Bajas de Afiliados');
+            $('#FormularioImprimir').attr('action', '@Url.Action("ImprimirBajasAfiliados", "Listados")');
+            $('#exampleModal').modal('toggle');
+        });
+        $('a>#calendarioAltasEmpleados').on('click', function (e) {
+            e.preventDefault();
+            $('#tituloModal').empty();
+            $('#tituloModal').text('Imprimir Altas de Empleados');
+            $('#FormularioImprimir').attr('action', '@Url.Action("ImprimirAltasEmpleados", "Listados")');
+            $('#exampleModal').modal('toggle');
+        });
+        $('a>#calendarioBajasEmpleados').on('click', function (e) {
+            e.preventDefault();
+            $('#tituloModal').empty();
+            $('#tituloModal').text('Imprimir Bajas de Empleados');
+            $('#FormularioImprimir').attr('action', '@Url.Action("ImprimirBajasEmpleados", "Listados")');
+            $('#exampleModal').modal('toggle');
+        });
+        $('a>#calendarioBoletasPagadas').on('click', function (e) {
+            e.preventDefault();
+            $('#tituloModal').empty();
+            $('#tituloModal').text('Imprimir Boletas Pagadas');
+            $('#FormularioImprimir').attr('action', '@Url.Action("ImprimirBoletasPagadas", "Listados")');
+            $('#exampleModal').modal('toggle');
+        });
+
+        $('.btnPagarEImprimir').click(function () {
+            event.preventDefault();
+            var searchIDs = $(".boletasAPagarEImprimir:checkbox:checked").map(function () {
+                return $(this).val();
+            }).toArray(); // <----
+            //if (Array.isArray(searchIDs)) {
+            //    alert("True");
+            //} else {
+            //    alert("False");
+            //}
+            $('#BoletasPagadas').val("[" + searchIDs + "]");
+            $('#btnPagarEImprimir').click();
+        });
+    </script>
+</body>
+</html>

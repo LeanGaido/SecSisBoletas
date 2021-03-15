@@ -1,0 +1,54 @@
+﻿@model DAL.Models.LicenciaEmpleado
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="text-left">Detalle de Licencia del Empleado</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpleadoEmpresa.Empleado.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpleadoEmpresa.Empleado.Apellido), @Html.DisplayFor(model => model.EmpleadoEmpresa.Empleado.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LicenciaLaboral.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LicenciaLaboral.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaAltaLicencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaAltaLicencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaBajaLicencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaBajaLicencia)
+        </dd>
+
+    </dl>
+</div>
+
+<div class="form-group">
+    <div class="col-md-2">
+        @Html.ActionLink("EDITAR", "Edit", new { id = Model.IdLicenciaEmpleado }, new { @class = "btn btn-default" })
+    </div>
+    <div class="col-md-2">
+        @Html.ActionLink("VOLVER", "Index", null, new { @class = "btn btn-default" })
+    </div>
+</div>

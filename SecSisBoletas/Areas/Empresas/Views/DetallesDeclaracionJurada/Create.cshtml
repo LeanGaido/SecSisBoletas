@@ -1,0 +1,165 @@
+﻿@model DAL.Models.DetalleDeclaracionJurada
+
+@{
+    ViewBag.Title = "Create";
+}
+<br />
+<h2 class="text-left">Carga de Empleados para DDJJ</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4 class="text-center">Declarar Empleado</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.IdDeclaracionJurada, "IdDeclaracionJurada", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdDeclaracionJurada", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdDeclaracionJurada, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdEmpleadoEmpresa, "Empleado", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownList("IdEmpleadoEmpresa", null, htmlAttributes: new { @class = "form-control selectpicker show-tick", data_live_search = "true" })
+                @Html.ValidationMessageFor(model => model.IdEmpleadoEmpresa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idCategoria, "Categoria", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <select class="form-control selectpicker" name="idCategoria" id="idCategoria"></select>
+                @Html.ValidationMessageFor(model => model.idCategoria, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idJornadaLaboral, "Jornada Laboral", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <select class="form-control selectpicker" name="idJornadaLaboral" id="idJornadaLaboral"></select>
+                @Html.ValidationMessageFor(model => model.idJornadaLaboral, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdLiquidacionProporcional, "Liquidacion Proporcional", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownList("IdLiquidacionProporcional", null, htmlAttributes: new { @class = "form-control selectpicker" })
+                @Html.ValidationMessageFor(model => model.IdLiquidacionProporcional, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sueldo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.Editor("Sueldo", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Sueldo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SueldoBase, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.Editor("SueldoBase", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SueldoBase, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <span class="text text-danger">Cargar solo para Empleados Afiliados al Sindicato de empleados de Comercio</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                <input type="submit" id="submit" value="GRABAR" class="btn btn-default" />
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("VOLVER", "Index", new { id = ViewBag.idDeclaracion }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        CargarCategoriaJornada();
+    })
+</script>
+<script type="text/javascript">
+    $("#IdEmpleadoEmpresa").change(function () {
+        CargarCategoriaJornada();
+    });
+
+    $('#IdLiquidacionProporcional').change(function () {
+        if ($('#IdLiquidacionProporcional').val() != 1) {
+            $('#Sueldo').val();
+        }
+    });
+
+    $('#Sueldo').keyup(function () {
+        var content = $(this).val();
+        $(this).val(content.replace(/[\.]+/g, ','));
+    });
+
+    function CargarCategoriaJornada() {
+        $("#idCategoria").empty();
+        $("#idJornadaLaboral").empty();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetEmpleadoJornadaCategoria", "Empleados")',
+            data: {
+                id: $("#IdEmpleadoEmpresa").val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('#submit').attr('disabled', false);
+                $.each(data, function (i, data) {
+                    $("#idCategoria").append('<option value="' + data.IdCategoria + '">' + data.NombreCategoria + '</option>');
+                    $("#idJornadaLaboral").append('<option value="' + data.IdJornada + '">' + data.NombreJornada + '</option>');
+                    $('#IdLiquidacionProporcional').val(1)
+                    GetSueldoBasico();
+                });
+                $("#idCategoria").selectpicker('refresh');
+                $("#idJornadaLaboral").selectpicker('refresh');
+                $("#IdLiquidacionProporcional").selectpicker('refresh');
+            },
+            error: function (ex) {
+                $('#submit').attr('disabled', true);
+            }
+        });
+    };
+
+    function GetSueldoBasico() {
+        $('#Sueldo').val('');
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetSueldoBasico", "Empleados")',
+            data: {
+                IdEmpleadoEmpresa: $("#IdEmpleadoEmpresa").val(),
+                IdDeclaracionJurada: $('#IdDeclaracionJurada').val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data == -1) {
+                    alert("No hay Sueldo Minimo Registrado para la Fecha que quiere Declarar");
+                    $("#submit").attr("disabled", true);
+                }
+                else {
+                    $('#submit').attr('disabled', false);
+                    var sueldo = data.toString();
+                    sueldo = sueldo.replace('.', ',');
+                    $('#Sueldo').val(sueldo);
+                }
+            },
+            error: function (ex) {
+                $('#submit').attr('disabled', true);
+            }
+        });
+    }
+</script>

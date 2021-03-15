@@ -1,0 +1,52 @@
+﻿@model PagedList.IPagedList<DAL.Models.Jornada>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2><b>Tabla de Jornadas Laborales</b></h2>
+
+<hr />
+
+@using (Html.BeginForm("IndexJornadas", "InstructivoDeUso", FormMethod.Get, new { @class = "pull-right", style = "display:inline-block" }))
+{
+    <p>
+        <label for="SearchString" style="margin-right:10px">Buscar por Nombre: </label>
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, null, new { @Class = "form-control", style = "width:200px;display:inline-block" })
+        <input type="submit" value="Search" class="btn btn-default" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Id")
+        </th>
+        <th>
+            @Html.ActionLink("Nombre", "IndexJornadas", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdJornada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<span class="clearfix"></span>
+<div style="position :relative;left: 40%;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("IndexJornadas",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

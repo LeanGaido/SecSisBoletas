@@ -1,0 +1,111 @@
+﻿@model PagedList.IPagedList<DAL.ViewModels.VmEmpleados>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<hr />
+
+@using (Html.BeginForm("IndexEmpleadosBaja", "Listados", FormMethod.Get, new { @class = "col-md-12" }))
+{
+    <p style="display:inline-block">
+        @Html.DropDownList("idEmpresa", null, new { @class = "selectpicker", data_width = "auto", title = "Seleccione una Emprea para Filtrar", data_live_search = true })
+    </p>
+    @*<p style="display:inline-block">
+        @Html.ActionLink("Imprimir", "ImprimirEmpleados", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, idEmpresa = ViewBag.idEmpresaSeleccionada }, new { @class = "btn btn-default" })
+    </p>*@
+    <p class="pull-right" style="display:inline-block">
+        <label for="SearchString" style="margin-right:10px">Buscar por Apellido: </label>
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, null, new { @Class = "form-control", style = "width:200px;display:inline-block" })
+        <input type="submit" value="Buscar" class="btn btn-default" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Apellido", "IndexEmpleadosBaja", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, idEmpresa = ViewBag.idEmpresaSeleccionada })
+        </th>
+        <th>
+            @Html.DisplayName("Nombre")
+        </th>
+        <th>
+            @Html.DisplayName("Cuil")
+        </th>
+        <th>
+            @Html.DisplayName("Localidad")
+        </th>
+        <th>
+            @Html.DisplayName("Calle")
+        </th>
+        <th>
+            @Html.DisplayName("Altura")
+        </th>
+        <th>
+            @Html.DisplayName("Fecha de Alta")
+        </th>
+        <th>
+            @Html.DisplayName("Fecha de Baja")
+        </th>
+        <th>
+            @Html.DisplayName("Categoría")
+        </th>
+        <th>
+            @Html.DisplayName("Jornada")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApellidoEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CuilEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocalidadEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CalleEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlturaEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAltaEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaBajaEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoríaEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JornadaEmpleado)
+            </td>
+            <td>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("DetailsEmpleados", "Listados",new { id = item.IdEmpleado, deBaja = true })" class="glyphicon glyphicon-plus"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Detalles</span>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<span class="clearfix"></span>
+<div style="position :relative;left: 40%;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("IndexEmpleadosBaja",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, idEmpresa = ViewBag.idEmpresaSeleccionada }))
+</div>

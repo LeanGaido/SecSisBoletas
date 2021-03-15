@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "IntructivoImportacionDDJJ";
+}
+
+<h2><b>Instructivo de Importación de DDJJ de Empleado</b></h2>
+
+<hr />
+
+<h4>
+
+    El sistema de generación de boletas de aportes XINDICOWEB permite la importación de datos de DDJJ de empleados a través de un archivo txt donde cada fila contiene datos de la DDJJ para un empleado separados por punto y coma (;). Cabe destacar que se recomienda el uso de esta opción para empresas que tengan que declarar empleados en gran cantidad y que la importación se realiza por única vez al comenzar a utilizar el sistema, es decir cuando no existan empleados cargados en el sistema. Una vez importados los datos a través el archivo de texto, el alta, baja y modificación de datos de empleados se realiza sobre el mismo sistema.
+
+    <br /><br />
+
+    A continuación se brinda detalle de la estructura que debe tener el archivo txt de DDJJ de empleados y un ejemplo de aplicación.
+
+</h4>
+
+<br />
+
+<h3><b>Estructura Archivo TXT</b></h3>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre Campo</th>
+            <th>Tipo de Dato</th>
+            <th>Ejemplo</th>
+            <th>Obsevación</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>CuilEmpleado</td>
+            <td>Numérico</td>
+            <td>30257522556</td>
+            <td>sin guiones, espacios o puntos, solo números</td>
+        </tr>
+        <tr>
+            <td>IdLiquidacion</td>
+            <td>Numérico</td>
+            <td>1</td>
+            <td>Ver IdLocalidad en tabla referencia Liquidaciones Proporcionales</td>
+        </tr>
+        <tr>
+            <td>SueldoEmpleado</td>
+            <td>Numérico</td>
+            <td>23698.50</td>
+            <td>En caso de usar decimales, utilizar 'coma' (,)</td>
+        </tr>
+    </tbody>
+</table>
+
+<br /><br />
+
+<h3><b>Ejemplo de Aplicación Archivo TXT</b></h3>
+
+<br />
+
+<h4><b>CuilEmpleado;IdLiquidacion,SueldoEmpleado</b></h4>
+
+
+<h4>
+    20300000000;1;28242,86
+    <br />
+    20398216866;1;28863,69
+    <br />
+    20141630155;1;28475,72
+</h4>
+

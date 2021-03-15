@@ -1,0 +1,43 @@
+﻿@model DAL.Models.Afiliado
+
+@{
+    ViewBag.Title = "Details";
+}
+<br />
+<h2>Afiliado</h2>
+<br />
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Empleado.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empleado.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaAlta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaAlta)
+        </dd>
+        @if (Model.FechaBaja != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaBaja)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaBaja)
+            </dd>
+        }
+    </dl>
+</div>  
+
+<div class="col-md-2">
+    @Html.ActionLink("Volver a la lista", "IndexAfiliados", null, new { @class = "btn btn-default" })
+</div>
+<br />

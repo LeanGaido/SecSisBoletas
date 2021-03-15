@@ -1,0 +1,173 @@
+﻿@model IEnumerable<DAL.Models.BoletaAportes>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2><b>BOLETAS DE APORTES</b></h2>
+<hr />
+<div>
+    <div class="col-md-6">
+        @Html.ActionLink("Nueva Boleta", "Create", null, new { @class = "btn btn-default" })
+    </div>
+
+    @using (Html.BeginForm("Index", "BoletaAportes", FormMethod.Get, new { @class = "col-md-6" }))
+    {
+        <select class="selectpicker" data-width="auto" title="Mes" name="mes" id="mes">
+            <option value="0">Mes</option>
+            @for (int i = 1; i <= 12; i++)
+            {
+                if (ViewBag.Mes == i)
+                {
+                    <option selected value="@i">@i</option>
+                }
+                else
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+
+        <select class="selectpicker" data-width="auto" title="Año" name="anio" id="anio">
+            <option value="0">Año</option>
+            @for (int i = 2015; i < 2030; i++)
+            {
+                if (ViewBag.Anio == i)
+                {
+                    <option selected value="@i">@i</option>
+                }
+                else
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+        </select>
+
+        <select class="selectpicker" data-width="auto" name="estadoPago" id="estadoPago">
+            @if (ViewBag.estadoPago == 0)
+            {
+                <option selected value="0">Todas</option> }
+            else
+            {
+                <option value="0"> Todas </option>}
+            @if (ViewBag.estadoPago == 1)
+            {
+                <option selected value="1">Pagas</option> }
+            else
+            {
+                <option value="1">Pagas</option>}
+            @if (ViewBag.estadoPago == 2)
+            {
+                <option selected value="2">Impagas</option> }
+            else
+            {
+                <option value="2">Impagas</option>}
+        </select>
+
+        <button class="btn btn-default" type="submit">Buscar</button>
+    }
+</div>
+<br /><br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MesBoleta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnioBoleta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaVencimiento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BoletaPagada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaPago)
+        </th>
+        <th>
+            @Html.DisplayName("Recargo por Mora")
+        </th>
+        <th>
+            @Html.DisplayName("Total a Pagar")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BoletaPagada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaPago)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MesBoleta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnioBoleta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaVencimiento)
+            </td>
+            <td>
+                @if (item.BoletaPagada)
+                {
+                    <span>Si</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </td>
+            <td>
+                @if(item.FechaPago == null)
+                {
+                    <span>No hay fecha de Pago</span>
+                }
+                else
+                {
+                    <span>@item.FechaPago.Value.ToShortDateString()</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecargoMora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalDepositado)
+            </td>
+            <td>
+                @if (item.BoletaPagada)
+                {
+                    <span>Si</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </td>
+            <td>
+                @if (item.FechaPago == null)
+                {
+                    <span>No hay fecha de Pago</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.FechaPago)
+                }
+            </td>
+            <td>
+                <a href="@Url.Action("Details", "BoletaAportes",new { id = item.IdBoleta})" class="glyphicon glyphicon-plus"></a> |
+                @*<a href="@Url.Action("Delete", "BoletaAportes",new { id = item.IdBoleta})" class="glyphicon glyphicon-remove"></a> |*@
+                <div class="dropdown" style="display:inline-block">
+                    <a class="dropdown-toggle" role="button" id="dropdownMenu" data-toggle="dropdown"><span class="glyphicon glyphicon-print"></span></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu" style="left:-60px">
+                        @Html.ActionLink("Banco Nacion", "ImpresionBoleta", "ImpresionBoleta", new { idBoleta = item.IdBoleta, _banco = "5525" }, new { @class = "btn", target = "_blank" })
+                        @Html.ActionLink("Banco Hipotecario", "ImpresionBoleta", "ImpresionBoleta", new { idBoleta = item.IdBoleta, _banco = "2354" }, new { @class = "btn", target = "_blank" })
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

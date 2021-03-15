@@ -1,0 +1,84 @@
+﻿@model PagedList.IPagedList<DAL.ViewModels.VmUsuario>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Usuarios";
+}
+
+<h2 class="text-center">Usuarios</h2>
+
+<hr />
+
+@using (Html.BeginForm("Usuarios", "Listados", FormMethod.Get, new { @class = "col-md-12" }))
+{
+    <div class="row">
+        <div class="pull-right" style="display:inline-block">
+            <label for="SearchString" style="margin-right:10px">Buscar por Razon Social: </label>
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, null, new { @Class = "form-control", style = "width:200px;display:inline-block" })
+            <input type="submit" value="Buscar" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("RazonSocial")
+        </th>
+        <th>
+            @Html.DisplayName("Nombre de Fantasia")
+        </th>
+        <th>
+            @Html.DisplayName("Cuit")
+        </th>
+        <th>
+            @Html.DisplayName("Email")
+        </th>
+        <th>
+            @Html.DisplayName("Telefono")
+        </th>
+        <th>
+            @Html.DisplayName("Celular")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazonSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreFantasia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cuit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Celular)
+            </td>
+            <td>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("ActualizarUsuario",new { id = item.Id, page = ViewBag.Page, currentFilter = ViewBag.CurrentFilter })" class="glyphicon glyphicon-edit"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Editar</span>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<span class="clearfix"></span>
+<div style="position :relative;left: 40%;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Usuarios",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

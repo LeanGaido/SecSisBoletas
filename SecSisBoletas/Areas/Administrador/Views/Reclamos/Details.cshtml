@@ -1,0 +1,57 @@
+﻿@model DAL.Models.Reclamo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Reclamo</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empresa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empresa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mensaje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mensaje)
+        </dd>
+
+    </dl>
+</div>
+
+<div class="col-md-2">
+    @Html.ActionLink("Volver a la lista", "Index", null, new { @class = "btn btn-default" })
+</div>

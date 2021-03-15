@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DAL.Models.Localidad>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Localidades</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Provincia.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CodPostal)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Provincia.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CodPostal)
+        </td>
+        <td>
+            @Html.ActionLink("Ver Detalle", "Details", new { id = item.IdLocalidad }) |
+            @Html.ActionLink("Editar", "Edit", new { id = item.IdLocalidad }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.IdLocalidad })
+        </td>
+    </tr>
+}
+
+</table>

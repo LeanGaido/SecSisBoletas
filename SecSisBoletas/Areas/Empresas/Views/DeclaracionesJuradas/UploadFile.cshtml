@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "UploadFile";
+}
+
+<h2 class="col-md-offset-2">Importar Empleados</h2>
+<hr />
+@using (Html.BeginForm("UploadFile", "DeclaracionesJuradas", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        <div class="row">
+            @Html.Label("mes", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <select class="form-control" name="mes" id="mes">
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            @Html.Label("Año", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <select class="form-control" name="anio" id="anio">
+                    @for (int i = 2015; i <= DateTime.Today.Year; i++)
+                    {
+                        if (i == DateTime.Today.Year)
+                        {
+                            <option selected value="@i">@i</option>
+                        }
+                        else
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group input-file col-md-6" name="file">
+            <span class="input-group-btn">
+                <button class="btn btn-default btn-choose" type="button">SELECCIONAR</button>
+            </span>
+            <input type="text" class="form-control" placeholder='Selecciona un Archivo...' />
+            <span class="input-group-btn">
+                <button class="btn btn-warning btn-reset" type="button">LIMPIAR</button>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="IMPORTAR" class="btn btn-default" />
+    </div>
+    @*@Html.TextBox("file", "", new { type = "file" })*@ <br />
+
+    @ViewBag.Message
+
+}
+
+<script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    function bs_input_file() {
+        $(".input-file").before(
+            function () {
+                if (!$(this).prev().hasClass('input-ghost')) {
+                    var element = $("<input type='file' class='input-ghost' required style='visibility:hidden; height:0'>");
+                    element.attr("name", $(this).attr("name"));
+                    element.change(function () {
+                        element.next(element).find('input').val((element.val()).split('\\').pop());
+                    });
+                    $(this).find("button.btn-choose").click(function () {
+                        element.click();
+                    });
+                    $(this).find("button.btn-reset").click(function () {
+                        element.val(null);
+                        $(this).parents(".input-file").find('input').val('');
+                    });
+                    $(this).find('input').css("cursor", "pointer");
+                    $(this).find('input').mousedown(function () {
+                        $(this).parents('.input-file').prev().click();
+                        return false;
+                    });
+                    return element;
+                }
+            }
+        );
+    }
+    $(function () {
+        bs_input_file();
+    });
+</script>

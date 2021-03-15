@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecSisBoletas", "SecSisBoletas\SecSisBoletas.csproj", "{9E42C813-F073-4049-9647-263A31F75F4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{B447329F-4458-40A3-B11E-E593632796FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E42C813-F073-4049-9647-263A31F75F4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E42C813-F073-4049-9647-263A31F75F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E42C813-F073-4049-9647-263A31F75F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E42C813-F073-4049-9647-263A31F75F4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B447329F-4458-40A3-B11E-E593632796FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B447329F-4458-40A3-B11E-E593632796FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B447329F-4458-40A3-B11E-E593632796FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B447329F-4458-40A3-B11E-E593632796FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C6280343-967E-4C90-A678-627A85AB1F78}
+	EndGlobalSection
+EndGlobal

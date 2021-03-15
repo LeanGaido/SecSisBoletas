@@ -1,0 +1,64 @@
+﻿@model DAL.Models.LicenciaEmpleado
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2 class="text-left">Cargar Licencia del Empleado</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdLicenciaLaboral, "Licencia", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownList("IdLicenciaLaboral", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = true })
+                @Html.ValidationMessageFor(model => model.IdLicenciaLaboral, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdEmpleadoEmpresa, "Empleado", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownList("IdEmpleadoEmpresa", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = true })
+                @Html.ValidationMessageFor(model => model.IdEmpleadoEmpresa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaAltaLicencia, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @*@Html.EditorFor(model => model.FechaAltaLicencia, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.TextBoxFor(model => model.FechaAltaLicencia, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", type = "date", required = "true" })
+                @Html.ValidationMessageFor(model => model.FechaAltaLicencia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaBajaLicencia, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @*@Html.EditorFor(model => model.FechaBajaLicencia, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.TextBoxFor(model => model.FechaBajaLicencia, "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", type = "date", required = "true" })
+                @Html.ValidationMessageFor(model => model.FechaBajaLicencia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group text-center">
+            <div class="col-md-2">
+                <input type="submit" id="submit" value="GRABAR" class="btn btn-default" />
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("VOLVER", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

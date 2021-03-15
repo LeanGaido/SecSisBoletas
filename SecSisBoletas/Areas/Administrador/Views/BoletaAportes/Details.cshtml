@@ -1,0 +1,106 @@
+﻿@model DAL.Models.BoletaAportes
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BoletaAportes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DeclaracionJurada.IdDeclaracionJurada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeclaracionJurada.IdDeclaracionJurada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MesBoleta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MesBoleta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AnioBoleta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnioBoleta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaVencimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaVencimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalSueldos2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSueldos2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalSueldos5)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSueldos5)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPagado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPagado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecargoMora)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecargoMora)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BoletaPagada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoletaPagada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaPago)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaPago)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaBoleta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaBoleta)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdBoleta }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

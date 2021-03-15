@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "IntructivoImportacionEmpleados";
+}
+
+<h2><b>Instructivo para Importación de Empleados</b></h2>
+
+<hr />
+
+<h4>
+
+    El sistema de generación de boletas de aportes XINDICOWEB permite la importación de datos de empleados a través de un archivo txt donde cada fila contiene datos de un empleado separados por punto y coma (;).
+
+    <br /><br />
+
+    Cabe destacar que se recomienda el uso de esta opción para empresas que tengan que declarar empleados en gran cantidad y que la importación se realiza por única vez al comenzar a utilizar el sistema, es decir cuando no existan empleados cargados en el sistema. Una vez importados los datos a través el archivo de texto, el alta, baja y modificación de datos de empleados se realiza sobre el mismo sistema.
+
+
+
+    A continuación se brinda detalle de la estructura que debe tener el archivo txt de empleados y un ejemplo de aplicación.
+
+</h4>
+
+<br />
+
+<h3><b>Estructura Archivo TXT</b></h3>
+
+<br />
+
+<table class="table">
+    <thead>
+    <th>Nombre Campo</th>
+    <th>Tipo de Dato</th>
+    <th>Ejemplo</th>
+    <th>Obsevación</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Nombre</td>
+            <td>String</td>
+            <td>Juan</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Apellido</td>
+            <td>String</td>
+            <td>Acosta</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Cuil</td>
+            <td>Numérico</td>
+            <td>30257522556</td>
+            <td>sin guiones, espacios o puntos, solo números</td>
+        </tr>
+        <tr>
+            <td>Calle</td>
+            <td>String</td>
+            <td>Mitre</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Altura</td>
+            <td>Numérico</td>
+            <td>2304</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>IdLocalidad</td>
+            <td>Numérico</td>
+            <td>1</td>
+            <td>Ver IdLocalidad en tabla referencia Localidades</td>
+        </tr>
+        <tr>
+            <td>IdCategoria</td>
+            <td>Numérico</td>
+            <td>1</td>
+            <td>Ver IdLocalidad en tabla referencia Categorías Empleados</td>
+        </tr>
+        <tr>
+            <td>IdJornada</td>
+            <td>String</td>
+            <td>1</td>
+            <td>Ver IdLocalidad en tabla referencia Jornadas Laborales</td>
+        </tr>
+        <tr>
+            <td>FechaAlta</td>
+            <td>Fecha</td>
+            <td>20/12/2019</td>
+            <td>formato dd/mm/aaaa</td>
+        </tr>
+    </tbody>
+</table>
+
+<br /><br />
+
+<h3><b>Ejemplo de Aplicación Archivo TXT</b></h3>
+
+<br />
+
+<h4><b>Nombre;Apellido;Cuil;Calle;Altura;IdLocalidad;IdCategoria;IdJornada;FechaAlta</b></h4>
+
+
+<h4>
+    Poppy;Mcdonald;20141630155;Point Street;700;2;3;1;10/02/2014
+    <br />
+    Bella;Berry;20115798077;Clay Street;392;2;3;1;10/02/2014
+    <br />
+    Terry;Fernandez;20289271915;Hanover Street;2320;2;3;1;10/02/2014
+</h4>

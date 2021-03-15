@@ -1,0 +1,112 @@
+﻿@model DAL.Models.BoletaAportes
+
+@{
+    ViewBag.Title = "DetailsBoletaAportes";
+}
+
+<div>
+    <h4>Boleta de Aportes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @*<dt>
+                @Html.DisplayName("Fecha de Boleta")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaBoleta)
+            </dd>*@
+
+        <dt>
+            @Html.DisplayName("Mes")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MesBoleta)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Año")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnioBoleta)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Fecha de Vencimiento")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaVencimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Total de Sueldos 2%")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSueldos2)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Total de Sueldos 5%")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSueldos5)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Total Depositado")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalDepositado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Recargo por Mora")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecargoMora)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Boleta Pagada")
+        </dt>
+
+        <dd>
+            @if (Model.BoletaPagada)
+            {
+                <span>Si</span>
+            }
+            else
+            {
+                <span>No</span>
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Pago")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPagado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Fecha de Pago")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaPago)
+        </dd>
+
+    </dl>
+</div>
+
+<div class="col-md-2">
+    @Html.ActionLink("Volver a la lista", "IndexBoletaAportes", null, new { @class = "btn btn-default" })
+</div>
+<br />

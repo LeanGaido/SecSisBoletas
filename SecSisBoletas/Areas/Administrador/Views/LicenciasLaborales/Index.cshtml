@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DAL.Models.LicenciaLaboral>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Licencias Laborales</h2>
+
+@*<p>
+    @Html.ActionLink("Nueva Licencia Laboral", "Create", null, new { @class = "btn btn-default" })
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            <div class="mytooltip tooltip-effect-4">
+                <a href="@Url.Action("Edit",new { id = item.IdLicenciaLaboral })" class="glyphicon glyphicon-edit"></a> |
+                <span class="tooltip-content5 tooltip-item" style="color:black">Editar</span>
+            </div>
+            <div class="mytooltip tooltip-effect-4">
+                <a href="@Url.Action("Details",new { id = item.IdLicenciaLaboral })" class="glyphicon glyphicon-plus"></a> |
+                <span class="tooltip-content5 tooltip-item" style="color:black">Detalles</span>
+            </div>
+            <div class="mytooltip tooltip-effect-4">
+                <a href="@Url.Action("Delete", new { id = item.IdLicenciaLaboral })" class="glyphicon glyphicon-remove"></a>
+                <span class="tooltip-content5 tooltip-item" style="color:black">Eliminar</span>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

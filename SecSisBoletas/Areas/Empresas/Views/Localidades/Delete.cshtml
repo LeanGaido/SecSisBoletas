@@ -1,0 +1,48 @@
+﻿@model DAL.Models.Localidad
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar Localidad</h2>
+
+<h3>¿Está seguro que desea eliminar la localidad?</h3>
+<div>
+    <h4>Localidad</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Provincia.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Provincia.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodPostal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodPostal)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="ELIMINAR" class="btn btn-default" /> |
+            @Html.ActionLink("VOLVER", "Index")
+        </div>
+    }
+</div>

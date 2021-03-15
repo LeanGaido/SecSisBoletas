@@ -1,0 +1,241 @@
+﻿@model IEnumerable<DAL.Models.DetalleDeclaracionJurada>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Empresa Municipal de Gas de San Francisco Cordoba que provee servicios de gas natural de uso residencial, comercios y PYMES">
+    <meta name="KEYWORDS" content="empresa municipal de gas, servicio de gas, gas natural, servicio de gas natural, empresa distribuidora de gas, gasista, gas natural licuado, gasista matriculado, instalación de gas natural, empresa gas natural, distribuidora de gas, gas natural comprimido, fuga de gas, instalaciones de gas, gas licuado, gas natural precio, gas envasado, san francisco, cordoba">
+    <title>Sitio Web de Carga e Impresion de Formularios de instalacion de Gas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <meta name="theme-color" content="#ffffff">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        body {
+            color: #000;
+        }
+
+        .outer-border {
+            border: solid 1px #000;
+            height: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .renglon-caja {
+            border: solid 1px #000;
+            height: 100%;
+            margin: 0;
+        }
+
+        .renglon-tabla {
+            border: solid 1px #000;
+            height: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+            .renglon-tabla > table {
+                margin-bottom: 0;
+            }
+
+        .caja-texto {
+            border-left: solid 1px #000;
+            border-right: solid 1px #000;
+        }
+
+        .caja-firma {
+            position: relative;
+            float: right;
+            border: solid 1px #000;
+            height: 75px;
+            width: 150px;
+            text-align: center;
+            top: -35px;
+            z-index: 2;
+            background-color: #fff;
+        }
+
+        .renglon-cajas {
+            padding: 0;
+            margin: 0;
+            height: 140px;
+        }
+
+        .renglon-caja-izquierda {
+            border: solid 1px #000;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .renglon-caja-derecha {
+            border: solid 1px #000;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .caja-texto-derecha {
+            border-left: solid 1px #000;
+        }
+
+        .caja-texto-arriba {
+            padding-left: 15px;
+            border-bottom: solid 1px #000;
+            z-index: 1;
+        }
+
+        .caja-texto-abajo {
+            padding-left: 15px;
+            z-index: 1;
+        }
+
+        .titular {
+            background-color: #808080;
+        }
+
+        p.saltodepagina {
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="outer-border col-xs-12">
+            <div class="renglon-caja col-xs-12">
+                <div class="col-xs-offset-1 col-xs-9 text-center caja-texto" style="font-size:18px;"><b>Sindicato de Empleados de Comercio</b></div>
+                <div class="col-xs-2"><b>@DateTime.Today.ToShortDateString()</b></div>
+            </div>
+            <div class="renglon-tabla col-xs-12">
+                <br />
+            </div>
+            <div class="renglon-caja col-xs-12">
+                <div class="col-xs-12 text-center" style="font-size:24px;"><b>Listado de Empresas con sus Empleados</b></div>
+            </div>
+            <div class="renglon-tabla col-xs-12">
+                <br />
+            </div>
+            <div class="renglon-tabla col-xs-12">
+                Declaracion Jurada del Periodo @ViewBag.Periodo
+            </div>
+            <div class="renglon-tabla col-xs-12">
+                <br />
+            </div>
+            <div class="renglon-caja titular col-xs-12">
+                <b>DATOS DE LA EMPRESA</b>
+            </div>
+            <div class="renglon-caja col-xs-12">
+                <!--
+                    ViewBag.RazonSocial = empresa.RazonSocial;
+                    ViewBag.Nro = empresa.Altura;
+                    ViewBag.Cuit = empresa.Cuit;
+                    ViewBag.Calle = empresa.Calle;
+                -->
+                <div class="row" style="padding-top:10px;">
+                    <div class="col-xs-4">Razon Social: @ViewBag.RazonSocial</div>
+                    <div class="col-xs-4">Cuit: @ViewBag.Cuit</div>
+                </div>
+                <div class="row" style="padding-top:10px;padding-bottom:10px;">
+                    <div class="col-xs-4">Localidad: @ViewBag.LocalidadEmpresa</div>
+                    <div class="col-xs-4">Provincia: @ViewBag.ProvinciaEmpresa</div>
+                    <div class="col-xs-4">Calle: @ViewBag.Calle  @ViewBag.Nro</div>
+                </div>
+            </div>
+            <div class="renglon-tabla col-xs-12">
+                <br /><br /><br />
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="outer-border col-xs-12">
+            <div class="renglon-caja col-xs-12">
+                <div class="col-xs-12 text-center" style="font-size:24px;"><b>Listado de Empleados</b></div>
+            </div>
+            <div class="renglon-tabla col-xs-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>
+                            Nombre del Empleado
+                        </th>
+                        <th>
+                            Categoria
+                        </th>
+                        <th>
+                            Jornada
+                        </th>
+                        <th>
+                            Es Afiliado
+                        </th>
+                        <th>
+                            Sueldo 2%
+                        </th>
+                        <th>
+                            Sueldo 5%
+                        </th>
+                        @*<th>
+                            Aporte
+                        </th>*@
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.EmpleadoEmpresa.Empleado.Apellido, @item.EmpleadoEmpresa.Empleado.Nombre</td>
+                            <td>@item.Categoria.Descripcion</td>
+                            <td>@item.Jornada.Descripcion</td>
+                            @if (item.EsAfiliado)
+                            {
+                                <td>Si</td>
+                            }
+                            else
+                            {
+                                <td>No</td>
+                            }
+
+                            <td>@item.Sueldo</td>
+
+                            <td>@item.SueldoBase</td>
+
+                            @*@if (item.EsAfiliado)
+                            {
+                                if(item.idJornadaLaboral == 1 || item.idJornadaLaboral == 2)
+                                {
+                                    <td>@Math.Round(((item.SueldoBase / 100) * 7), 2)</td>
+                                }
+                                else
+                                {
+                                <td>@Math.Round(((item.Sueldo / 100) * 2), 7)</td>
+                                }
+                            }
+                            else
+                            {
+                                <td>@Math.Round(((item.Sueldo / 100) * 2), 2)</td>
+                            }*@
+                        </tr>
+                    }
+                    <tr>
+                        <td>Totales</td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td>@ViewBag.TotalSueldos</td>
+                        <td>@ViewBag.TotalSueldosBase</td>
+                        @*<td>@ViewBag.TotalAportes</td>*@
+                    </tr>
+                        
+                </table>
+                <span class="pull-right" style="padding:15px">Cant. Empleados: @Model.Count()</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

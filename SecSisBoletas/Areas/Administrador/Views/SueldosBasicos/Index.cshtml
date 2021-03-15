@@ -1,0 +1,148 @@
+﻿@model PagedList.IPagedList<DAL.Models.SueldoBasico>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">Sueldo Basico</h2>
+
+@*<div class="col-md-2">
+        <p style="display:inline-block">
+            @Html.ActionLink("Nuevo Sueldo Basico", "Create", null, new { @class = "btn btn-default" })
+        </p>
+    </div>*@
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-4">
+            @Html.DropDownList("fecha", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="Buscar" class="btn btn-primary" />
+        </div>
+    </div>
+    <div class="row">
+        <a href="@Url.Action("create")">¿Nuevo periodo?</a>
+    </div>
+}
+
+<div class="col-md-offset-1 col-md-10">
+    <div class="">
+        <div class="">
+            @using (Html.BeginForm("create", "SueldosBasicos", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>SueldoBasico</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.Label("Categoria", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownList("IdCategoria", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessage("IdCategoria", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Monto", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.Editor("Monto", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("Monto", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Desde", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @*@Html.EditorFor(model => model.Desde, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.TextBox("Desde", "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", type = "date" })
+                            @Html.ValidationMessage("Desde", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Hasta", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @*@Html.EditorFor(model => model.Hasta, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.TextBox("Hasta", "{0:yyyy-MM-dd}", new { @class = "form-control datepicker", type = "date" })
+                            @Html.ValidationMessage("Hasta", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @*<div class="col-xs-offset-2 col-xs-2 col-md-offset-2 col-md-1">
+                                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-default" })
+                            </div>*@
+                        <div class="col-xs-2 col-md-1">
+                            <input type="submit" value="Guardar" class="btn btn-default" />
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Categoria", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, fecha = ViewBag.FechaSeleccionada })
+        </th>
+        <th>
+            @Html.ActionLink("Sueldo", "Index", new { sortOrder = ViewBag.MontoSortParm, currentFilter = ViewBag.CurrentFilter, fecha = ViewBag.FechaSeleccionada })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Desde)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Hasta)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Monto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Desde)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hasta)
+            </td>
+            <td>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("Edit",new { id = item.IdSueldoBasico })" class="glyphicon glyphicon-edit"></a> |
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Editar</span>
+                </div>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("Details",new { id = item.IdSueldoBasico })" class="glyphicon glyphicon-plus"></a> |
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Detalles</span>
+                </div>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("Delete", new { id = item.IdSueldoBasico })" class="glyphicon glyphicon-remove"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Eliminar</span>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<span class="clearfix"></span>
+<div class="text-center" style="position :relative;">
+    Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

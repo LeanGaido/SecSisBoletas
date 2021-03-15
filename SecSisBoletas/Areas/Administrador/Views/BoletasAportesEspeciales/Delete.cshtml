@@ -1,0 +1,104 @@
+﻿@model DAL.Models.BoletaAportesEspecial
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+<h2>Eliminar</h2>
+
+<h3>¿Estas Seguro que deseas eliminar esta Boleta de Aportes?</h3>
+<div>
+    <h4>BoletaAportes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("Periodo")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Periodo)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Total de Sueldos 2%")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSueldos2)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Total de Sueldos 5%")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSueldos5)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Total Depositado")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalDepositado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Recargo por Mora")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecargoMora)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Boleta Pagada")
+        </dt>
+
+        <dd>
+            @if (Model.BoletaPagada)
+            {
+                <span>Si</span>
+            }
+            else
+            {
+                <span>No</span>
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Pago")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalDepositado)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Fecha de Pago")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaPago)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.IdBoleta)
+
+        <div class="form-actions no-color">
+            <div class="col-md-2">
+                <input type="submit" id="submit" value="ELIMINAR" class="btn btn-default" />
+            </div>
+            <div class="col-md-2">
+                @Html.ActionLink("VOLVER", "IndexBoletaAportes", new { estadoPago = Model.BoletaPagada, idEmpresa = Model.IdEmpresa }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DAL.Models.Afiliado>
+
+@{
+    ViewBag.Title = "Afiliados";
+}
+
+<br />
+
+<h2><b>AFILIADOS</b></h2>
+
+<hr />
+@*<p>
+    @Html.ActionLink("Dar de Alta a Afiliado", "Create", null, new { @class = "btn btn-default" })
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpleadoEmpresa.Empleado.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpleadoEmpresa.FechaAlta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpleadoEmpresa.FechaBaja)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoEmpresa.Empleado.Apellido), @Html.DisplayFor(modelItem => item.EmpleadoEmpresa.Empleado.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAlta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaBaja)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "Afiliados",new { id = item.IdAfiliado})" class="glyphicon glyphicon-edit"></a>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,140 @@
+﻿@model PagedList.IPagedList<DAL.Models.DetalleDeclaracionJurada>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<h2 class="text-center">Declaracion Jurada</h2>
+
+@using (Html.BeginForm("IndexDetallesDeclaracionJurada", "Listados", FormMethod.Get, new { @class = "col-md-12" }))
+{
+    <p class="pull-right" style="display:inline-block">
+        <label for="SearchString" style="margin-right:10px">Buscar por Apellido: </label>
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, null, new { @Class = "form-control", style = "width:200px;display:inline-block" })
+        <input type="submit" value="Buscar" class="btn btn-default" />
+    </p>
+}
+
+<h4 class="">Declaracion Jurada del Mes @ViewBag.Mes y del Año @ViewBag.Anio</h4>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Apellido", "IndexDetallesDeclaracionJurada", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.DisplayName("Empleado")
+        </th>
+        <th>
+            ¿Es Afiliado?
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Categoria.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Jornada.Descripcion)
+        </th>
+        <th>
+            ¿En Licencia?
+        </th>
+        <th>
+            ¿Liquidacion Proporcional?
+        </th>
+        <th>
+            @Html.DisplayName("Sueldo 2%")
+        </th>
+        <th>
+            @Html.DisplayName("Sueldo 5%")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoEmpresa.Empleado.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpleadoEmpresa.Empleado.Nombre)
+            </td>
+            <td>
+                @if (item.EsAfiliado)
+                {
+                    <span>Si</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jornada.Descripcion)
+            </td>
+            <td>
+                @if (item.LicenciaEmpleado)
+                {
+                    <span>Si</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </td>
+            <td>
+                @if (item.LiquidacionProporcional)
+                {
+                    <span>Si</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sueldo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SueldoBase)
+            </td>
+            <td>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("DetailsDetallesDeclaracionJurada", "Listados",new { id = item.IdDetalleDeclaracionJurada})" class="glyphicon glyphicon-plus"></a> |
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Detalles</span>
+                </div>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="7">
+            Totales
+        </td>
+        <td>
+            @ViewBag.Sueldos2
+        </td>
+        <td>
+            @ViewBag.Sueldos5
+        </td>
+        <td></td>
+    </tr>
+
+</table>
+
+
+<div class="col-md-2">
+    @Html.ActionLink("Volver a la lista", "IndexDeclaracionesJuradas", "Listados", null, new { @class = "btn btn-default" })
+</div>
+
+<br />
+<span class="clearfix"></span>
+<div style="position :relative;left: 40%;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("IndexDetallesDeclaracionJurada",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

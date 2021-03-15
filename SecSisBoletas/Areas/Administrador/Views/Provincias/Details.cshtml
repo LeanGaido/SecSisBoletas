@@ -1,0 +1,32 @@
+﻿@model DAL.Models.Provincia
+
+@{
+    ViewBag.Title = "Details";
+}
+<br />
+<h2 class="text-center">Localidad</h2>
+
+<div>
+    <h4>Provincia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+    </dl>
+</div>
+
+<div class="form-group">
+    <div class="col-xs-offset-4 col-xs-2 col-md-offset-5 col-md-1">
+        @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-default" })
+    </div>
+    <div class="col-xs-2 col-md-1">
+        @Html.ActionLink("Editar", "Edit", new { id = Model.IdProvincia }, new { @class = "btn btn-default" })
+    </div>
+</div>
+<br /><br />
