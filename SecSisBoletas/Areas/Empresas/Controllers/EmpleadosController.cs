@@ -1678,9 +1678,9 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
                             if(af == null)
                             {
                                 af = new Afiliado();
+                                af.FechaAlta = DateTime.Today;
                             }
                             af.IdEmpleadoEmpresa = empEmp.idEmpleadoEmpresa;
-                            af.FechaAlta = DateTime.Today;
                             af.FechaBaja = null;
 
                             empEmp.EsAfiliado = true;

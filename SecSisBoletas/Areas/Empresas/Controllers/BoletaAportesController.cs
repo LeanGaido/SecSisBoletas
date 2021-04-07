@@ -122,7 +122,7 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             ViewBag.Anio = anio;
             ViewBag.estadoPago = estadoPago;
 
-            return View(boletaAportes.ToList());
+            return View(boletaAportes.OrderByDescending(x => x.AnioBoleta).ThenByDescending(x => x.MesBoleta).ToList());
         }
 
         // GET: Empresas/BoletaAportes/Details/5

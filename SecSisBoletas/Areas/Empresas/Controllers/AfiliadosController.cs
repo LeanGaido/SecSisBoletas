@@ -342,6 +342,7 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
         {
             bool error = false;
             Afiliado afiliado = db.Afiliado.Find(id);
+            var empleadoEmpresa = db.EmpleadoEmpresa.Where(x => x.idEmpleadoEmpresa == afiliado.IdEmpleadoEmpresa).FirstOrDefault();
 
             if (afiliado.FechaAlta > FechaBaja)
             {
@@ -356,7 +357,7 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
 
             int mesAux = FechaBaja.Month, anioAux  = FechaBaja.Year;
 
-            var DeclaracionJurada = db.DeclaracionJurada.Where(x => x.mes >= mesAux && x.anio >= anioAux).FirstOrDefault();
+            var DeclaracionJurada = db.DeclaracionJurada.Where(x => x.idEmpresa == empleadoEmpresa.idEmpresa && x.mes >= mesAux && x.anio >= anioAux).FirstOrDefault();
 
             if(DeclaracionJurada  != null)
             {
@@ -371,8 +372,8 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
                 var claim = ((ClaimsIdentity)User.Identity).FindFirst("IdEmpresa");
                 int IdEmpresa = Convert.ToInt32(claim.Value);
 
-                EmpleadoEmpresa empEmp = db.EmpleadoEmpresa.Where(x => x.idEmpleadoEmpresa == afiliado.IdEmpleadoEmpresa).FirstOrDefault();
-                empEmp.EsAfiliado = false;
+                //EmpleadoEmpresa empEmp = db.EmpleadoEmpresa.Where(x => x.idEmpleadoEmpresa == afiliado.IdEmpleadoEmpresa).FirstOrDefault();
+                empleadoEmpresa.EsAfiliado = false;
 
                 //db.Afiliado.Remove(afiliado);
                 db.SaveChanges();
