@@ -58,8 +58,8 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
                 boletaNueva.Domicilio = empresa.Calle + " " + empresa.Altura.ToString();
                 boletaNueva.CodPostal = localidad.CodPostal.ToString();
                 boletaNueva.Localidad = localidad.Nombre;
-                string telefono = (empresa.TelefonoFijo != null) ? empresa.TelefonoFijo.ToString() : "";
-                if (telefono == ""){ telefono = (empresa.TelefonoCelular != null) ? empresa.TelefonoCelular.ToString() : ""; }
+                string telefono = (!string.IsNullOrEmpty(empresa.TelefonoFijo)) ? empresa.TelefonoFijo.ToString() : "";
+                if (telefono == ""){ telefono = (!string.IsNullOrEmpty(empresa.TelefonoCelular)) ? empresa.TelefonoCelular.ToString() : ""; }
                 boletaNueva.Telefono = (empresa.TelefonoFijo != null) ? empresa.TelefonoFijo.ToString() : "";
                 boletaNueva.Mes = ddjj.mes.ToString();
                 boletaNueva.Anio = ddjj.anio.ToString();

@@ -439,6 +439,14 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
                 if (db.DetalleDeclaracionJurada.Where(x => x.IdDeclaracionJurada == detalleDeclaracionJurada.IdDeclaracionJurada &&
                                                         x.IdEmpleadoEmpresa == detalleDeclaracionJurada.IdEmpleadoEmpresa).FirstOrDefault() == null)
                 {
+                    var empEmp = empleadosRestantes.Where(x => x.idEmpleadoEmpresa == detalleDeclaracionJurada.IdEmpleadoEmpresa).FirstOrDefault();
+
+                    if (!empEmp.EsAfiliado && detalleDeclaracionJurada.SueldoBase > 0)
+                    {
+                        TempData["MensajeError"] = "El Sueldo 5% ingresado no puede ser mayor a 0 ya que el empleado no es afiliado.";
+                        ModelState.AddModelError("SueldoBase", "El Sueldo 5% ingresado no puede ser mayor a 0 ya que el empleado no es afiliado.");
+                        return RedirectToAction("Index", "DetallesDeclaracionJurada", new { id = detalleDeclaracionJurada.IdDeclaracionJurada, idEmpleadoEmpresa = detalleDeclaracionJurada.IdEmpleadoEmpresa });
+                    }
 
                     if (detalleDeclaracionJurada.IdLiquidacionProporcional != 1)
                     {
@@ -454,7 +462,6 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
 
                         return RedirectToAction("CreateMessage", "DetallesDeclaracionJurada", new { idDeclaracionJurada = detalleDeclaracionJurada.IdDeclaracionJurada });
                     }
-                    var empEmp = empleadosRestantes.Where(x => x.idEmpleadoEmpresa == detalleDeclaracionJurada.IdEmpleadoEmpresa).FirstOrDefault();
 
                     DateTime fechaSueldo = new DateTime(declaracionJurada.anio, declaracionJurada.mes, 1);//DateTime.Today.Day);
 
@@ -653,7 +660,16 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
                     ModelState.AddModelError("Sueldo", "El Sueldo ingresado es menor que el minimo.");
                     return View(detalleDeclaracionJurada);
                 }
+
                 var empEmp = db.EmpleadoEmpresa.AsNoTracking().Where(x => x.idEmpleadoEmpresa == detalleDeclaracionJurada.IdEmpleadoEmpresa).FirstOrDefault();
+
+                if (!empEmp.EsAfiliado && detalleDeclaracionJurada.SueldoBase > 0)
+                {
+                    TempData["MensajeError"] = "El Sueldo 5% ingresado no puede ser mayor a 0 ya que el empleado no es afiliado.";
+                    ModelState.AddModelError("SueldoBase", "El Sueldo 5% ingresado no puede ser mayor a 0 ya que el empleado no es afiliado.");
+                    return View(detalleDeclaracionJurada);
+                }
+
                 var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == empEmp.idEmpleadoEmpresa).FirstOrDefault();
                 if (afiliado != null)
                 {
