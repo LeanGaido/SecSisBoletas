@@ -14,6 +14,7 @@ using DAL.ViewModels;
 using SecSisBoletas.Areas.Empresas.Controllers;
 using SecSisBoletas.Models;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace SecSisBoletas.Areas.Administrador.Controllers
 {
@@ -573,6 +574,130 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
         public ActionResult CantDeleteBoletaAportesMessage()
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult ImprimirBoletasPagadas(DateTime? FechaPago, string BoletasPagadas = "null")
+        {
+            int[] IdsBoletasAportesPagadas;
+            List<BoletaAportes> BoletasAportesPagadas = new List<BoletaAportes>();
+            if (!string.IsNullOrEmpty(BoletasPagadas))
+            {
+                string llave = BoletasPagadas.Substring(0, 1);
+                if (llave == "[")
+                {
+                    IdsBoletasAportesPagadas = System.Web.Helpers.Json.Decode<int[]>(BoletasPagadas);
+                    ViewBag.BoletasAportesPagadas = IdsBoletasAportesPagadas;
+                    BoletasAportesPagadas = db.BoletaAportes.Where(x => IdsBoletasAportesPagadas.Contains(x.IdBoleta)).ToList();
+                }
+                else
+                {
+                    IdsBoletasAportesPagadas = new int[1] { System.Web.Helpers.Json.Decode<int>(BoletasPagadas) };
+                    ViewBag.BoletasAportesPagadas = IdsBoletasAportesPagadas;
+                    BoletasAportesPagadas = db.BoletaAportes.Where(x => IdsBoletasAportesPagadas.Contains(x.IdBoleta)).ToList();
+                }
+            }
+
+            decimal totalGlobal = 0;
+
+            if(FechaPago == null)
+            {
+                FechaPago = DateTime.Now;
+            }
+
+            foreach (var boleta in BoletasAportesPagadas)
+            {
+                decimal total2 = (boleta.TotalSueldos2 / 100) * 2;
+                decimal total5 = (boleta.TotalSueldos5 / 100) * 5;
+
+                if (boleta.BoletaPagada == false)
+                {
+                    boleta.BoletaPagada = true;
+                    boleta.FechaPago = FechaPago;
+                    decimal mora = (boleta.RecargoMora != null) ? (decimal)boleta.RecargoMora : 0;
+                    boleta.TotalPagado = TruncateFunction(total2 + total5 + mora, 2);
+                    db.SaveChanges();
+                }
+            }
+
+
+            List<VmBoletaAportes> boletasDeAportes = new List<VmBoletaAportes>();
+
+            foreach (var boleta in BoletasAportesPagadas)
+            {
+                DeclaracionJurada declaracion = db.DeclaracionJurada.Find(boleta.IdDeclaracionJurada);
+
+                var detalles = db.DetalleDeclaracionJurada.Where(x => x.IdDeclaracionJurada == declaracion.IdDeclaracionJurada).ToList();
+                decimal total2 = 0;
+                decimal total5 = 0;
+                decimal sueldos2 = 0, sueldos5 = 0;
+
+                foreach (var detalle in detalles)
+                {
+                    sueldos2 += detalle.Sueldo;
+                    if (detalle.SueldoBase > 0)
+                    {
+                        sueldos5 += detalle.SueldoBase;
+                        //count5++;
+                    }
+                    //var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == detalle.IdEmpleadoEmpresa).FirstOrDefault();
+                    //if (afiliado != null)
+                    //{
+                    //    if (afiliado.FechaAlta.Year < declaracion.anio)
+                    //    {
+                    //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > declaracion.anio || (afiliado.FechaBaja.Value.Year == declaracion.anio && afiliado.FechaBaja.Value.Month >= declaracion.mes))
+                    //        {
+                    //            sueldos5 += detalle.SueldoBase;
+                    //        }
+                    //    }
+                    //    else if (afiliado.FechaAlta.Year == declaracion.anio && afiliado.FechaAlta.Month <= declaracion.mes)
+                    //    {
+                    //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > declaracion.anio || (afiliado.FechaBaja.Value.Year == declaracion.anio && afiliado.FechaBaja.Value.Month >= declaracion.mes))
+                    //        {
+                    //            sueldos5 += detalle.SueldoBase;
+                    //        }
+                    //    }
+                    //}
+                }
+
+                total2 = TruncateFunction((sueldos2 / 100) * 2, 2);
+
+                total5 = TruncateFunction((sueldos5 / 100) * 5, 2);
+
+                decimal mora = (boleta.RecargoMora != null) ? (decimal)boleta.RecargoMora : 0;
+
+                boleta.TotalDepositado = TruncateFunction(total2 + total5 + mora, 2);
+
+                totalGlobal += boleta.TotalPagado;
+                boletasDeAportes.Add(new VmBoletaAportes()
+                {
+                    IdDeclaracionJurada = boleta.IdDeclaracionJurada.ToString(),
+                    RazonSocial = boleta.DeclaracionJurada.Empresa.RazonSocial.ToString(),
+                    Cuit = boleta.DeclaracionJurada.Empresa.Cuit.ToString(),
+                    Mes = boleta.MesBoleta.ToString(),
+                    Anio = boleta.AnioBoleta.ToString(),
+                    CantEmpleados = detalles.Count().ToString(),
+                    TotalSueldos = sueldos2.ToString(),
+                    DosPorc = total2.ToString(),
+                    CantAfiliados = detalles.Where(x => x.EmpleadoEmpresa.EsAfiliado).Count().ToString(),
+                    TotalSueldosAfiliados = sueldos5.ToString(),
+                    CincoPorc = total5.ToString(),
+                    CantFamiliaresACargo = "",
+                    UnPorcFamiliaresACargo = "",
+                    RecargoPorMora = boleta.RecargoMora.ToString(),
+                    TotalDepositado = boleta.TotalPagado.ToString(),
+                    FechaPago = boleta.FechaPago.ToString()
+                });
+            }
+
+            ViewBag.TotalGlobal = totalGlobal;
+            return new ViewAsPdf(boletasDeAportes)
+            {
+                FileName = "Boletas-Aportes-Pagadas.pdf",
+                PageOrientation = Rotativa.Options.Orientation.Landscape
+            };
         }
 
         [AllowAnonymous]

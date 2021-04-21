@@ -45,22 +45,28 @@
         <select class="selectpicker col-md-1" name="estadoPago" id="estadoPago">
             @if (ViewBag.estadoPago == 0)
             {
-                <option selected value="0">Todas</option> }
+                <option selected value="0">Todas</option>
+ }
             else
             {
-                <option value="0"> Todas </option>}
+                <option value="0"> Todas </option>
+}
             @if (ViewBag.estadoPago == 1)
             {
-                <option selected value="1">Pagas</option> }
+                <option selected value="1">Pagas</option>
+ }
             else
             {
-                <option value="1">Pagas</option>}
+                <option value="1">Pagas</option>
+}
             @if (ViewBag.estadoPago == 2)
             {
-                <option selected value="2">Impagas</option> }
+                <option selected value="2">Impagas</option>
+ }
             else
             {
-                <option value="2">Impagas</option>}
+                <option value="2">Impagas</option>
+}
         </select>
 
         @Html.DropDownList("IdEmpresa", null, new { @class = "selectpicker", data_live_search = "true" })
@@ -70,11 +76,16 @@
 
 </div>
 
-<br /><br />
+<br />
+<br />
 
-@using (Html.BeginForm("ImprimirBoletasPagadas", "Rendicion", FormMethod.Post))
+@using (Html.BeginForm("ImprimirBoletasPagadas", "Rendicion", FormMethod.Post, new { @class = "col-md-6" }))
 {
     @Html.AntiForgeryToken()
+
+    <div class="col-md-6">
+        <input type="date" name="FechaPago" id="FechaPago" class="form-control" />
+    </div>
     <input type="hidden" id="BoletasPagadas" name="BoletasPagadas" value="" />
 
     <input type="submit" class="btn btn-primary" value="Imprimir" id="btnPagarEImprimir" style="display:none" />

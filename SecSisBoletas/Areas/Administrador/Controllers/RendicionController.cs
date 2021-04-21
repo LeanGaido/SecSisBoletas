@@ -456,7 +456,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
         [AllowAnonymous]
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult ImprimirBoletasPagadas(string BoletasPagadas = "null")
+        public ActionResult ImprimirBoletasPagadas(DateTime? FechaPago, string BoletasPagadas = "null")
         {
             int[] IdsBoletasAportesPagadas;
             List<BoletaAportes> BoletasAportesPagadas = new List<BoletaAportes>();
@@ -478,6 +478,11 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             }
 
             decimal totalGlobal = 0;
+
+            if (FechaPago == null)
+            {
+                FechaPago = DateTime.Now;
+            }
 
 
             foreach (var boleta in BoletasAportesPagadas)
