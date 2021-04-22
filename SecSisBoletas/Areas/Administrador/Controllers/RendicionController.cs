@@ -493,7 +493,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                 if(boleta.BoletaPagada == false)
                 {
                     boleta.BoletaPagada = true;
-                    boleta.FechaPago = DateTime.Today;
+                    boleta.FechaPago = FechaPago;
                     decimal mora = (boleta.RecargoMora != null) ? (decimal)boleta.RecargoMora : 0;
                     boleta.TotalPagado = TruncateFunction(total2 + total5 + mora, 2);
                     db.SaveChanges();
