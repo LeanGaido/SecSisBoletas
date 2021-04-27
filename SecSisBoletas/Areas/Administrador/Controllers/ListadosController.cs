@@ -1900,6 +1900,45 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                 FileName = "Padron-2%.pdf"
             };
         }
+
+
+        [AllowAnonymous]
+        public ActionResult ImpresionPadron5()
+        {
+            List<VmEmpleados> listaEmpleados = new List<VmEmpleados>();
+
+            DateTime hoy = DateTime.Now;
+
+            var afiliados = db.Afiliado.Where(x => (x.FechaBaja == null || x.FechaBaja > hoy) && x.FechaAlta < hoy).ToList();
+
+
+            if (afiliados.Count > 0)
+            {
+                foreach (var afiliado in afiliados)
+                {
+                    var empEmp = db.EmpleadoEmpresa.Where(x => x.idEmpleadoEmpresa == afiliado.IdEmpleadoEmpresa &&
+                                                               (x.FechaBaja == null || x.FechaBaja > hoy) &&
+                                                               x.FechaAlta < hoy)
+                                                   .FirstOrDefault();
+                    if (empEmp != null)
+                    {
+                        var empleado = db.Empleado.Where(x => x.IdEmpleado == empEmp.idEmpleado).FirstOrDefault();
+
+                        VmEmpleados vmEmp = new VmEmpleados();
+                        vmEmp.NombreEmpleado = empleado.Apellido + " " + empleado.Nombre;
+                        vmEmp.CuilEmpleado = empleado.Cuil;
+                        vmEmp.LocalidadEmpleado = empleado.Localidad.Nombre;
+                        vmEmp.ProvinciaEmpleado = empleado.Localidad.Provincia.Nombre;
+                        vmEmp.CategoríaEmpleado = empEmp.Categoria.Descripcion;
+                        vmEmp.JornadaEmpleado = empEmp.Jornada.Descripcion;
+
+                        listaEmpleados.Add(vmEmp);
+                    }
+                }
+            }
+            ViewBag.TotalAfiliados = listaEmpleados.Count;
+            return View(listaEmpleados);
+        }
         #endregion
 
         #region Empleados
@@ -2882,37 +2921,6 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
 
             var afiliados = db.Afiliado.Where(x => (x.FechaBaja == null || x.FechaBaja > hoy) && x.FechaAlta < hoy).ToList();
 
-            //var empleados = (from oEmpleados in db.Empleado
-            //                 join oLocalidades in db.Localidad on oEmpleados.IdLocalidad equals oLocalidades.IdLocalidad
-            //                 join oEmpleadoEmpresa in db.EmpleadoEmpresa on oEmpleados.IdEmpleado equals oEmpleadoEmpresa.idEmpleado
-            //                 join oAfiliados in db.Afiliado on oEmpleados.IdEmpleado equals oAfiliados.IdAfiliado
-            //                 where oEmpleadoEmpresa.FechaBaja == null && oAfiliados.FechaBaja == null
-            //                 select oEmpleados).ToList();
-
-            //if (idEmpresa != 0)
-            //{
-            //    empleados = (from oEmpleados in empleados
-            //                 join oLocalidades in db.Localidad on oEmpleados.IdLocalidad equals oLocalidades.IdLocalidad
-            //                 join oEmpleadoEmpresa in db.EmpleadoEmpresa on oEmpleados.IdEmpleado equals oEmpleadoEmpresa.idEmpleado
-            //                 where oEmpleadoEmpresa.idEmpresa == idEmpresa && oEmpleadoEmpresa.FechaBaja == null
-            //                 select oEmpleados).ToList();
-            //}
-
-            //if (!string.IsNullOrEmpty(searchString))
-            //{
-            //    empleados = empleados.Where(x => x.Apellido.Contains(searchString)).ToList();
-            //}
-
-            //switch (sortOrder)
-            //{
-            //    case "name_desc":
-            //        empleados = empleados.OrderByDescending(x => x.Apellido).ToList();
-            //        break;
-            //    default:
-            //        empleados = empleados.OrderBy(x => x.Apellido).ToList();
-            //        break;
-            //}
-
 
             if (afiliados.Count > 0)
             {
@@ -2939,7 +2947,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                 }
             }
             ViewBag.TotalAfiliados = listaEmpleados.Count;
-            return View(listaEmpleados);
+            return View(listaEmpleados.OrderBy(x => x.LocalidadEmpleado));
         }
 
         [AllowAnonymous]
@@ -3020,7 +3028,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                                  join oEmpleadoEmpresa in db.EmpleadoEmpresa on oEmpleados.IdEmpleado equals oEmpleadoEmpresa.idEmpleado
                                  join oAfiliados in db.Afiliado on oEmpleadoEmpresa.idEmpleadoEmpresa equals oAfiliados.IdEmpleadoEmpresa
                                  where oEmpleadoEmpresa.idEmpresa == emp.IdEmpresa && oAfiliados.FechaBaja == null
-                                 select oEmpleados).ToList();
+                                 select oEmpleados).OrderBy(x => x.Localidad.Nombre).ToList();
 
                 if (empleados.Count > 0)
                 {
