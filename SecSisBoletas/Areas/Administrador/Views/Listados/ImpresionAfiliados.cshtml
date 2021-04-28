@@ -131,30 +131,34 @@
                             Nombre del Empleado
                         </th>
                         <th>
-                            Cuil
+                            Domicilio
                         </th>
                         <th>
                             Localidad
                         </th>
                         <th>
-                            Provincia
+                            Cuil
+                        </th>
+                        <th>
+                            Fecha de Ingreso
                         </th>
                         <th>
                             Categoria
                         </th>
                         <th>
-                            Jornada
+                            Empresa
                         </th>
                     </tr>
                     @foreach (var emp in Model)
                     {
                         <tr>
                             <td>@emp.NombreEmpleado</td>
-                            <td>@emp.CuilEmpleado</td>
+                            <td>@emp.CalleEmpleado</td>
                             <td>@emp.LocalidadEmpleado</td>
-                            <td>@emp.ProvinciaEmpleado</td>
+                            <td>@emp.CuilEmpleado</td>
+                            <td>@emp.FechaAltaEmpleado</td>
                             <td>@emp.CategoríaEmpleado</td>
-                            <td>@emp.JornadaEmpleado</td>
+                            <td>@emp.NombreEmpresa</td>
                         </tr>
                     }
                     <tr>

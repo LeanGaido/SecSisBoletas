@@ -349,3 +349,5 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /SecSisBoletas/App_Data
+/SecSisBoletas/Areas/ContentAdmin/Content/Impresiones/AfiliadosPorEmpresa
+/SecSisBoletas/Areas/Administrador/Content/Impresiones/AfiliadosPorEmpresa

@@ -15,6 +15,8 @@ using SecSisBoletas.Areas.Empresas.Controllers;
 using SecSisBoletas.Models;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using ClosedXML.Excel;
+using System.IO.Compression;
 
 namespace SecSisBoletas.Areas.Administrador.Controllers
 {
@@ -2932,15 +2934,19 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                                                    .FirstOrDefault();
                     if (empEmp != null)
                     {
-                        var empleado = db.Empleado.Where(x => x.IdEmpleado == empEmp.idEmpleado).FirstOrDefault();
+                        //var empleado = db.Empleado.Where(x => x.IdEmpleado == empEmp.idEmpleado).FirstOrDefault();
 
                         VmEmpleados vmEmp = new VmEmpleados();
-                        vmEmp.NombreEmpleado = empleado.Apellido + " " + empleado.Nombre;
-                        vmEmp.CuilEmpleado = empleado.Cuil;
-                        vmEmp.LocalidadEmpleado = empleado.Localidad.Nombre;
-                        vmEmp.ProvinciaEmpleado = empleado.Localidad.Provincia.Nombre;
+                        vmEmp.NombreEmpleado = empEmp.Empleado.Apellido + " " + empEmp.Empleado.Nombre;
+                        vmEmp.CalleEmpleado = empEmp.Empleado.Calle + " " + empEmp.Empleado.Altura;
+                        vmEmp.CuilEmpleado = empEmp.Empleado.Cuil;
+                        vmEmp.LocalidadEmpleado = empEmp.Empleado.Localidad.Nombre;
+                        vmEmp.ProvinciaEmpleado = empEmp.Empleado.Localidad.Provincia.Nombre;
                         vmEmp.CategoríaEmpleado = empEmp.Categoria.Descripcion;
                         vmEmp.JornadaEmpleado = empEmp.Jornada.Descripcion;
+                        vmEmp.FechaAltaEmpleado = empEmp.FechaAlta.ToShortDateString();
+                        vmEmp.NombreEmpresa = empEmp.Empresa.RazonSocial;
+
 
                         listaEmpleados.Add(vmEmp);
                     }
@@ -2963,11 +2969,13 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult ImpresionAfiliadosPorEmpresas(string sortOrder, string searchString, int IdLocalidadSeleccionada = 0, int IdProvinciaSeleccionada = 0, int IdActividadSeleccionada = 0)
+        public FileContentResult ImpresionAfiliadosPorEmpresas(string sortOrder, string searchString, int IdLocalidadSeleccionada = 0, int IdProvinciaSeleccionada = 0, int IdActividadSeleccionada = 0)
         {
             List<VmEmpleadosEmpresas> empleadosEmpresas = new List<VmEmpleadosEmpresas>();
 
             VmEmpleadosEmpresas tvm;
+
+            string newFile = "";
 
             //Datos de la Empresa
             var empresa = db.Empresa.Include(e => e.Actividad).Include(e => e.Localidad);
@@ -3041,12 +3049,15 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                         if (empEmp != null)
                         {
                             VmEmpleados vmEmp = new VmEmpleados();
-                            vmEmp.NombreEmpleado = empleado.Apellido + " " + empleado.Nombre;
-                            vmEmp.CuilEmpleado = empleado.Cuil;
-                            vmEmp.LocalidadEmpleado = empleado.Localidad.Nombre;
-                            vmEmp.ProvinciaEmpleado = empleado.Localidad.Provincia.Nombre;
+                            vmEmp.NombreEmpleado = empEmp.Empleado.Apellido + " " + empEmp.Empleado.Nombre;
+                            vmEmp.CalleEmpleado = empEmp.Empleado.Calle + " " + empEmp.Empleado.Altura;
+                            vmEmp.CuilEmpleado = empEmp.Empleado.Cuil;
+                            vmEmp.LocalidadEmpleado = empEmp.Empleado.Localidad.Nombre;
+                            vmEmp.ProvinciaEmpleado = empEmp.Empleado.Localidad.Provincia.Nombre;
                             vmEmp.CategoríaEmpleado = empEmp.Categoria.Descripcion;
                             vmEmp.JornadaEmpleado = empEmp.Jornada.Descripcion;
+                            vmEmp.FechaAltaEmpleado = empEmp.FechaAlta.ToShortDateString();
+                            vmEmp.NombreEmpresa = empEmp.Empresa.RazonSocial;
 
                             tvm.Empleados.Add(vmEmp);
                         }
@@ -3057,11 +3068,73 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
 
             }
 
-            //return new ViewAsPdf(empleadosEmpresas.ToList())
-            //{
-            //    FileName = "Empleados-Por-Empresas.pdf"
-            //};
-            return View(empleadosEmpresas.ToList());
+            #region Generacion Excels
+            int fila = 1;
+            
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Afiliados Por Empresa");
+                foreach (var excelSwissMedical in empleadosEmpresas.Where(x => x.Empleados.Count >= 1))
+                {
+                    //Escriobo en la fila y en la columna que corresponde para cada valor
+                    worksheet.Cell(fila, 1).SetValue<string>(Convert.ToString("Razon Social:"));
+                    worksheet.Cell(fila, 2).SetValue<string>(Convert.ToString(excelSwissMedical.RazonSocialEmpresa));
+                    worksheet.Cell(fila, 4).SetValue<string>(Convert.ToString("Cuit:"));
+                    worksheet.Cell(fila, 5).SetValue<string>(Convert.ToString(excelSwissMedical.CuitEmpresa));
+                    fila++;
+
+                    worksheet.Cell(fila, 1).SetValue<string>(Convert.ToString("Calle: "));
+                    worksheet.Cell(fila, 2).SetValue<string>(Convert.ToString(excelSwissMedical.CalleEmpresa));
+                    worksheet.Cell(fila, 3).SetValue<string>(Convert.ToString("Localidad:"));
+                    worksheet.Cell(fila, 4).SetValue<string>(Convert.ToString(excelSwissMedical.LocalidadEmpresa));
+                    worksheet.Cell(fila, 5).SetValue<string>(Convert.ToString("Provincia:"));
+                    worksheet.Cell(fila, 6).SetValue<string>(Convert.ToString(excelSwissMedical.ProvinciaEmpresa));
+
+                    IXLRange range = worksheet.Range(worksheet.Cell(fila - 1, 1).Address, worksheet.Cell(fila, 6).Address);
+
+                    range.Style.Font.Bold = true;
+                    fila++;
+
+                    worksheet.Cell(fila, 1).SetValue<string>(Convert.ToString("Nombre"));
+                    worksheet.Cell(fila, 2).SetValue<string>(Convert.ToString("Calle"));
+                    worksheet.Cell(fila, 3).SetValue<string>(Convert.ToString("Localidad"));
+                    worksheet.Cell(fila, 4).SetValue<string>(Convert.ToString("Cuil"));
+                    worksheet.Cell(fila, 5).SetValue<string>(Convert.ToString("Fecha Alta"));
+                    worksheet.Cell(fila, 6).SetValue<string>(Convert.ToString("Categoria"));
+                    worksheet.Cell(fila, 7).SetValue<string>(Convert.ToString("Nombre de la Empresa"));
+                    IXLRange range2 = worksheet.Range(worksheet.Cell(fila, 1).Address, worksheet.Cell(fila, 7).Address);
+                    range2.Style.Fill.SetBackgroundColor(XLColor.LightGray);
+                    range2.Style.Font.Bold = true;
+                    fila++;
+                    foreach (var afiliado in excelSwissMedical.Empleados)
+                    {
+                        worksheet.Cell(fila, 1).SetValue<string>(Convert.ToString(afiliado.NombreEmpleado));
+                        worksheet.Cell(fila, 2).SetValue<string>(Convert.ToString(afiliado.CalleEmpleado));
+                        worksheet.Cell(fila, 3).SetValue<string>(Convert.ToString(afiliado.LocalidadEmpleado));
+                        worksheet.Cell(fila, 4).SetValue<string>(Convert.ToString(afiliado.CuilEmpleado));
+                        worksheet.Cell(fila, 5).SetValue<string>(Convert.ToString(afiliado.FechaAltaEmpleado));
+                        worksheet.Cell(fila, 6).SetValue<string>(Convert.ToString(afiliado.CategoríaEmpleado));
+                        worksheet.Cell(fila, 7).SetValue<string>(Convert.ToString(afiliado.NombreEmpresa));
+                    }
+                    fila += 2;
+                }
+
+                worksheet.Columns().AdjustToContents();  // Adjust column width
+                worksheet.Rows().AdjustToContents();
+
+                newFile = Server.MapPath("~/Areas/Administrador/Content/Impresiones/AfiliadosPorEmpresa/AfiliadosPorEmpresa.xlsx");
+                workbook.SaveAs(newFile);
+            }
+            
+            #endregion
+
+            #region descargar
+            String mimeType = MimeMapping.GetMimeMapping(newFile);
+
+            byte[] stream = System.IO.File.ReadAllBytes(newFile);
+
+            return File(stream, mimeType);
+            #endregion
         }
 
         [AllowAnonymous]
