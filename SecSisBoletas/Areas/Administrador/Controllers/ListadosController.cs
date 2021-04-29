@@ -3115,8 +3115,9 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                         worksheet.Cell(fila, 5).SetValue<string>(Convert.ToString(afiliado.FechaAltaEmpleado));
                         worksheet.Cell(fila, 6).SetValue<string>(Convert.ToString(afiliado.CategoríaEmpleado));
                         worksheet.Cell(fila, 7).SetValue<string>(Convert.ToString(afiliado.NombreEmpresa));
+                        fila++;
                     }
-                    fila += 2;
+                    fila++;
                 }
 
                 worksheet.Columns().AdjustToContents();  // Adjust column width
