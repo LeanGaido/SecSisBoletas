@@ -2953,7 +2953,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                 }
             }
             ViewBag.TotalAfiliados = listaEmpleados.Count;
-            return View(listaEmpleados.OrderBy(x => x.LocalidadEmpleado));
+            return View(listaEmpleados.OrderBy(x => x.LocalidadEmpleado).ThenBy(x => x.NombreEmpleado));
         }
 
         [AllowAnonymous]
