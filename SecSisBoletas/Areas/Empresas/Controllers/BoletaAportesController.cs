@@ -125,6 +125,30 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             return View(boletaAportes.OrderByDescending(x => x.AnioBoleta).ThenByDescending(x => x.MesBoleta).ToList());
         }
 
+        public ActionResult BoletasEspeciales(int? mes, int? anio, int estadoPago = 0)
+        {
+            var claim = ((ClaimsIdentity)User.Identity).FindFirst("IdEmpresa");
+            int IdEmpresa = Convert.ToInt32(claim.Value);
+            List<BoletaAportesEspecial> boletaAportes = new List<BoletaAportesEspecial>();
+
+            boletaAportes = db.BoletaAportesEspeciales.AsNoTracking().Where(x => x.IdEmpresa == IdEmpresa && x.BoletaPagada).ToList();
+            
+
+            if (estadoPago == 1)
+            {
+                boletaAportes = boletaAportes.Where(x => x.BoletaPagada == true).ToList();
+            }
+
+            if (estadoPago == 2)
+            {
+                boletaAportes = boletaAportes.Where(x => x.BoletaPagada == false).ToList();
+            }
+
+            ViewBag.estadoPago = estadoPago;
+
+            return View(boletaAportes.OrderByDescending(x => x.FechaBoleta));
+        }
+
         // GET: Empresas/BoletaAportes/Details/5
         public ActionResult Details(int? id)
         {
@@ -224,13 +248,27 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             return View(boletaAportes);
         }
 
+        public ActionResult DetailsBoletaEspecial(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BoletaAportesEspecial boletaAportesEspecial = db.BoletaAportesEspeciales.Find(id);
+            if (boletaAportesEspecial == null)
+            {
+                return HttpNotFound();
+            }
+            return View(boletaAportesEspecial);
+        }
+
         // GET: Empresas/BoletaAportes/Create
         public ActionResult Create()
         {
             var claim = ((ClaimsIdentity)User.Identity).FindFirst("IdEmpresa");
             int IdEmpresa = Convert.ToInt32(claim.Value);
 
-            var declaracionesJuradas = db.DeclaracionJurada.Where(x => x.idEmpresa == IdEmpresa && x.DeBaja == false).ToList();
+            var declaracionesJuradas = db.DeclaracionJurada.Where(x => x.idEmpresa == IdEmpresa && x.DeBaja == false).OrderByDescending(x => x.anio).ThenByDescending(x => x.mes).ToList();
             foreach (DeclaracionJurada declaracion in declaracionesJuradas)
             {
                 declaracion.MesAnio = declaracion.mes + "/" + declaracion.anio;
@@ -251,7 +289,7 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             var claim = ((ClaimsIdentity)User.Identity).FindFirst("IdEmpresa");
             int IdEmpresa = Convert.ToInt32(claim.Value);
 
-            var declaracionesJuradas = db.DeclaracionJurada.Where(x => x.idEmpresa == IdEmpresa && x.DeBaja == false).ToList();
+            var declaracionesJuradas = db.DeclaracionJurada.Where(x => x.idEmpresa == IdEmpresa && x.DeBaja == false).OrderByDescending(x => x.anio).ThenByDescending(x => x.mes).ToList();
 
             foreach (DeclaracionJurada declaracion in declaracionesJuradas)
             {

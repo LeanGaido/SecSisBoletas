@@ -11,7 +11,7 @@ using DAL.Models;
 
 namespace SecSisBoletas.Areas.Administrador.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Fiscalizacion, Finanzas")]
     public class BoletasAportesEspecialesController : Controller
     {
         private SecModel db = new SecModel();
