@@ -43,6 +43,40 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             return View(empresa);
         }
 
+        public ActionResult AsesorContable()
+        {
+            var claim = ((ClaimsIdentity)User.Identity).FindFirst("IdEmpresa");
+            int IdEmpresa = Convert.ToInt32(claim.Value);
+            AsesorContable asesor = db.AsesorContable.Where(x => x.idEmpresa == IdEmpresa).FirstOrDefault();
+            if (asesor == null)
+            {
+                asesor = new AsesorContable();
+                asesor.idEmpresa = IdEmpresa;
+            }
+            return View(asesor);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AsesorContable(AsesorContable asesorContable)
+        {
+            if (ModelState.IsValid)
+            {
+                if(asesorContable.ID == 0)
+                {
+                    db.AsesorContable.Add(asesorContable);
+                }
+                else
+                {
+                    db.Entry(asesorContable).State = EntityState.Modified;
+                }
+                db.SaveChanges();
+                return RedirectToAction("Index", "Manage", new { Area = "" });
+            }
+
+            return View(asesorContable);
+        }
+
         // GET: Empresa/Empresas/Create
         public ActionResult Create()
         {

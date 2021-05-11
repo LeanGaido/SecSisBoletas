@@ -1,0 +1,81 @@
+﻿@model DAL.Models.AsesorContable
+@{
+    ViewBag.Title = "Asesor Contable";
+}
+
+
+<h2 class="text-left">@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.idEmpresa)
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.NombreContacto, "Nombre de Contacto", htmlAttributes: new { @class = "control-label col-md-2 col-md-offset-1" })
+                <div class=" col-md-5">
+                    @Html.EditorFor(model => model.NombreContacto, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.NombreContacto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="col-md-offset-2 col-md-6">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.AreaTelefono, "Area de Telefono", htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.AreaTelefono, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.AreaTelefono, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.NumeroTelefono, "Numero de Telefono", htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.NumeroTelefono, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.NumeroTelefono, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-offset-2 col-md-6">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.AreaCelular, "Area de Celular", htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.AreaCelular, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.AreaCelular, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.NumeroCelular, "Numero de Celular", htmlAttributes: new { @class = "control-label " })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.NumeroCelular, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.NumeroCelular, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-2">
+                <a role="button" class="btn btn-default pull-right" href="@Url.Action("Index","Manage")">Volver</a>
+            </div>
+            <div class="col-md-offset-3 col-md-2">
+                <input type="submit" value="GUARDAR CAMBIOS" class="btn btn-default pull-right" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

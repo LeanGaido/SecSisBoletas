@@ -169,6 +169,10 @@
     <Compile Include="Migrations\202011051315038_DeclaracionJurada-DeBaja.Designer.cs">
       <DependentUpon>202011051315038_DeclaracionJurada-DeBaja.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105111532408_AsesorContable.cs" />
+    <Compile Include="Migrations\202105111532408_AsesorContable.Designer.cs">
+      <DependentUpon>202105111532408_AsesorContable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actividad.cs" />
     <Compile Include="Models\Afiliado.cs" />
@@ -180,6 +184,7 @@
     <Compile Include="Models\Empleado.cs" />
     <Compile Include="Models\EmpleadoEmpresa.cs" />
     <Compile Include="Models\Empresa.cs" />
+    <Compile Include="Models\AsesorContable.cs" />
     <Compile Include="Models\FechaVencimiento.cs" />
     <Compile Include="Models\HorarioEmpleado.cs" />
     <Compile Include="Models\Jornada.cs" />
@@ -295,6 +300,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011051315038_DeclaracionJurada-DeBaja.resx">
       <DependentUpon>202011051315038_DeclaracionJurada-DeBaja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105111532408_AsesorContable.resx">
+      <DependentUpon>202105111532408_AsesorContable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

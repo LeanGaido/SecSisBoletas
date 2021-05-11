@@ -356,6 +356,20 @@
             $('#BoletasPagadas').val("[" + searchIDs + "]");
             $('#btnPagarEImprimir').click();
         });
+
+        $('.btnPagarEspeciales').click(function () {
+            event.preventDefault();
+            var searchIDs = $(".boletasAPagarEImprimir:checkbox:checked").map(function () {
+                return $(this).val();
+            }).toArray(); // <----
+            //if (Array.isArray(searchIDs)) {
+            //    alert("True");
+            //} else {
+            //    alert("False");
+            //}
+            $('#BoletasPagadas').val("[" + searchIDs + "]");
+            $('#btnPagarEspeciales').click();
+        });
     </script>
 </body>
 </html>

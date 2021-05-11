@@ -248,6 +248,56 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             return RedirectToAction("Index");
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult PagarBoletasEspeciales(DateTime? FechaPago, string BoletasPagadas = "null")
+        {
+            int[] IdsBoletasAportesPagadas;
+            List<BoletaAportesEspecial> BoletasAportesPagadas = new List<BoletaAportesEspecial>();
+            if (!string.IsNullOrEmpty(BoletasPagadas))
+            {
+                string llave = BoletasPagadas.Substring(0, 1);
+                if (llave == "[")
+                {
+                    IdsBoletasAportesPagadas = System.Web.Helpers.Json.Decode<int[]>(BoletasPagadas);
+                    ViewBag.BoletasAportesPagadas = IdsBoletasAportesPagadas;
+                    BoletasAportesPagadas = db.BoletaAportesEspeciales.Where(x => IdsBoletasAportesPagadas.Contains(x.IdBoleta)).ToList();
+                }
+                else
+                {
+                    IdsBoletasAportesPagadas = new int[1] { System.Web.Helpers.Json.Decode<int>(BoletasPagadas) };
+                    ViewBag.BoletasAportesPagadas = IdsBoletasAportesPagadas;
+                    BoletasAportesPagadas = db.BoletaAportesEspeciales.Where(x => IdsBoletasAportesPagadas.Contains(x.IdBoleta)).ToList();
+                }
+            }
+
+            decimal totalGlobal = 0;
+
+            if (FechaPago == null)
+            {
+                FechaPago = DateTime.Now;
+            }
+
+
+            foreach (var boleta in BoletasAportesPagadas)
+            {
+                decimal total2 = (boleta.TotalSueldos2 / 100) * 2;
+                decimal total5 = (boleta.TotalSueldos5 / 100) * 5;
+
+                //if (boleta.BoletaPagada == false)
+                //{
+                    boleta.BoletaPagada = true;
+                    boleta.FechaPago = FechaPago;
+
+                    boleta.TotalDepositado = boleta.Total;
+                    db.SaveChanges();
+                //}
+            }
+
+            return RedirectToAction("Index");
+        }
+
         public decimal TruncateFunction(decimal number, int digits)
         {
             decimal stepper = (decimal)(Math.Pow(10.0, (double)digits));

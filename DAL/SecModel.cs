@@ -17,6 +17,7 @@ namespace DAL
 
         public DbSet<Actividad> Actividad { get; set; }
         public DbSet<Afiliado> Afiliado { get; set; }
+        public DbSet<AsesorContable> AsesorContable { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<DeclaracionJurada> DeclaracionJurada { get; set; }
         public DbSet<DetalleDeclaracionJurada> DetalleDeclaracionJurada { get; set; }

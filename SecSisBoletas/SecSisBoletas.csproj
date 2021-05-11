@@ -1391,6 +1391,7 @@
     <Content Include="Areas\Administrador\Views\Listados\CantDeleteDeclaracionJuradaMessage.cshtml" />
     <Content Include="Areas\Empresas\Views\BoletaAportes\BoletasEspeciales.cshtml" />
     <Content Include="Areas\Empresas\Views\BoletaAportes\DetailsBoletaEspecial.cshtml" />
+    <Content Include="Areas\Empresas\Views\Empresas\AsesorContable.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
