@@ -212,7 +212,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             boletaAportes.BoletaPagada = true;
             boletaAportes.FechaPago = DateTime.Today;
 
-            boletaAportes.TotalDepositado = boletaAportes.Total;
+            //boletaAportes.TotalDepositado = boletaAportes.Total;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -290,7 +290,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                     boleta.BoletaPagada = true;
                     boleta.FechaPago = FechaPago;
 
-                    boleta.TotalDepositado = boleta.Total;
+                    //boleta.TotalDepositado = boleta.Total;
                     db.SaveChanges();
                 //}
             }
