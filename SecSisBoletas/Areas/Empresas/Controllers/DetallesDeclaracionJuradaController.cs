@@ -603,7 +603,7 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IdDetalleDeclaracionJurada,IdDeclaracionJurada,IdEmpleadoEmpresa,idCategoria,idJornadaLaboral,IdLiquidacionProporcional,Sueldo,SueldoBase")] DetalleDeclaracionJurada detalleDeclaracionJurada)
         {
-            var boleta = db.BoletaAportes.Where(x => x.IdDeclaracionJurada == detalleDeclaracionJurada.IdDeclaracionJurada && x.BoletaPagada == true && x.DeBaja == false).FirstOrDefault();
+            var boleta = db.BoletaAportes.Where(x => x.IdDeclaracionJurada == detalleDeclaracionJurada.IdDeclaracionJurada /*&& x.BoletaPagada == true*/ && x.DeBaja == false).FirstOrDefault();
             if(boleta != null)
             {
                 return RedirectToAction("CantEditMessage", "DetallesDeclaracionJurada", new { idDeclaracionJurada = detalleDeclaracionJurada.IdDeclaracionJurada });
