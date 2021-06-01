@@ -175,6 +175,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actividad.cs" />
+    <Compile Include="Models\AdjuntoNotificacion.cs" />
     <Compile Include="Models\Afiliado.cs" />
     <Compile Include="Models\BoletaAportes.cs" />
     <Compile Include="Models\BoletaAportesEspecial.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Models\LiquidacionProporcional.cs" />
     <Compile Include="Models\LiquidacionProporcionalEmpleado.cs" />
     <Compile Include="Models\Localidad.cs" />
+    <Compile Include="Models\Notificacion.cs" />
     <Compile Include="Models\Reclamo.cs" />
     <Compile Include="Models\TurnoEmpleado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
