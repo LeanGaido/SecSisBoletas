@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace DAL.Models
 {
@@ -24,12 +25,19 @@ namespace DAL.Models
         public string Titulo { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 255, ErrorMessage = "La Descripcion no puede superar los 255 caracteres")]
         public string Descripcion { get; set; }
 
         public bool Visto { get; set; }
 
-        public DateTime FechaVisto { get; set; }
+        public DateTime? FechaVisto { get; set; }
+
+        public string UserId { get; set; }
+
+        [NotMapped]
+        public List<AdjuntoNotificacion> ListadoAdjuntos { get; set; }
+
+        [NotMapped]
+        public List<HttpPostedFileBase> Adjuntos { get; set; }
 
         public virtual Empresa Empresa { get; set; }
     }

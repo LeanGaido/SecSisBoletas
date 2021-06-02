@@ -1,0 +1,62 @@
+﻿@model IEnumerable<DAL.ViewModels.VmListadoNotificaciones>
+@{
+    ViewBag.Title = "Notificaciones";
+}
+
+<h2><b>@ViewBag.Title</b></h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Nombre")
+        </th>
+        <th>
+            @Html.DisplayName("Titulo")
+        </th>
+        <th>
+            @Html.DisplayName("Visto")
+        </th>
+        <th>
+            @Html.DisplayName("Fecha de Visto")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Visto)
+            </td>
+            <td>
+                @if (item.FechaVisto != null)
+                {
+                    <span>@item.FechaVisto.Value.ToString("dd/MM/yyyy HH:mm")</span>
+                }
+                else
+                {
+                    <span></span>
+                }
+            </td>
+            <td>
+                <a href="@Url.Action("Detalle", "Notificaciones",new { Id = item.ID})" class="glyphicon glyphicon-plus"></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<span class="clearfix"></span>
+@*<div style="position :relative;left: 40%;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>*@

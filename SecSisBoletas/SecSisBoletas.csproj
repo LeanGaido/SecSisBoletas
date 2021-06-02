@@ -310,6 +310,7 @@
     <Compile Include="Areas\Empresas\Controllers\InstructivoDeUsoController.cs" />
     <Compile Include="Areas\Empresas\Controllers\LicenciasEmpleadoController.cs" />
     <Compile Include="Areas\Empresas\Controllers\LocalidadesController.cs" />
+    <Compile Include="Areas\Empresas\Controllers\NotificacionesController.cs" />
     <Compile Include="Areas\Empresas\Controllers\ReclamosController.cs" />
     <Compile Include="Areas\Empresas\EmpresasAreaRegistration.cs" />
     <Compile Include="Areas\Empresas\Reports\ImpresionBoleta.aspx.cs">
@@ -1392,6 +1393,9 @@
     <Content Include="Areas\Empresas\Views\BoletaAportes\BoletasEspeciales.cshtml" />
     <Content Include="Areas\Empresas\Views\BoletaAportes\DetailsBoletaEspecial.cshtml" />
     <Content Include="Areas\Empresas\Views\Empresas\AsesorContable.cshtml" />
+    <Content Include="Areas\Administrador\Views\Listados\NotificarEmpresa.cshtml" />
+    <Content Include="Areas\Empresas\Views\Notificaciones\Index.cshtml" />
+    <Content Include="Areas\Empresas\Views\Notificaciones\Detalle.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
@@ -1479,6 +1483,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Administrador\Content\AdjuntosNotificaciones\" />
     <Folder Include="Areas\Administrador\Content\Impresiones\" />
     <Folder Include="Areas\Administrador\Models\" />
     <Folder Include="Areas\Empresas\Models\" />

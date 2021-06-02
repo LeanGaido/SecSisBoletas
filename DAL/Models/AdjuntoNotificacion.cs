@@ -11,6 +11,7 @@ namespace DAL.Models
     [Table("tblAdjuntosNotificacion")]
     public class AdjuntoNotificacion
     {
+        [Key]
         public int IdAdjuntoNotificacion { get; set; }
 
         [Required, ForeignKey("Notificacion")]
@@ -18,6 +19,6 @@ namespace DAL.Models
 
         public string Adjunto { get; set; }
 
-        public virtual Empresa Empresa { get; set; }
+        public virtual Notificacion Notificacion { get; set; }
     }
 }

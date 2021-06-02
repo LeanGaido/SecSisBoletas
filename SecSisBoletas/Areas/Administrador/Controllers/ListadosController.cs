@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using ClosedXML.Excel;
 using System.IO.Compression;
+using System.IO;
 
 namespace SecSisBoletas.Areas.Administrador.Controllers
 {
@@ -1540,6 +1541,68 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             int pageNumber = (page ?? 1);
 
             return View(listadoEmpresas.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult NotificarEmpresa(int? id)
+        {
+            string userId = User.Identity.GetUserId();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Empresa empresa = db.Empresa.Find(id);
+            if (empresa == null)
+            {
+                return HttpNotFound();
+            }
+
+            List<Empresa> empresas = db.Empresa.Where(x => x.IdEmpresa == empresa.IdEmpresa).ToList();
+            ViewBag.IdEmpresa = new SelectList(empresas, "IdEmpresa", "RazonSocial");
+
+            Notificacion notificacion = new Notificacion();
+
+            notificacion.idEmpresa = empresa.IdEmpresa;
+            notificacion.Fecha = DateTime.Now;
+            notificacion.UserId = userId;
+            notificacion.Visto = false;
+
+            return View(notificacion);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NotificarEmpresa(Notificacion notificacion)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Notificaciones.Add(notificacion);
+                db.SaveChanges();
+
+                foreach (var adjunto in notificacion.Adjuntos)
+                {
+                    string fecha = DateTime.Today.ToShortDateString();
+                    fecha = fecha.Replace('/', '-');
+                    string fileName = notificacion.IdNotificacion + " - " + notificacion.Titulo + " - " + adjunto.FileName;
+                    string path = Path.Combine(Server.MapPath("~/Areas/Administrador/Content/AdjuntosNotificaciones"),
+                                    Path.GetFileName(fileName));
+                    if (!System.IO.File.Exists(path))
+                    {
+                        adjunto.SaveAs(path);
+                        db.AdjuntosNotificacion.Add(new AdjuntoNotificacion()
+                        {
+                            idNotificacion = notificacion.IdNotificacion,
+                            Adjunto = fileName
+                        });
+                    }
+                }
+
+                return RedirectToAction("IndexEmpresa");
+            }
+
+            List<Empresa> empresas = db.Empresa.OrderBy(x => x.RazonSocial).ToList();
+            ViewBag.IdEmpresa = new SelectList(empresas, "IdEmpresa", "RazonSocial", notificacion.idEmpresa);
+
+            return View(notificacion);
         }
 
         [Authorize(Roles = "Admin, Fiscalizacion")]

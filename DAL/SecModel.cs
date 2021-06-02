@@ -16,6 +16,7 @@ namespace DAL
         }
 
         public DbSet<Actividad> Actividad { get; set; }
+        public DbSet<AdjuntoNotificacion> AdjuntosNotificacion { get; set; }
         public DbSet<Afiliado> Afiliado { get; set; }
         public DbSet<AsesorContable> AsesorContable { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
@@ -30,6 +31,7 @@ namespace DAL
         public DbSet<LiquidacionProporcional> LiquidacionProporcional { get; set; }
         public DbSet<LiquidacionProporcionalEmpleado> LiquidacionProporcionalEmpleado { get; set; }
         public DbSet<Localidad> Localidad { get; set; }
+        public DbSet<Notificacion> Notificaciones { get; set; }
         public DbSet<Provincia> Provincia { get; set; }
         public DbSet<SueldoBasico> SueldoBasico { get; set; }
         public DbSet<BoletaAportes> BoletaAportes { get; set; }

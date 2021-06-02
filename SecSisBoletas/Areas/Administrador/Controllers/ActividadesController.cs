@@ -66,6 +66,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Actividad actividad = db.Actividad.Find(id);
+
             if (actividad == null)
             {
                 return HttpNotFound();
