@@ -320,6 +320,33 @@
                 ObtenerNotificaciones();
             });
 
+            ObtenerCantNotificaciones();
+
+            function ObtenerCantNotificaciones(){
+                $.ajax({
+                    type: "POST",
+                    traditional: true,
+                    async: false,
+                    cache: false,
+                    url: '@Url.Action("GetNotificaciones", "Notificaciones")',
+                    context: document.body,
+                    data: {
+
+                    },
+                    success: function (data) {
+                        if (data == "") {
+                            $('#cantNotifcaciones').text("");
+                        } else {
+                            $('#cantNotifcaciones').text(data.length);
+                            $('#cantNotifcaciones').css('color', '#FFF')
+                        }
+                    },
+                    error: function (xhr) {
+
+                    }
+                });
+            }
+
             function ObtenerNotificaciones() {
                  $.ajax({
                     type: "POST",
@@ -329,7 +356,7 @@
                     url: '@Url.Action("GetNotificaciones", "Notificaciones")',
                     context: document.body,
                     data: {
-                        
+
                     },
                     success: function (data) {
                         if (data == "") {
@@ -367,7 +394,7 @@
                         }
                     },
                     error: function (xhr) {
-                   
+
                     }
                 });
             }
