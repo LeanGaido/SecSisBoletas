@@ -178,6 +178,10 @@
     <Compile Include="Migrations\202106011643370_Notificaciones.Designer.cs">
       <DependentUpon>202106011643370_Notificaciones.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106031800286_Notificaciones_rework.cs" />
+    <Compile Include="Migrations\202106031800286_Notificaciones_rework.Designer.cs">
+      <DependentUpon>202106031800286_Notificaciones_rework.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actividad.cs" />
     <Compile Include="Models\AdjuntoNotificacion.cs" />
@@ -200,6 +204,7 @@
     <Compile Include="Models\LiquidacionProporcionalEmpleado.cs" />
     <Compile Include="Models\Localidad.cs" />
     <Compile Include="Models\Notificacion.cs" />
+    <Compile Include="Models\NotificacionEmpresa.cs" />
     <Compile Include="Models\Reclamo.cs" />
     <Compile Include="Models\TurnoEmpleado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -215,6 +220,8 @@
     <Compile Include="ViewModels\VmEmpresa.cs" />
     <Compile Include="ViewModels\VmFaecys.cs" />
     <Compile Include="ViewModels\VmListadoNotificaciones.cs" />
+    <Compile Include="ViewModels\VmNotificacion.cs" />
+    <Compile Include="ViewModels\VmNotificacionEmpresas.cs" />
     <Compile Include="ViewModels\VmPadron.cs" />
     <Compile Include="ViewModels\VmPreviewNotificacion.cs" />
     <Compile Include="ViewModels\VmUsuario.cs" />
@@ -315,6 +322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106011643370_Notificaciones.resx">
       <DependentUpon>202106011643370_Notificaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106031800286_Notificaciones_rework.resx">
+      <DependentUpon>202106031800286_Notificaciones_rework.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

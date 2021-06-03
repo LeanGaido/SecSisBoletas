@@ -21,16 +21,17 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             int IdEmpresa = Convert.ToInt32(claim.Value);
 
             List<VmListadoNotificaciones> notificaciones = (from oNotificaciones in db.Notificaciones
-                                                          where oNotificaciones.idEmpresa == IdEmpresa
-                                                          select new VmListadoNotificaciones
-                                                          {
-                                                              ID = oNotificaciones.IdNotificacion,
-                                                              EmpresaId = oNotificaciones.idEmpresa,
-                                                              Fecha = oNotificaciones.Fecha,
-                                                              Titulo = oNotificaciones.Titulo,
-                                                              Visto = oNotificaciones.Visto,
-                                                              FechaVisto = oNotificaciones.FechaVisto
-                                                          }).ToList();
+                                                            join oNotificacionesEmpresa in db.NotificacionesEmpresa on oNotificaciones.IdNotificacion equals oNotificacionesEmpresa.IdNotificacion
+                                                            where oNotificacionesEmpresa.idEmpresa == IdEmpresa
+                                                            select new VmListadoNotificaciones
+                                                            {
+                                                                ID = oNotificaciones.IdNotificacion,
+                                                                EmpresaId = oNotificacionesEmpresa.idEmpresa,
+                                                                Fecha = oNotificaciones.Fecha,
+                                                                Titulo = oNotificaciones.Titulo,
+                                                                Visto = oNotificacionesEmpresa.Visto,
+                                                                FechaVisto = oNotificacionesEmpresa.FechaVisto
+                                                            }).ToList();
 
             return View(notificaciones);
         }
@@ -40,19 +41,33 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             var claim = ((ClaimsIdentity)User.Identity).FindFirst("IdEmpresa");
             int IdEmpresa = Convert.ToInt32(claim.Value);
 
-            Notificacion notificacion = db.Notificaciones.Where(x => x.IdNotificacion == Id && x.idEmpresa == IdEmpresa).FirstOrDefault();
+            VmNotificacion notificacion = (from oNotificaciones in db.Notificaciones
+                                           join oNotificacionesEmpresa in db.NotificacionesEmpresa on oNotificaciones.IdNotificacion equals oNotificacionesEmpresa.IdNotificacion
+                                           where oNotificacionesEmpresa.idEmpresa == IdEmpresa
+                                           select new VmNotificacion
+                                           {
+                                               idNotificacion = oNotificaciones.IdNotificacion,
+                                               idEmpresa = oNotificacionesEmpresa.idEmpresa,
+                                               Fecha = oNotificaciones.Fecha,
+                                               Titulo = oNotificaciones.Titulo,
+                                               Descripcion = oNotificaciones.Descripcion,
+                                               Visto = oNotificacionesEmpresa.Visto,
+                                               FechaVisto = oNotificacionesEmpresa.FechaVisto
+                                           }).FirstOrDefault();
 
-            if(notificacion == null)
+            if (notificacion == null)
             {
                 return HttpNotFound();
             }
 
-            notificacion.Visto = true;
-            notificacion.FechaVisto = DateTime.Now;
+            NotificacionEmpresa notificacionEmpresa = db.NotificacionesEmpresa.Where(x => x.IdNotificacion == notificacion.idNotificacion && x.idEmpresa == notificacion.idEmpresa).FirstOrDefault();
+
+            notificacionEmpresa.Visto = true;
+            notificacionEmpresa.FechaVisto = DateTime.Now;
 
             db.SaveChanges();
 
-            notificacion.ListadoAdjuntos = db.AdjuntosNotificacion.Where(x => x.idNotificacion == notificacion.IdNotificacion).ToList();
+            notificacion.ListadoAdjuntos = db.AdjuntosNotificacion.Where(x => x.idNotificacion == notificacion.idNotificacion).ToList();
 
             return View(notificacion);
         }
@@ -63,11 +78,12 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             int IdEmpresa = Convert.ToInt32(claim.Value);
 
             List<VmPreviewNotificacion> notificaciones = (from oNotificaciones in db.Notificaciones
-                                                          where oNotificaciones.idEmpresa == IdEmpresa && !oNotificaciones.Visto
+                                                          join oNotificacionesEmpresa in db.NotificacionesEmpresa on oNotificaciones.IdNotificacion equals oNotificacionesEmpresa.IdNotificacion
+                                                          where oNotificacionesEmpresa.idEmpresa == IdEmpresa && !oNotificacionesEmpresa.Visto
                                                           select new VmPreviewNotificacion
                                                           {
                                                               ID = oNotificaciones.IdNotificacion,
-                                                              EmpresaId = oNotificaciones.idEmpresa,
+                                                              EmpresaId = oNotificacionesEmpresa.idEmpresa,
                                                               FechaAux = oNotificaciones.Fecha,
                                                               Titulo = oNotificaciones.Titulo
                                                           }).ToList();

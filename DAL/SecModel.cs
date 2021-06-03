@@ -32,6 +32,7 @@ namespace DAL
         public DbSet<LiquidacionProporcionalEmpleado> LiquidacionProporcionalEmpleado { get; set; }
         public DbSet<Localidad> Localidad { get; set; }
         public DbSet<Notificacion> Notificaciones { get; set; }
+        public DbSet<NotificacionEmpresa> NotificacionesEmpresa { get; set; }
         public DbSet<Provincia> Provincia { get; set; }
         public DbSet<SueldoBasico> SueldoBasico { get; set; }
         public DbSet<BoletaAportes> BoletaAportes { get; set; }

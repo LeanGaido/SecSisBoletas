@@ -1396,6 +1396,7 @@
     <Content Include="Areas\Administrador\Views\Listados\NotificarEmpresa.cshtml" />
     <Content Include="Areas\Empresas\Views\Notificaciones\Index.cshtml" />
     <Content Include="Areas\Empresas\Views\Notificaciones\Detalle.cshtml" />
+    <Content Include="Areas\Administrador\Views\Listados\NotificarEmpresas.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />

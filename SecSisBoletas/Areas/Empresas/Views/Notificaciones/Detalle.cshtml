@@ -1,4 +1,4 @@
-﻿@model DAL.Models.Notificacion
+﻿@model DAL.ViewModels.VmNotificacion
 
 @{
     ViewBag.Title = "Notificacion " + Model.Titulo;
@@ -41,7 +41,7 @@
                 </dt>
 
                 <dd>
-                    @adjunto.Adjunto
+                    <a href="~/Areas/Administrador/Content/AdjuntosNotificaciones/@adjunto.Adjunto" download>@adjunto.Adjunto</a>
                 </dd>
             }
         </dl>

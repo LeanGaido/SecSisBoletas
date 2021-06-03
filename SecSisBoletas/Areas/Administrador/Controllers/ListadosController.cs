@@ -1559,7 +1559,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             List<Empresa> empresas = db.Empresa.Where(x => x.IdEmpresa == empresa.IdEmpresa).ToList();
             ViewBag.IdEmpresa = new SelectList(empresas, "IdEmpresa", "RazonSocial");
 
-            Notificacion notificacion = new Notificacion();
+            VmNotificacion notificacion = new VmNotificacion();
 
             notificacion.idEmpresa = empresa.IdEmpresa;
             notificacion.Fecha = DateTime.Now;
@@ -1571,18 +1571,34 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult NotificarEmpresa(Notificacion notificacion)
+        public ActionResult NotificarEmpresa(VmNotificacion notificacion)
         {
             if (ModelState.IsValid)
             {
-                db.Notificaciones.Add(notificacion);
+                Notificacion nuevaNotificacion = new Notificacion();
+
+                nuevaNotificacion.Fecha = DateTime.Now;
+                nuevaNotificacion.UserId = notificacion.UserId;
+                nuevaNotificacion.Titulo = notificacion.Titulo;
+                nuevaNotificacion.Descripcion = notificacion.Descripcion;
+
+                db.Notificaciones.Add(nuevaNotificacion);
+                db.SaveChanges();
+
+                NotificacionEmpresa notificacionEmpresa = new NotificacionEmpresa();
+
+                notificacionEmpresa.IdNotificacion = nuevaNotificacion.IdNotificacion;
+                notificacionEmpresa.idEmpresa = notificacion.idEmpresa;
+                notificacionEmpresa.Visto = false;
+
+                db.NotificacionesEmpresa.Add(notificacionEmpresa);
                 db.SaveChanges();
 
                 foreach (var adjunto in notificacion.Adjuntos)
                 {
                     string fecha = DateTime.Today.ToShortDateString();
                     fecha = fecha.Replace('/', '-');
-                    string fileName = notificacion.IdNotificacion + " - " + notificacion.Titulo + " - " + adjunto.FileName;
+                    string fileName = nuevaNotificacion.IdNotificacion + " - " + notificacion.Titulo + " - " + adjunto.FileName;
                     string path = Path.Combine(Server.MapPath("~/Areas/Administrador/Content/AdjuntosNotificaciones"),
                                     Path.GetFileName(fileName));
                     if (!System.IO.File.Exists(path))
@@ -1590,7 +1606,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                         adjunto.SaveAs(path);
                         db.AdjuntosNotificacion.Add(new AdjuntoNotificacion()
                         {
-                            idNotificacion = notificacion.IdNotificacion,
+                            idNotificacion = nuevaNotificacion.IdNotificacion,
                             Adjunto = fileName
                         });
                     }
@@ -1599,11 +1615,117 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                 return RedirectToAction("IndexEmpresa");
             }
 
-            List<Empresa> empresas = db.Empresa.OrderBy(x => x.RazonSocial).ToList();
+            List<Empresa> empresas = db.Empresa.Where(x => x.IdEmpresa == notificacion.idEmpresa).ToList();
             ViewBag.IdEmpresa = new SelectList(empresas, "IdEmpresa", "RazonSocial", notificacion.idEmpresa);
 
             return View(notificacion);
         }
+
+        public ActionResult NotificarEmpresas(string idSeleccionados = "null")
+        {
+            List<int> id = new List<int>();
+            List<BoletaAportes> BoletasAportesPagadas = new List<BoletaAportes>();
+            if (!string.IsNullOrEmpty(idSeleccionados))
+            {
+                string llave = idSeleccionados.Substring(0, 1);
+                if (llave == "[")
+                {
+                    id.AddRange(System.Web.Helpers.Json.Decode<List<int>>(idSeleccionados));
+                }
+                else
+                {
+                    id.Add(System.Web.Helpers.Json.Decode<int>(idSeleccionados));
+                }
+            }
+
+            string userId = User.Identity.GetUserId();
+            if (id == null || id.Count < 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<Empresa> empresa = db.Empresa.Where(x => id.Contains(x.IdEmpresa)).ToList();
+            if (empresa == null || empresa.Count < 1)
+            {
+                return HttpNotFound();
+            }
+
+            VmNotificacionEmpresas notificacion = new VmNotificacionEmpresas();
+
+            notificacion.idEmpresaSeleccionado = idSeleccionados;
+            notificacion.idEmpresa = id;
+            notificacion.Fecha = DateTime.Now;
+            notificacion.UserId = userId;
+            notificacion.Visto = false;
+
+            return View(notificacion);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NotificarEmpresas(VmNotificacionEmpresas notificaciones)
+        {
+            string userId = User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                notificaciones.idEmpresa = new List<int>();
+                string llave = notificaciones.idEmpresaSeleccionado.Substring(0, 1);
+                if (llave == "[")
+                {
+                    notificaciones.idEmpresa.AddRange(System.Web.Helpers.Json.Decode<List<int>>(notificaciones.idEmpresaSeleccionado));
+                }
+                else
+                {
+                    notificaciones.idEmpresa.Add(System.Web.Helpers.Json.Decode<int>(notificaciones.idEmpresaSeleccionado));
+                }
+
+                Notificacion nuevaNotificacion = new Notificacion();
+
+                nuevaNotificacion.Fecha = DateTime.Now;
+                nuevaNotificacion.UserId = userId;
+                nuevaNotificacion.Titulo = notificaciones.Titulo;
+                nuevaNotificacion.Descripcion = notificaciones.Descripcion;
+
+                db.Notificaciones.Add(nuevaNotificacion);
+                db.SaveChanges();
+
+                foreach (var adjunto in notificaciones.Adjuntos)
+                {
+                    string fecha = DateTime.Today.ToShortDateString();
+                    fecha = fecha.Replace('/', '-');
+                    string fileName = nuevaNotificacion.IdNotificacion + " - " + nuevaNotificacion.Titulo + " - " + adjunto.FileName;
+                    string path = Path.Combine(Server.MapPath("~/Areas/Administrador/Content/AdjuntosNotificaciones"),
+                                    Path.GetFileName(fileName));
+                    if (!System.IO.File.Exists(path))
+                    {
+                        adjunto.SaveAs(path);
+                        db.AdjuntosNotificacion.Add(new AdjuntoNotificacion()
+                        {
+                            idNotificacion = nuevaNotificacion.IdNotificacion,
+                            Adjunto = fileName
+                        });
+
+                        db.SaveChanges();
+                    }
+                }
+
+                foreach (var IdEmpresa in notificaciones.idEmpresa)
+                {
+                    NotificacionEmpresa notificacionEmpresa = new NotificacionEmpresa();
+
+                    notificacionEmpresa.IdNotificacion = nuevaNotificacion.IdNotificacion;
+                    notificacionEmpresa.idEmpresa = IdEmpresa;
+                    notificacionEmpresa.Visto = false;
+
+                    db.NotificacionesEmpresa.Add(notificacionEmpresa);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("IndexEmpresa");
+            }
+
+            return View(notificaciones);
+        }
+
 
         [Authorize(Roles = "Admin, Fiscalizacion")]
         public ActionResult DetailsEmpresa(int? id)

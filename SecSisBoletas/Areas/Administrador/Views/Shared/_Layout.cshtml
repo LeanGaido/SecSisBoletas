@@ -343,6 +343,15 @@
             $('#exampleModal').modal('toggle');
         });
 
+        $('.btnNotificarEmpresas').click(function () {
+            event.preventDefault();
+            var searchIDs = $(".empresasANotificar:checkbox:checked").map(function () {
+                return $(this).val();
+            }).toArray();
+            $('#idSeleccionados').val("[" + searchIDs + "]");
+            $('#btnNotificarEmpresas').click();
+        });
+
         $('.btnPagarEImprimir').click(function () {
             event.preventDefault();
             var searchIDs = $(".boletasAPagarEImprimir:checkbox:checked").map(function () {

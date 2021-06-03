@@ -1,4 +1,4 @@
-﻿@model DAL.ViewModels.VmNotificacion
+﻿@model DAL.ViewModels.VmNotificacionEmpresas
 @{
     ViewBag.Title = "Notificar Empresa";
 }
@@ -6,24 +6,17 @@
 <br />
 <br />
 
-@using (Html.BeginForm("NotificarEmpresa", "Listados", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NotificarEmpresas", "Listados", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.UserId)
     @Html.HiddenFor(model => model.Fecha)
     @Html.HiddenFor(model => model.Visto)
+    @Html.HiddenFor(model => model.idEmpresaSeleccionado)
 
     <h2 class="col-md-offset-2">@ViewBag.Title</h2>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-    <div class="form-group col-md-12">
-        @Html.LabelFor(model => model.idEmpresa, "Razon Social", htmlAttributes: new { @class = "control-label col-md-1" })
-        <div class="col-md-5">
-            @Html.DropDownList("IdEmpresa", null, new { @class = "selectpicker", data_live_search = "true" })
-            @Html.ValidationMessageFor(model => model.idEmpresa, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
     <div class="form-group col-md-12">
         @Html.LabelFor(model => model.Titulo, "Titulo", htmlAttributes: new { @class = "control-label col-md-1" })
