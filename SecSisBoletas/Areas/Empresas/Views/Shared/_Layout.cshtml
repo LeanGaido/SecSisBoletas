@@ -317,7 +317,12 @@
 
             $('#btnNotificaciones').click(function (e) {
                 e.preventDefault();
-                ObtenerNotificaciones();
+                if ($('#awesome-results').is(":visible")) {
+                    $('#awesome-results').hide();
+                }
+                else {
+                    ObtenerNotificaciones();
+                }
             });
 
             ObtenerCantNotificaciones();
@@ -359,39 +364,14 @@
 
                     },
                     success: function (data) {
-                        if (data == "") {
-                            $('#awesome-results').hide();
-                        }
-                        if ($('#awesome-results > #awesome-collection').length) {
-                            $('#awesome-results > #awesome-collection').remove();
-                        }
-                        else {
-                            $('#awesome-results').append('<ul id="awesome-collection" class="collection" style="padding:10px 0px 0px 0px;list-style: none;margin: 0;"></ul>');
-                            $.each(data, function (index) {
-                                $('#awesome-results').show();
-                                $('#awesome-results > #awesome-collection').append('<li class="collection-item" style="cursor: default;"><a href="/Empresas/Notificaciones/Detalle?id=' + data[index].ID + '" style = "padding: 10px 0px 10px 0px;background-color:#f2f2f2;display:inline-block;width: 100%;height: 100%;"><div class="col-xs-12"><p style="display:inline;color:#E61B75;">' + data[index].Titulo + '</p><br/></div></a></li>');
-                            });
-                            //$('#awesome-results > #awesome-collection').append('<li style="height: 20px;background-color:#c2c2c2"><label for="cantProdMostrar">Mostrar: </label><select id="cantProdMostrar" onchange="buscarProductos()"></select></li>');
-                            $('#awesome-results > #awesome-collection').append('<br><li class="collection-item" style="cursor: default;background-color:#c2c2c2"><a href="/Empresas/Notificaciones/index" style = "padding: 10px 0px 10px 0px;display: inline-block;width: 100%;height: 100%;"><div class="col-xs-12"><p style="display:inline;color:#E61B75;">Ver Todos</p><br/></div></a></li>');
-                            //<option value="5">5</option> <option value="10">10</option> <option value="15">15</option>
-                            //if (cant == 5) {
-                            //    $('#cantProdMostrar').append('<option selected value="5">5</option>')
-                            //    $('#cantProdMostrar').append('<option value="10">10</option>')
-                            //    $('#cantProdMostrar').append('<option value="15">15</option>')
-                            //} else if (cant == 10) {
-                            //    $('#cantProdMostrar').append('<option value="5">5</option>')
-                            //    $('#cantProdMostrar').append('<option selected value="10">10</option>')
-                            //    $('#cantProdMostrar').append('<option value="15">15</option>')
-                            //} else if (cant == 15) {
-                            //    $('#cantProdMostrar').append('<option value="5">5</option>')
-                            //    $('#cantProdMostrar').append('<option value="10">10</option>')
-                            //    $('#cantProdMostrar').append('<option selected value="15">15</option>')
-                            //} else {
-                            //    $('#cantProdMostrar').append('<option value="5">5</option>')
-                            //    $('#cantProdMostrar').append('<option value="10">10</option>')
-                            //    $('#cantProdMostrar').append('<option value="15">15</option>')
-                            //}
-                        }
+                        $('#awesome-results > #awesome-collection').remove();
+                        $('#awesome-results').append('<ul id="awesome-collection" class="collection" style="padding:10px 0px 0px 0px;list-style: none;margin: 0;"></ul>');
+                        $('#awesome-results > #awesome-collection').append('<li class="collection-item" style="cursor: default;><div class="col-xs-12"><p style = "padding: 10px 0px 10px 0px;display: inline-block;width: 100%;height: 100%;">Notificaciones</p></div></li>');
+                        $.each(data, function (index) {
+                            $('#awesome-results > #awesome-collection').append('<li class="collection-item" style="cursor: default;"><a href="/Empresas/Notificaciones/Detalle?id=' + data[index].ID + '" style = "padding: 10px 0px 10px 0px;background-color:#f2f2f2;display:inline-block;width: 100%;height: 100%;"><div class="col-xs-12"><p style="display:inline;color:#E61B75;">' + data[index].Titulo + '</p><br/></div></a></li>');
+                        });
+                        $('#awesome-results > #awesome-collection').append('<li class="collection-item" style="cursor: default;background-color:#c2c2c2"><a href="/Empresas/Notificaciones/index" style = "padding: 10px 0px 10px 0px;display: inline-block;width: 100%;height: 100%;"><div class="col-xs-12"><p style="display:inline;color:#E61B75;">Ver Todos</p></div></a></li>');
+                        $('#awesome-results').show();
                     },
                     error: function (xhr) {
 

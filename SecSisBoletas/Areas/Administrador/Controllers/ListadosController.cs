@@ -1383,7 +1383,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
         #endregion
 
         #region Empresas
-        [Authorize(Roles = "Admin, Fiscalizacion")]
+        [Authorize(Roles = "Admin, Fiscalizacion, Finanzas")]
         // GET: Empresa/Empresas
         public ActionResult IndexEmpresa(string sortOrder, string currentFilter, string searchString, int? page, int searchType = 1, int idLocalidad = 0, int idProvincia = 0, int idActividad = 0, int CantMinEmpleados = 0)
         {
@@ -1543,6 +1543,25 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             return View(listadoEmpresas.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult IndexEmpresasSinPagos(int? page)
+        {
+            var IdEmpresasConPagos = (from oEmpresas in db.Empresa
+                                      join oDeclaraciones in db.DeclaracionJurada on oEmpresas.IdEmpresa equals oDeclaraciones.idEmpresa
+                                      join oBoletas in db.BoletaAportes on oDeclaraciones.IdDeclaracionJurada equals oBoletas.IdDeclaracionJurada
+                                      where oBoletas.BoletaPagada == true
+                                      select oEmpresas.IdEmpresa).ToList();
+
+            var EmpresasSinPagos = (from oEmpresas in db.Empresa
+                                    where !IdEmpresasConPagos.Contains(oEmpresas.IdEmpresa)
+                                    select oEmpresas).ToList();
+
+            int pageSize = 7;
+            int pageNumber = (page ?? 1);
+
+            return View(EmpresasSinPagos.ToPagedList(pageNumber, pageSize));
+        }
+
+        [Authorize(Roles = "Admin, Fiscalizacion, Finanzas")]
         public ActionResult NotificarEmpresa(int? id)
         {
             string userId = User.Identity.GetUserId();
@@ -1569,6 +1588,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             return View(notificacion);
         }
 
+        [Authorize(Roles = "Admin, Fiscalizacion, Finanzas")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult NotificarEmpresa(VmNotificacion notificacion)
@@ -1621,6 +1641,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             return View(notificacion);
         }
 
+        [Authorize(Roles = "Admin, Fiscalizacion, Finanzas")]
         public ActionResult NotificarEmpresas(string idSeleccionados = "null")
         {
             List<int> id = new List<int>();
@@ -1660,6 +1681,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             return View(notificacion);
         }
 
+        [Authorize(Roles = "Admin, Fiscalizacion, Finanzas")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult NotificarEmpresas(VmNotificacionEmpresas notificaciones)
@@ -1727,7 +1749,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
         }
 
 
-        [Authorize(Roles = "Admin, Fiscalizacion")]
+        [Authorize(Roles = "Admin, Fiscalizacion, Finanzas")]
         public ActionResult DetailsEmpresa(int? id)
         {
             if (id == null)

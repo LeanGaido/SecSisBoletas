@@ -77,17 +77,17 @@
                         <li>
                             <a href="#" class="waves-effect"><i data-icon="&#xe008;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">LISTADOS<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
+                                <li><a href="@Url.Action("IndexEmpresa","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empresas</span></a></li>
+                                <li><a href="@Url.Action("IndexEmpresasSinPagos", "Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empresas Sin Pagos</span></a></li>
                                 @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion"))
                                 {
-                                    <li><a href="@Url.Action("Usuarios","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Usuarios</span></a></li>
-                                    <li><a href="@Url.Action("IndexEmpresa","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empresas</span></a></li>
                                     <li> <a href="@Url.Action("IndexEmpleados","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empleados</span></a></li>
                                     <li> <a href="@Url.Action("IndexEmpleadosBaja","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empleados de Baja</span></a></li>
                                     <li> <a href="@Url.Action("IndexAfiliados","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Afiliados</span></a></li>
+                                    <li><a href="@Url.Action("Usuarios","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Usuarios</span></a></li>
                                 }
-
                                 <li> <a href="@Url.Action("IndexDeclaracionesJuradas","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">DDJJ</span></a></li>
-                                
+
                                 @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion") || User.IsInRole("Finanzas"))
                                 {
                                     <li> <a href="@Url.Action("IndexBoletaAportes","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Boleta de Aportes</span></a></li>

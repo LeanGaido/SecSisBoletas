@@ -1,0 +1,103 @@
+﻿@model PagedList.IPagedList<DAL.Models.Empresa>
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "Empresas Sin Pagos";
+}
+
+<hr />
+
+@using (Html.BeginForm("NotificarEmpresas", "Listados", FormMethod.Get, new { @class = "col-md-6" }))
+{
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" id="idSeleccionados" name="idSeleccionados" value="" />
+
+    <input type="submit" class="btn btn-primary" value="Imprimir" id="btnNotificarEmpresas" style="display:none" />
+}
+
+
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayName("Razon Social")
+        </th>
+        <th>
+            @Html.DisplayName("Nombre de Fantasia")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Cuit)
+        </th>
+        <th>
+            @Html.DisplayName("Actividad")
+        </th>
+        <th>
+            @Html.DisplayName("Localidad")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().FechaAltaEmpresa)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <input type="checkbox" class="empresasANotificar" value="@item.IdEmpresa" name="idSeleccionados[]" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazonSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreFantasia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cuit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Actividad.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Localidad.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAltaEmpresa)
+            </td>
+            <td>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("DetailsEmpresa", "Listados",new { id = item.IdEmpresa })" target="_blank" class="glyphicon glyphicon-plus"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Detalles</span>
+                </div>
+                <div class="mytooltip tooltip-effect-4">
+                    <a href="@Url.Action("NotificarEmpresa", "Listados",new { id = item.IdEmpresa })" target="_blank" class="glyphicon glyphicon-envelope"></a>
+                    <span class="tooltip-content5 tooltip-item" style="color:black">Notificar</span>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="col-md-12">
+    <input type="button" class="btnNotificarEmpresas btn btn-default" value="Notificar" />
+</div>
+
+<br />
+<span class="clearfix"></span>
+<div style="position :relative;left: 40%;">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("IndexEmpresasSinPagos",
+        new { page }))
+</div>
+
