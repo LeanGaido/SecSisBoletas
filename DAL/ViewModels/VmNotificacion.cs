@@ -17,6 +17,8 @@ namespace DAL.ViewModels
         [Required]
         public int idEmpresa { get; set; }
 
+        public string RazonSocial { get; set; }
+
         public DateTime Fecha { get; set; }
 
         [Required]

@@ -1565,10 +1565,12 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
         {
             List<VmListadoNotificaciones> notificaciones = (from oNotificaciones in db.Notificaciones
                                                             join oNotificacionesEmpresa in db.NotificacionesEmpresa on oNotificaciones.IdNotificacion equals oNotificacionesEmpresa.IdNotificacion
+                                                            join oEmpresa in db.Empresa on oNotificacionesEmpresa.idEmpresa equals oEmpresa.IdEmpresa
                                                             select new VmListadoNotificaciones
                                                             {
                                                                 ID = oNotificaciones.IdNotificacion,
                                                                 EmpresaId = oNotificacionesEmpresa.idEmpresa,
+                                                                RazonSocial = oEmpresa.RazonSocial,
                                                                 Fecha = oNotificaciones.Fecha,
                                                                 Titulo = oNotificaciones.Titulo,
                                                                 Visto = oNotificacionesEmpresa.Visto,
@@ -1584,11 +1586,13 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
         {
             VmNotificacion notificacion = (from oNotificaciones in db.Notificaciones
                                            join oNotificacionesEmpresa in db.NotificacionesEmpresa on oNotificaciones.IdNotificacion equals oNotificacionesEmpresa.IdNotificacion
+                                           join oEmpresa in db.Empresa on oNotificacionesEmpresa.idEmpresa equals oEmpresa.IdEmpresa
                                            where oNotificaciones.IdNotificacion == Id
                                            select new VmNotificacion
                                            {
                                                idNotificacion = oNotificaciones.IdNotificacion,
                                                idEmpresa = oNotificacionesEmpresa.idEmpresa,
+                                               RazonSocial = oEmpresa.RazonSocial,
                                                Fecha = oNotificaciones.Fecha,
                                                Titulo = oNotificaciones.Titulo,
                                                Descripcion = oNotificaciones.Descripcion,
