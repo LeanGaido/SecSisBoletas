@@ -1605,13 +1605,6 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                 return HttpNotFound();
             }
 
-            NotificacionEmpresa notificacionEmpresa = db.NotificacionesEmpresa.Where(x => x.IdNotificacion == notificacion.idNotificacion && x.idEmpresa == notificacion.idEmpresa).FirstOrDefault();
-
-            notificacionEmpresa.Visto = true;
-            notificacionEmpresa.FechaVisto = DateTime.Now;
-
-            db.SaveChanges();
-
             notificacion.ListadoAdjuntos = db.AdjuntosNotificacion.Where(x => x.idNotificacion == notificacion.idNotificacion).ToList();
 
             return View(notificacion);
@@ -1687,6 +1680,8 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                                 idNotificacion = nuevaNotificacion.IdNotificacion,
                                 Adjunto = fileName
                             });
+
+                            db.SaveChanges();
                         }
                     }
                 }
