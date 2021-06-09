@@ -79,6 +79,7 @@
                             <ul class="nav nav-second-level">
                                 <li><a href="@Url.Action("IndexEmpresa","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empresas</span></a></li>
                                 <li><a href="@Url.Action("IndexEmpresasSinPagos", "Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empresas Sin Pagos</span></a></li>
+                                <li><a href="@Url.Action("Notificaciones", "Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Notificaciones</span></a></li>
                                 @if (User.IsInRole("Admin") || User.IsInRole("Fiscalizacion"))
                                 {
                                     <li> <a href="@Url.Action("IndexEmpleados","Listados", new { Area = "Administrador" })" class="waves-effect"> <span class="hide-menu">Empleados</span></a></li>

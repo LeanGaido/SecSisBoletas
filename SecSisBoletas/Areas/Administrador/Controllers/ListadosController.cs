@@ -1561,6 +1561,58 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             return View(EmpresasSinPagos.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult Notificaciones(int? page)
+        {
+            List<VmListadoNotificaciones> notificaciones = (from oNotificaciones in db.Notificaciones
+                                                            join oNotificacionesEmpresa in db.NotificacionesEmpresa on oNotificaciones.IdNotificacion equals oNotificacionesEmpresa.IdNotificacion
+                                                            select new VmListadoNotificaciones
+                                                            {
+                                                                ID = oNotificaciones.IdNotificacion,
+                                                                EmpresaId = oNotificacionesEmpresa.idEmpresa,
+                                                                Fecha = oNotificaciones.Fecha,
+                                                                Titulo = oNotificaciones.Titulo,
+                                                                Visto = oNotificacionesEmpresa.Visto,
+                                                                FechaVisto = oNotificacionesEmpresa.FechaVisto
+                                                            }).ToList();
+            int pageSize = 7;
+            int pageNumber = (page ?? 1);
+
+            return View(notificaciones.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult DetalleNotificacion(int Id)
+        {
+            VmNotificacion notificacion = (from oNotificaciones in db.Notificaciones
+                                           join oNotificacionesEmpresa in db.NotificacionesEmpresa on oNotificaciones.IdNotificacion equals oNotificacionesEmpresa.IdNotificacion
+                                           where oNotificaciones.IdNotificacion == Id
+                                           select new VmNotificacion
+                                           {
+                                               idNotificacion = oNotificaciones.IdNotificacion,
+                                               idEmpresa = oNotificacionesEmpresa.idEmpresa,
+                                               Fecha = oNotificaciones.Fecha,
+                                               Titulo = oNotificaciones.Titulo,
+                                               Descripcion = oNotificaciones.Descripcion,
+                                               Visto = oNotificacionesEmpresa.Visto,
+                                               FechaVisto = oNotificacionesEmpresa.FechaVisto
+                                           }).FirstOrDefault();
+
+            if (notificacion == null)
+            {
+                return HttpNotFound();
+            }
+
+            NotificacionEmpresa notificacionEmpresa = db.NotificacionesEmpresa.Where(x => x.IdNotificacion == notificacion.idNotificacion && x.idEmpresa == notificacion.idEmpresa).FirstOrDefault();
+
+            notificacionEmpresa.Visto = true;
+            notificacionEmpresa.FechaVisto = DateTime.Now;
+
+            db.SaveChanges();
+
+            notificacion.ListadoAdjuntos = db.AdjuntosNotificacion.Where(x => x.idNotificacion == notificacion.idNotificacion).ToList();
+
+            return View(notificacion);
+        }
+
         [Authorize(Roles = "Admin, Fiscalizacion, Finanzas")]
         public ActionResult NotificarEmpresa(int? id)
         {
@@ -1616,19 +1668,22 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
 
                 foreach (var adjunto in notificacion.Adjuntos)
                 {
-                    string fecha = DateTime.Today.ToShortDateString();
-                    fecha = fecha.Replace('/', '-');
-                    string fileName = nuevaNotificacion.IdNotificacion + " - " + notificacion.Titulo + " - " + adjunto.FileName;
-                    string path = Path.Combine(Server.MapPath("~/Areas/Administrador/Content/AdjuntosNotificaciones"),
-                                    Path.GetFileName(fileName));
-                    if (!System.IO.File.Exists(path))
+                    if(adjunto != null)
                     {
-                        adjunto.SaveAs(path);
-                        db.AdjuntosNotificacion.Add(new AdjuntoNotificacion()
+                        string fecha = DateTime.Today.ToShortDateString();
+                        fecha = fecha.Replace('/', '-');
+                        string fileName = nuevaNotificacion.IdNotificacion + " - " + notificacion.Titulo + " - " + adjunto.FileName;
+                        string path = Path.Combine(Server.MapPath("~/Areas/Administrador/Content/AdjuntosNotificaciones"),
+                                        Path.GetFileName(fileName));
+                        if (!System.IO.File.Exists(path))
                         {
-                            idNotificacion = nuevaNotificacion.IdNotificacion,
-                            Adjunto = fileName
-                        });
+                            adjunto.SaveAs(path);
+                            db.AdjuntosNotificacion.Add(new AdjuntoNotificacion()
+                            {
+                                idNotificacion = nuevaNotificacion.IdNotificacion,
+                                Adjunto = fileName
+                            });
+                        }
                     }
                 }
 
@@ -1712,21 +1767,24 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
 
                 foreach (var adjunto in notificaciones.Adjuntos)
                 {
-                    string fecha = DateTime.Today.ToShortDateString();
-                    fecha = fecha.Replace('/', '-');
-                    string fileName = nuevaNotificacion.IdNotificacion + " - " + nuevaNotificacion.Titulo + " - " + adjunto.FileName;
-                    string path = Path.Combine(Server.MapPath("~/Areas/Administrador/Content/AdjuntosNotificaciones"),
-                                    Path.GetFileName(fileName));
-                    if (!System.IO.File.Exists(path))
+                    if (adjunto != null)
                     {
-                        adjunto.SaveAs(path);
-                        db.AdjuntosNotificacion.Add(new AdjuntoNotificacion()
+                        string fecha = DateTime.Today.ToShortDateString();
+                        fecha = fecha.Replace('/', '-');
+                        string fileName = nuevaNotificacion.IdNotificacion + " - " + nuevaNotificacion.Titulo + " - " + adjunto.FileName;
+                        string path = Path.Combine(Server.MapPath("~/Areas/Administrador/Content/AdjuntosNotificaciones"),
+                                        Path.GetFileName(fileName));
+                        if (!System.IO.File.Exists(path))
                         {
-                            idNotificacion = nuevaNotificacion.IdNotificacion,
-                            Adjunto = fileName
-                        });
+                            adjunto.SaveAs(path);
+                            db.AdjuntosNotificacion.Add(new AdjuntoNotificacion()
+                            {
+                                idNotificacion = nuevaNotificacion.IdNotificacion,
+                                Adjunto = fileName
+                            });
 
-                        db.SaveChanges();
+                            db.SaveChanges();
+                        }
                     }
                 }
 

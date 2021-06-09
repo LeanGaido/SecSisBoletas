@@ -43,7 +43,7 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
 
             VmNotificacion notificacion = (from oNotificaciones in db.Notificaciones
                                            join oNotificacionesEmpresa in db.NotificacionesEmpresa on oNotificaciones.IdNotificacion equals oNotificacionesEmpresa.IdNotificacion
-                                           where oNotificacionesEmpresa.idEmpresa == IdEmpresa
+                                           where oNotificaciones.IdNotificacion == Id && oNotificacionesEmpresa.idEmpresa == IdEmpresa
                                            select new VmNotificacion
                                            {
                                                idNotificacion = oNotificaciones.IdNotificacion,

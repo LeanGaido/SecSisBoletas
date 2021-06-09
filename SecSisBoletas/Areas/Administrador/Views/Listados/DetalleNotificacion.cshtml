@@ -1,0 +1,55 @@
+﻿@model DAL.ViewModels.VmNotificacion
+
+@{
+    ViewBag.Title = "Notificacion " + Model.Titulo;
+}
+
+<h2 class="text-left">@ViewBag.Title</h2>
+
+<div>
+    <h4>@Model.Titulo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Fecha")
+        </dt>
+
+        <dd>
+            @Model.Fecha.ToString("dd/MM/yyyy HH:mm")
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayName("Mensaje")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+    </dl>
+</div>
+
+@if (Model.ListadoAdjuntos != null && Model.ListadoAdjuntos.Count > 0)
+{
+    <div>
+        <h4>Adjuntos</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            @foreach (var adjunto in Model.ListadoAdjuntos)
+            {
+                <dt>
+                    @Html.DisplayName("Nombre")
+                </dt>
+
+                <dd>
+                    <a href="~/Areas/Administrador/Content/AdjuntosNotificaciones/@adjunto.Adjunto" download>@adjunto.Adjunto</a>
+                </dd>
+            }
+        </dl>
+    </div>
+}
+
+<div class="form-actions no-color">
+    <div class="col-md-2">
+        @Html.ActionLink("VOLVER", "Index", null, new { @class = "btn btn-default" })
+    </div>
+</div>
