@@ -1,7 +1,24 @@
 ﻿@model PagedList.IPagedList<DAL.ViewModels.VmListadoNotificaciones>
 @using PagedList.Mvc;
 
+
+
 <hr />
+
+
+@using (Html.BeginForm("Notificaciones", "Listados", FormMethod.Get, new { @class = "col-md-12" }))
+{
+    <div class="col-md-12">
+        <div class="col-md-7">
+            <div style="display:inline-block">
+                @Html.DropDownList("idEmpresa", null, new { @class = "selectpicker", title = "Seleccione una Emprea para Filtrar", data_live_search = true })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <input type="submit" class="btn btn-primary" value="Buscar" />
+    </div>
+}
 
 <table class="table">
     <tr>

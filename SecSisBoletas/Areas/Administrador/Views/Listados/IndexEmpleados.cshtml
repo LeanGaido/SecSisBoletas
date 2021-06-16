@@ -7,7 +7,6 @@
 
 <hr />
 
-
 @using (Html.BeginForm("IndexEmpleados", "Listados", FormMethod.Get, new { @class = "col-md-12" }))
 {
     <div class="col-md-12">
@@ -16,8 +15,8 @@
                 @Html.DropDownList("idEmpresa", null, new { @class = "selectpicker", title = "Seleccione una Emprea para Filtrar", data_live_search = true })
             </div>
             @*<div style="display:inline-block">
-                <input type="number" placeholder="Cant. Min. de Empleados" class="form-control" />
-            </div>*@
+                    <input type="number" placeholder="Cant. Min. de Empleados" class="form-control" />
+                </div>*@
             <div style="display:inline-block">
                 @Html.ActionLink("Imprimir", "ImprimirEmpleados", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, idEmpresa = ViewBag.idEmpresaSeleccionada }, new { @class = "btn btn-default" })
             </div>
