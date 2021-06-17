@@ -1561,18 +1561,22 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             return View(EmpresasSinPagos.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult Notificaciones(int? page, int idEmpresa = 0, bool Vistas = false)
+        public ActionResult Notificaciones(int? page, int idEmpresa = 0, int Vistas = 0)
         {
             List<Empresa> empresas = db.Empresa.Where(x => x.FechaBajaEmpresa == null).OrderBy(x => x.RazonSocial).ToList();
 
             empresas.Insert(0, new Empresa() { IdEmpresa = 0, RazonSocial = "Todas" });
 
+            bool notificacionesVistas = (Vistas == 1) ? true : false;
+
             ViewBag.idEmpresa = new SelectList(empresas, "IdEmpresa", "RazonSocial", idEmpresa);
+            ViewBag.idEmpresaSeleccionada = idEmpresa;
+            ViewBag.Vistas = Vistas;
 
             List<VmListadoNotificaciones> notificaciones = (from oNotificaciones in db.Notificaciones
                                                             join oNotificacionesEmpresa in db.NotificacionesEmpresa on oNotificaciones.IdNotificacion equals oNotificacionesEmpresa.IdNotificacion
                                                             join oEmpresa in db.Empresa on oNotificacionesEmpresa.idEmpresa equals oEmpresa.IdEmpresa
-                                                            where oNotificacionesEmpresa.Visto == Vistas && ((idEmpresa != 0 && oNotificacionesEmpresa.idEmpresa == idEmpresa) || idEmpresa == 0) 
+                                                            where oNotificacionesEmpresa.Visto == notificacionesVistas && ((idEmpresa != 0 && oNotificacionesEmpresa.idEmpresa == idEmpresa) || idEmpresa == 0) 
                                                             select new VmListadoNotificaciones
                                                             {
                                                                 ID = oNotificaciones.IdNotificacion,

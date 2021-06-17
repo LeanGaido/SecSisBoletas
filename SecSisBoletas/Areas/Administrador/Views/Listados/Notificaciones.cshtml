@@ -13,6 +13,20 @@
             <div style="display:inline-block">
                 @Html.DropDownList("idEmpresa", null, new { @class = "selectpicker", title = "Seleccione una Emprea para Filtrar", data_live_search = true })
             </div>
+            <div style="display:inline-block">
+                <select class="form-control" name="Vistas" id="Vistas">
+                    @if (ViewBag.Vistas == 1)
+                    {
+                        <option selected value="1">Notificaciones Vistas</option>
+                        <option value="0">Notificaciones Sin Ver</option>
+                    }
+                    else
+                    {
+                        <option value="1">Notificaciones Vistas</option>
+                        <option selected value="0">Notificaciones Sin Ver</option>
+                    }
+                </select>
+            </div>
         </div>
     </div>
     <div class="col-md-12">
@@ -79,6 +93,6 @@
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Notificaciones",
-        new { page }))
+        new { page, Vistas = ViewBag.Vistas, idEmpresa = ViewBag.idEmpresaSeleccionada }))
 </div>
 
