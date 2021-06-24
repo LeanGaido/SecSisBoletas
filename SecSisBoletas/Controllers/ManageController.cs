@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using DAL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -17,6 +18,8 @@ namespace SecSisBoletas.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        private SecModel db = new SecModel();
 
         public ManageController()
         {
@@ -366,6 +369,16 @@ namespace SecSisBoletas.Controllers
                     user.EmailConfirmed = false;
 
                     UserManager.Update(user);
+
+                    var ClaimIdEmpresa = user.Claims.Where(x => x.ClaimType == "IdEmpresa").FirstOrDefault();
+
+                    int IdEmpresa = int.Parse(ClaimIdEmpresa.ClaimValue);
+
+                    var empresa = db.Empresa.Find(IdEmpresa);
+
+                    empresa.Email = newEmail;
+
+                    db.SaveChanges();
 
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
