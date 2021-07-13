@@ -21,7 +21,7 @@
     <div class="form-group col-md-12">
         @Html.LabelFor(model => model.Titulo, "Titulo", htmlAttributes: new { @class = "control-label col-md-1" })
         <div class="col-md-5">
-            @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control", required = "true" } })
             @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -29,7 +29,7 @@
     <div class="form-group col-md-12">
         @Html.LabelFor(model => model.Descripcion, "Descripcion", htmlAttributes: new { @class = "control-label col-md-1" })
         <div class="col-md-5">
-            <textarea class="form-control" name="Descripcion" id="Descripcion">@Model.Descripcion</textarea>
+            <textarea name="Descripcion" id="Descripcion" required>@Model.Descripcion</textarea>
             @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -95,5 +95,6 @@
     }
     $(function () {
         bs_input_file();
+        CKEDITOR.replace('Descripcion');
     });
 </script>

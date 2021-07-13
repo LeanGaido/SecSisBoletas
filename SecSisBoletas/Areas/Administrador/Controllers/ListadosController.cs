@@ -1609,6 +1609,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
 
         [Authorize(Roles = "Admin, Fiscalizacion, Finanzas")]
         [HttpPost]
+        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult NotificarEmpresa(VmNotificacion notificacion)
         {
@@ -1714,6 +1715,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
 
         [Authorize(Roles = "Admin, Fiscalizacion, Finanzas")]
         [HttpPost]
+        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult NotificarEmpresas(VmNotificacionEmpresas notificaciones)
         {
