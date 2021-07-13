@@ -1193,7 +1193,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                                                                        .Include(d => d.DeclaracionJurada)
                                                                        .Include(d => d.EmpleadoEmpresa)
                                                                        .Include(d => d.Jornada)
-                                                                       .Where(x => x.IdDeclaracionJurada == id && x.EmpleadoEmpresa.FechaBaja == null));
+                                                                       .Where(x => x.IdDeclaracionJurada == id/* && x.EmpleadoEmpresa.FechaBaja == null*/));
             ViewBag.IdDeclaracionJurada = id;
 
             foreach (DetalleDeclaracionJurada detalle in detalleDeclaracionJurada)
@@ -1204,47 +1204,6 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                     totalAportes += Math.Round(((detalle.SueldoBase / 100) * 5), 2);
                     detalle.EsAfiliado = true;
                 }
-                //var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == detalle.IdEmpleadoEmpresa).FirstOrDefault();
-                //if (afiliado != null)
-                //{
-                //    if (afiliado.FechaAlta.Year < declaracionJurada.anio)
-                //    {
-                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > declaracionJurada.anio || (afiliado.FechaBaja.Value.Year == declaracionJurada.anio && afiliado.FechaBaja.Value.Month >= declaracionJurada.mes))
-                //        {
-                //            if(detalle.idJornadaLaboral == 1 || detalle.idJornadaLaboral == 2)
-                //            {
-                //                totalAportes += Math.Round(((detalle.SueldoBase / 100) * 5), 2);
-                //            }
-                //            else
-                //            {
-                //                totalAportes += Math.Round(((detalle.Sueldo / 100) * 5), 2);
-                //            }
-                //            totalSueldosBase += detalle.SueldoBase;
-                //            detalle.EsAfiliado = true;
-                //        }
-                //    }
-                //    else if (afiliado.FechaAlta.Year == declaracionJurada.anio && afiliado.FechaAlta.Month <= declaracionJurada.mes)
-                //    {
-                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > declaracionJurada.anio || (afiliado.FechaBaja.Value.Year == declaracionJurada.anio && afiliado.FechaBaja.Value.Month >= declaracionJurada.mes))
-                //        {
-                //            if (detalle.idJornadaLaboral == 1 || detalle.idJornadaLaboral == 2)
-                //            {
-                //                totalAportes += Math.Round(((detalle.SueldoBase / 100) * 5), 2);
-                //            }
-                //            else
-                //            {
-                //                totalAportes += Math.Round(((detalle.Sueldo / 100) * 5), 2);
-                //            }
-                //            totalSueldosBase += detalle.SueldoBase;
-                //            detalle.EsAfiliado = true;
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    totalAportes += Math.Round(((detalle.Sueldo / 100) * 2), 2);
-                //    detalle.EsAfiliado = false;
-                //}
                 detalle.LicenciaEmpleado = false;
                 foreach (var licencia in db.LicenciaEmpleado.Where(x => x.IdEmpleadoEmpresa == detalle.IdEmpleadoEmpresa))
                 {
@@ -1713,14 +1672,21 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             List<BoletaAportes> BoletasAportesPagadas = new List<BoletaAportes>();
             if (!string.IsNullOrEmpty(idSeleccionados))
             {
-                string llave = idSeleccionados.Substring(0, 1);
-                if (llave == "[")
+                if(idSeleccionados != "TodasLasEmpresas")
                 {
-                    id.AddRange(System.Web.Helpers.Json.Decode<List<int>>(idSeleccionados));
+                    string llave = idSeleccionados.Substring(0, 1);
+                    if (llave == "[")
+                    {
+                        id.AddRange(System.Web.Helpers.Json.Decode<List<int>>(idSeleccionados));
+                    }
+                    else
+                    {
+                        id.Add(System.Web.Helpers.Json.Decode<int>(idSeleccionados));
+                    }
                 }
                 else
                 {
-                    id.Add(System.Web.Helpers.Json.Decode<int>(idSeleccionados));
+                    id = db.Empresa.Where(x => x.FechaBajaEmpresa == null).Select(x => x.IdEmpresa).ToList();
                 }
             }
 
@@ -1755,14 +1721,21 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             if (ModelState.IsValid)
             {
                 notificaciones.idEmpresa = new List<int>();
-                string llave = notificaciones.idEmpresaSeleccionado.Substring(0, 1);
-                if (llave == "[")
+                if (notificaciones.idEmpresaSeleccionado != "TodasLasEmpresas")
                 {
-                    notificaciones.idEmpresa.AddRange(System.Web.Helpers.Json.Decode<List<int>>(notificaciones.idEmpresaSeleccionado));
+                    string llave = notificaciones.idEmpresaSeleccionado.Substring(0, 1);
+                    if (llave == "[")
+                    {
+                        notificaciones.idEmpresa.AddRange(System.Web.Helpers.Json.Decode<List<int>>(notificaciones.idEmpresaSeleccionado));
+                    }
+                    else
+                    {
+                        notificaciones.idEmpresa.Add(System.Web.Helpers.Json.Decode<int>(notificaciones.idEmpresaSeleccionado));
+                    }
                 }
                 else
                 {
-                    notificaciones.idEmpresa.Add(System.Web.Helpers.Json.Decode<int>(notificaciones.idEmpresaSeleccionado));
+                    notificaciones.idEmpresa.AddRange(db.Empresa.Where(x => x.FechaBajaEmpresa == null).Select(x => x.IdEmpresa).ToList());
                 }
 
                 Notificacion nuevaNotificacion = new Notificacion();
