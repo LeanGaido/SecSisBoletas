@@ -684,6 +684,22 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
 
                                 return View(detalleDeclaracionJurada);
                             }
+
+                            if (!ddjj.comprobarSueldoBase(detalleDeclaracionJurada.IdEmpleadoEmpresa, declaracionJurada.IdDeclaracionJurada, detalleDeclaracionJurada.SueldoBase))
+                            {
+                                TempData["MensajeError"] = "El Sueldo 5% ingresado es menor que el minimo.";
+                                ModelState.AddModelError("SueldoBase", "El Sueldo 5% ingresado es menor que el minimo.");
+                                return View(detalleDeclaracionJurada);
+                                //return RedirectToAction("Index", "DetallesDeclaracionJurada", new { id = detalleDeclaracionJurada.IdDeclaracionJurada, idEmpleadoEmpresa = detalleDeclaracionJurada.IdEmpleadoEmpresa });
+                            }
+
+                            if (detalleDeclaracionJurada.SueldoBase < detalleDeclaracionJurada.Sueldo)
+                            {
+                                TempData["MensajeError"] = "El Sueldo 5% no puede ser menor que el sueldo 2% ingresado.";
+                                ModelState.AddModelError("SueldoBase", "El Sueldo 5% no puede ser menor que el sueldo 2% ingresado.");
+                                return View(detalleDeclaracionJurada);
+                                //return RedirectToAction("Index", "DetallesDeclaracionJurada", new { id = detalleDeclaracionJurada.IdDeclaracionJurada, idEmpleadoEmpresa = detalleDeclaracionJurada.IdEmpleadoEmpresa });
+                            }
                         }
                     }
                     else if (afiliado.FechaAlta.Year == declaracionJurada.anio && afiliado.FechaAlta.Month <= declaracionJurada.mes)
@@ -696,6 +712,22 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
                                 ModelState.AddModelError("SueldoBase", "El Sueldo ingresado tiene que ser mayor que 0.");
 
                                 return View(detalleDeclaracionJurada);
+                            }
+
+                            if (!ddjj.comprobarSueldoBase(detalleDeclaracionJurada.IdEmpleadoEmpresa, declaracionJurada.IdDeclaracionJurada, detalleDeclaracionJurada.SueldoBase))
+                            {
+                                TempData["MensajeError"] = "El Sueldo 5% ingresado es menor que el minimo.";
+                                ModelState.AddModelError("SueldoBase", "El Sueldo 5% ingresado es menor que el minimo.");
+                                return View(detalleDeclaracionJurada);
+                                //return RedirectToAction("Index", "DetallesDeclaracionJurada", new { id = detalleDeclaracionJurada.IdDeclaracionJurada, idEmpleadoEmpresa = detalleDeclaracionJurada.IdEmpleadoEmpresa });
+                            }
+
+                            if (detalleDeclaracionJurada.SueldoBase < detalleDeclaracionJurada.Sueldo)
+                            {
+                                TempData["MensajeError"] = "El Sueldo 5% no puede ser menor que el sueldo 2% ingresado.";
+                                ModelState.AddModelError("SueldoBase", "El Sueldo 5% no puede ser menor que el sueldo 2% ingresado.");
+                                return View(detalleDeclaracionJurada);
+                                //return RedirectToAction("Index", "DetallesDeclaracionJurada", new { id = detalleDeclaracionJurada.IdDeclaracionJurada, idEmpleadoEmpresa = detalleDeclaracionJurada.IdEmpleadoEmpresa });
                             }
                         }
                     }

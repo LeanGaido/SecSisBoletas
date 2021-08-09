@@ -1928,6 +1928,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             }
 
             var empresa = db.Empresa.Find(usuario.IdEmpresa);
+            empresa.Email = usuario.Email;
 
             if (!string.IsNullOrEmpty(usuario.RazonSocial) && usuario.RazonSocial.Trim() != empresa.RazonSocial.Trim())
             {
