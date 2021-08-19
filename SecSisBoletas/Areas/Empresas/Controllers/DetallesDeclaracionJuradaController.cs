@@ -371,6 +371,7 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdDetalleDeclaracionJurada,IdDeclaracionJurada,IdEmpleadoEmpresa,idCategoria,idJornadaLaboral,IdLiquidacionProporcional,Sueldo,SueldoBase")] DetalleDeclaracionJurada detalleDeclaracionJurada)
         {
+            #region DatosParaElReturn
             var boleta = db.BoletaAportes.Where(x => x.IdDeclaracionJurada == detalleDeclaracionJurada.IdDeclaracionJurada && x.BoletaPagada == true && x.DeBaja == false).FirstOrDefault();
             if (boleta != null)
             {
@@ -424,12 +425,13 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             ViewBag.IdEmpleadoEmpresa = new SelectList(empleadosRestantes, "idEmpleadoEmpresa", "Empleado.Nombre", detalleDeclaracionJurada.IdEmpleadoEmpresa);
             ViewBag.idJornadaLaboral = new SelectList(db.Jornada, "IdJornada", "Descripcion", detalleDeclaracionJurada.idJornadaLaboral);
             ViewBag.IdLiquidacionProporcional = new SelectList(db.LiquidacionProporcional, "idLiquidacionProporcional", "Descripcion", detalleDeclaracionJurada.IdLiquidacionProporcional);
+            #endregion
 
             TempData["MensajeError"] = "";
 
-            if (db.BoletaAportes.Where(x => x.IdDeclaracionJurada == detalleDeclaracionJurada.IdDeclaracionJurada && x.BoletaPagada).FirstOrDefault() != null)
+            if (db.BoletaAportes.Where(x => x.IdDeclaracionJurada == detalleDeclaracionJurada.IdDeclaracionJurada && x.DeBaja == false).FirstOrDefault() != null)
             {
-                TempData["MensajeError"] = "No Puede Declarar Empleados en una declaracion que ya tiene una boleta generada y pagada.";
+                TempData["MensajeError"] = "No Puede Declarar Empleados en una declaracion que ya tiene una boleta generada";
                 return RedirectToAction("Index", "DetallesDeclaracionJurada", new { id = detalleDeclaracionJurada.IdDeclaracionJurada, idEmpleadoEmpresa = detalleDeclaracionJurada.IdEmpleadoEmpresa });
             }
 

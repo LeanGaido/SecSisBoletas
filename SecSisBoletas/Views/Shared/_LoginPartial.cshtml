@@ -6,14 +6,14 @@
     {
         @Html.AntiForgeryToken()
         <ul class="nav navbar-top-links navbar-right pull-right">
-            <li class="dropdown">
+            @*<li class="dropdown">
                 <div class="awesome-container white z-depth-1" style="padding-top:8px">
-                    <a class="dropdown-toggle profile-pic" href="#" id="btnNotificaciones"><span style="color:#fff;font-size:20px;" class="glyphicon glyphicon-bell"></span><span style="position: absolute; top: -7px; left: 17px;" id="cantNotifcaciones"></span></a>
+                    <a class="dropdown-toggle profile-pic" href="#" id="btnNotificaciones"><span style="color:#fff;font-size:20px;" class="glyphicon glyphicon-bell"></span></a>
                     <div id="awesome-results" class="awesome-results">
                         
                     </div>
                 </div>
-            </li>
+            </li>*@
             <li class="dropdown">
                 @{
                     var claimIdEmpresa = ((ClaimsIdentity)User.Identity).FindFirst("IdEmpresa");

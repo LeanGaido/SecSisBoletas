@@ -1,60 +1,67 @@
 ﻿@model DAL.Models.Afiliado
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Estas seguro de querer dar de baja a este afiliado?";
 }
 
-<h2 class="text-left">Dar de Baja</h2>
-
-<h3>Estas seguro de querer dar de baja a este afiliado?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.EmpleadoEmpresa.Empleado.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EmpleadoEmpresa.Empleado.Apellido), @Html.DisplayFor(model => model.EmpleadoEmpresa.Empleado.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaAlta)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaAlta)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <span class="text text-danger">@ViewBag.MensajeError</span>
-        <div class="row">
-            <div class="col-md-offset-1 col-md-1">
-                @Html.LabelFor(model => model.FechaBaja)
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <h3 class="text-center">@ViewBag.Title</h3>
+            <hr />
+            <div class="alert alert-danger">
+                <h3 class="text-center">Sr. Empleador: Antes de dar de baja a un afiliado (5%) recuerde que el empleado debe de gestionar el tramite en Sede Sindical donde la empresa sera notificada por la fecha de cese de afiliación, si estos pasos no son cumplimentados dichos aportes pueden ser reclamados</h3>
             </div>
-            <div class="col-md-4">
-                <input type="date" name="FechaBaja" id="FechaBaja" />
-                @Html.ValidationMessageFor(model => model.FechaBaja)
-                <br /><br />
+            <div>
+                <hr />
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <span class="text text-danger">@ViewBag.MensajeError</span>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.EmpleadoEmpresa.Empleado.Nombre)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.EmpleadoEmpresa.Empleado.Apellido), @Html.DisplayFor(model => model.EmpleadoEmpresa.Empleado.Nombre)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.FechaAlta)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.FechaAlta)
+                        </dd>
+
+                        <dt>
+                            @Html.LabelFor(model => model.FechaBaja)
+                        </dt>
+
+                        <dd>
+                            <input type="date" name="FechaBaja" id="FechaBaja" />
+                            @Html.ValidationMessageFor(model => model.FechaBaja)
+                        </dd>
+
+                    </dl>
+
+                    <div class="row">
+                        <div class="form-actions no-color">
+                            <div class="col-md-2">
+                                <input type="submit" id="submit" value="ELIMINAR" class="btn btn-default" />
+                            </div>
+                            <div class="pull-right col-md-2">
+                                @Html.ActionLink("VOLVER", "Index", new { id = ViewBag.idDeclaracion }, new { @class = "btn btn-default" })
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-
-        <div class="row">
-            <div class="form-actions no-color">
-                <div class="col-md-2">
-                    <input type="submit" id="submit" value="ELIMINAR" class="btn btn-default" />
-                </div>
-                <div class="col-md-2">
-                    @Html.ActionLink("VOLVER", "Index", new { id = ViewBag.idDeclaracion }, new { @class = "btn btn-default" })
-                </div>
-            </div>
-        </div>
-    }
+    </div>
 </div>
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>

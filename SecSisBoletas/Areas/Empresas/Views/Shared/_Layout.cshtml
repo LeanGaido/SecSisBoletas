@@ -207,6 +207,12 @@
                     <ul class="nav" id="side-menu">
                         <li class="nav-small-cap m-t-10">--- Menú Principal</li>
                         <li><a href="~/Empresas/home/index" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu">HOME</span></a></li>
+                        <li style="background-color: #B22D00;">
+                            <a href="#" class="waves-effect"><i data-icon="A" style="color: #fff" class="linea-icon linea-elaborate fa-fw"></i> <span class="hide-menu" style="color:#fff">NOTIFICACIONES <span style="position: absolute; top: 1px; left: 150px; color: #fff;" id="cantNotifcaciones"></span><span class="fa arrow"></span></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>@Html.ActionLink("Ver Todas las Notificaciones", "Index", "Notificaciones", null, new { Style = "color:#fff" })</li>
+                            </ul>
+                        </li>
                         <li>
                             <a href="#" class="waves-effect"><i data-icon="A" class="linea-icon linea-elaborate fa-fw"></i> <span class="hide-menu">INSTRUCTIVO DE USO<span class="fa arrow"></span></span></a>
                             <ul class="nav nav-second-level">
