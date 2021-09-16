@@ -37,10 +37,10 @@
             @Html.DisplayNameFor(model => model.First().Jornada.Descripcion)
         </th>
         <th>
-            ¿En Licencia?
+            Direccion
         </th>
         <th>
-            ¿Liquidacion Proporcional?
+            ¿En Licencia?
         </th>
         <th>
             @Html.DisplayName("Sueldo 2%")
@@ -77,17 +77,10 @@
                 @Html.DisplayFor(modelItem => item.Jornada.Descripcion)
             </td>
             <td>
-                @if (item.LicenciaEmpleado)
-                {
-                    <span>Si</span>
-                }
-                else
-                {
-                    <span>No</span>
-                }
+                @item.EmpleadoEmpresa.Empleado.Calle @item.EmpleadoEmpresa.Empleado.Altura
             </td>
             <td>
-                @if (item.LiquidacionProporcional)
+                @if (item.LicenciaEmpleado)
                 {
                     <span>Si</span>
                 }

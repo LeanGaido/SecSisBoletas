@@ -925,6 +925,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             var detalleDeclaracionJurada = (db.DetalleDeclaracionJurada.Include(d => d.Categoria)
                                                                        .Include(d => d.DeclaracionJurada)
                                                                        .Include(d => d.EmpleadoEmpresa)
+                                                                       .Include(d => d.EmpleadoEmpresa.Empleado)
                                                                        .Include(d => d.Jornada)
                                                                        .Where(x => x.IdDeclaracionJurada == id /*&& x.EmpleadoEmpresa.FechaBaja == null*/));
             ViewBag.IdDeclaracionJurada = id;
