@@ -37,7 +37,7 @@
             @Html.DisplayNameFor(model => model.First().Jornada.Descripcion)
         </th>
         <th>
-            Direccion
+            Fecha de Alta
         </th>
         <th>
             ¿En Licencia?
@@ -77,7 +77,7 @@
                 @Html.DisplayFor(modelItem => item.Jornada.Descripcion)
             </td>
             <td>
-                @item.EmpleadoEmpresa.Empleado.Calle @item.EmpleadoEmpresa.Empleado.Altura
+                @item.EmpleadoEmpresa.FechaAlta.ToString("dd/MM/yyyy")
             </td>
             <td>
                 @if (item.LicenciaEmpleado)
