@@ -141,6 +141,9 @@
                 <table class="table table-bordered">
                     <tr>
                         <th>
+                            Nombre de la Empresa
+                        </th>
+                        <th>
                             Nombre del Empleado
                         </th>
                         <th>
@@ -162,6 +165,7 @@
                     @foreach (var emp in Model)
                     {
                         <tr>
+                            <td>@emp.NombreEmpresa</td>
                             <td>@emp.NombreEmpleado</td>
                             <td>@emp.CuilEmpleado</td>
                             <td>@emp.LocalidadEmpleado</td>
