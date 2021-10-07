@@ -3426,24 +3426,25 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             ViewBag.End = End;
             List<VmEmpleados> listaEmpleados = new List<VmEmpleados>();
 
-            var empleados = db.EmpleadoEmpresa.Include(t => t.Empleado).Where(x => x.EsAfiliado && x.FechaAlta > Start && x.FechaAlta < End).ToList();
+            var afiliados = db.Afiliado.Include(t => t.EmpleadoEmpresa).Include(t => t.EmpleadoEmpresa.Empleado).Include(t => t.EmpleadoEmpresa.Empresa).Where(x => x.FechaBaja > Start && x.FechaBaja < End).ToList();
 
-            if (empleados.Count > 0)
+            if (afiliados.Count > 0)
             {
-                foreach (var empleado in empleados)
+                foreach (var afiliado in afiliados)
                 {
-                    var empEmp = db.Empleado.Where(x => x.IdEmpleado == empleado.idEmpleado).FirstOrDefault();
+                    var empEmp = db.Empleado.Where(x => x.IdEmpleado == afiliado.EmpleadoEmpresa.idEmpleado).FirstOrDefault();
                     if (empEmp != null)
                     {
                         if (!empEmp.EsAfiliado)
                         {
                             VmEmpleados vmEmp = new VmEmpleados();
+                            vmEmp.NombreEmpresa = afiliado.EmpleadoEmpresa.Empresa.RazonSocial;
                             vmEmp.NombreEmpleado = empEmp.Apellido + " " + empEmp.Nombre;
                             vmEmp.CuilEmpleado = empEmp.Cuil;
                             vmEmp.LocalidadEmpleado = empEmp.Localidad.Nombre;
                             vmEmp.ProvinciaEmpleado = empEmp.Localidad.Provincia.Nombre;
-                            vmEmp.CategoríaEmpleado = empleado.Categoria.Descripcion;
-                            vmEmp.JornadaEmpleado = empleado.Jornada.Descripcion;
+                            vmEmp.CategoríaEmpleado = afiliado.EmpleadoEmpresa.Categoria.Descripcion;
+                            vmEmp.JornadaEmpleado = afiliado.EmpleadoEmpresa.Jornada.Descripcion;
 
                             listaEmpleados.Add(vmEmp);
                         }
@@ -3467,8 +3468,6 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             List<VmEmpleados> listaEmpleados = new List<VmEmpleados>();
 
             var afiliados = db.Afiliado.Include(t => t.EmpleadoEmpresa).Include(t => t.EmpleadoEmpresa.Empleado).Include(t => t.EmpleadoEmpresa.Empresa).Where(x => x.FechaBaja > Start && x.FechaBaja < End).ToList();
-
-            var empleados = db.EmpleadoEmpresa.Include(t => t.Empleado).Where(x => x.EsAfiliado && x.FechaBaja > Start && x.FechaBaja < End).ToList();
 
             if (afiliados.Count > 0)
             {
