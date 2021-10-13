@@ -299,9 +299,11 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             ViewBag.IdDeclaracionJurada = new SelectList(declaracionesJuradas, "IdDeclaracionJurada", "MesAnio", boletaAportes.IdDeclaracionJurada);
 
             int cantEmpleados = db.EmpleadoEmpresa.Where(x => x.idEmpresa == IdEmpresa &&
-                                                              x.FechaAlta.Month <= boletaAportes.MesBoleta &&
-                                                              x.FechaAlta.Year <= boletaAportes.AnioBoleta &&
-                                                              (x.FechaBaja.Value == null)).Count();
+                                                              (x.FechaAlta.Year < boletaAportes.AnioBoleta ||
+                                                              (x.FechaAlta.Year == boletaAportes.AnioBoleta && x.FechaAlta.Month <= boletaAportes.MesBoleta)) &&
+                                                              (x.FechaBaja.Value == null || 
+                                                              (x.FechaBaja.Value.Year > boletaAportes.AnioBoleta || 
+                                                              (x.FechaBaja.Value.Year == boletaAportes.AnioBoleta && x.FechaBaja.Value.Month > boletaAportes.MesBoleta)))).Count();
 
             int cantDetalleDeclaracion = db.DetalleDeclaracionJurada.Include(t => t.DeclaracionJurada)
                                                                     .Include(t => t.EmpleadoEmpresa)
@@ -342,29 +344,6 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
                     sueldos5 += detalle.SueldoBase;
                     count5++;
                 }
-
-                //var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == empEmpAux.idEmpleadoEmpresa).FirstOrDefault();
-                //if (afiliado != null)
-                //{
-                //    if (afiliado.FechaAlta.Year < ddjj.anio)
-                //    {
-                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
-                //        {
-                //            count5++;
-                //            sueldos5 += detalle.SueldoBase;
-                //            boletaAportes.TotalSueldos5 += detalle.SueldoBase;
-                //        }
-                //    }
-                //    else if (afiliado.FechaAlta.Year == ddjj.anio && afiliado.FechaAlta.Month <= ddjj.mes)
-                //    {
-                //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > ddjj.anio || (afiliado.FechaBaja.Value.Year == ddjj.anio && afiliado.FechaBaja.Value.Month >= ddjj.mes))
-                //        {
-                //            count5++;
-                //            sueldos5 += detalle.SueldoBase;
-                //            boletaAportes.TotalSueldos5 += detalle.SueldoBase;
-                //        }
-                //    }
-                //}
             }
 
             boletaAportes.CantEmpleados = count2;
