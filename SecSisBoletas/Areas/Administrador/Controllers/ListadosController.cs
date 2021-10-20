@@ -1203,6 +1203,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                 if (detalle.SueldoBase > 0)
                 {
                     totalAportes += Math.Round(((detalle.SueldoBase / 100) * 5), 2);
+                    totalSueldosBase += detalle.SueldoBase;
                     detalle.EsAfiliado = true;
                 }
                 detalle.LicenciaEmpleado = false;
@@ -3445,6 +3446,8 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                             vmEmp.ProvinciaEmpleado = empEmp.Localidad.Provincia.Nombre;
                             vmEmp.CategoríaEmpleado = afiliado.EmpleadoEmpresa.Categoria.Descripcion;
                             vmEmp.JornadaEmpleado = afiliado.EmpleadoEmpresa.Jornada.Descripcion;
+                            vmEmp.FechaAltaAfiliado = afiliado.FechaAlta.ToString("dd/MM/yyyy");
+                            //vmEmp.FechaBajaAfiliado = afiliado.FechaBaja.Value.ToString("dd/MM/yyyy");
 
                             listaEmpleados.Add(vmEmp);
                         }
@@ -3486,8 +3489,10 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                             vmEmp.ProvinciaEmpleado = empEmp.Localidad.Provincia.Nombre;
                             vmEmp.CategoríaEmpleado = afiliado.EmpleadoEmpresa.Categoria.Descripcion;
                             vmEmp.JornadaEmpleado = afiliado.EmpleadoEmpresa.Jornada.Descripcion;
+                            vmEmp.FechaAltaAfiliado = afiliado.FechaAlta.ToString("dd/MM/yyyy");
+                            vmEmp.FechaBajaAfiliado = afiliado.FechaBaja.Value.ToString("dd/MM/yyyy");
 
-                            listaEmpleados.Add(vmEmp);
+                        listaEmpleados.Add(vmEmp);
                         //}
                     }
                 }

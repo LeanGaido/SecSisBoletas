@@ -16,6 +16,8 @@
         public string JornadaEmpleado { get; set; }
         public string FechaAltaEmpleado { get; set; }
         public string FechaBajaEmpleado { get; set; }
+        public string FechaAltaAfiliado { get; set; }
+        public string FechaBajaAfiliado { get; set; }
         public string Licencia_Liquidacion { get; set; }
         public decimal Sueldo { get; set; }
         public bool EsAfiliado { get; set; }
