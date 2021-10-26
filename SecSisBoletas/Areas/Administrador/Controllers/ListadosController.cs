@@ -3427,7 +3427,12 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             ViewBag.End = End;
             List<VmEmpleados> listaEmpleados = new List<VmEmpleados>();
 
-            var afiliados = db.Afiliado.Include(t => t.EmpleadoEmpresa).Include(t => t.EmpleadoEmpresa.Empleado).Include(t => t.EmpleadoEmpresa.Empresa).Where(x => x.FechaBaja > Start && x.FechaBaja < End).ToList();
+            var afiliados = db.Afiliado.Include(t => t.EmpleadoEmpresa)
+                                       .Include(t => t.EmpleadoEmpresa.Empleado)
+                                       .Include(t => t.EmpleadoEmpresa.Empresa)
+                                       .Where(x => x.FechaAlta > Start && 
+                                                   x.FechaAlta < End)
+                                       .ToList();
 
             if (afiliados.Count > 0)
             {
@@ -3470,7 +3475,12 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
             ViewBag.End = End;
             List<VmEmpleados> listaEmpleados = new List<VmEmpleados>();
 
-            var afiliados = db.Afiliado.Include(t => t.EmpleadoEmpresa).Include(t => t.EmpleadoEmpresa.Empleado).Include(t => t.EmpleadoEmpresa.Empresa).Where(x => x.FechaBaja > Start && x.FechaBaja < End).ToList();
+            var afiliados = db.Afiliado.Include(t => t.EmpleadoEmpresa)
+                                       .Include(t => t.EmpleadoEmpresa.Empleado)
+                                       .Include(t => t.EmpleadoEmpresa.Empresa)
+                                       .Where(x => x.FechaBaja > Start && 
+                                                   x.FechaBaja < End)
+                                       .ToList();
 
             if (afiliados.Count > 0)
             {

@@ -1463,24 +1463,25 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
             empleado.Categoria = empEmp.Categoria.Descripcion;
             var afiliado = db.Afiliado.Where(x => x.IdEmpleadoEmpresa == empEmp.idEmpleadoEmpresa).FirstOrDefault();
             var hoy = DateTime.Today;
-            empleado.EsAfiliado = false;
-            if (afiliado != null)
-            {
-                if (afiliado.FechaAlta.Year < hoy.Year)
-                {
-                    if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > hoy.Year || (afiliado.FechaBaja.Value.Year == hoy.Year && afiliado.FechaBaja.Value.Month >= hoy.Month))
-                    {
-                        empleado.EsAfiliado = true;
-                    }
-                }
-                else if (afiliado.FechaAlta.Year == hoy.Year && afiliado.FechaAlta.Month <= hoy.Month)
-                {
-                    if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > hoy.Year || (afiliado.FechaBaja.Value.Year == hoy.Year && afiliado.FechaBaja.Value.Month >= hoy.Month))
-                    {
-                        empleado.EsAfiliado = true;
-                    }
-                }
-            }
+            //empleado.EsAfiliado = false;
+            //if (afiliado != null)
+            //{
+            //    if (afiliado.FechaAlta.Year < hoy.Year)
+            //    {
+            //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > hoy.Year || (afiliado.FechaBaja.Value.Year == hoy.Year && afiliado.FechaBaja.Value.Month >= hoy.Month))
+            //        {
+            //            empleado.EsAfiliado = true;
+            //        }
+            //    }
+            //    else if (afiliado.FechaAlta.Year == hoy.Year && afiliado.FechaAlta.Month <= hoy.Month)
+            //    {
+            //        if (afiliado.FechaBaja == null || afiliado.FechaBaja.Value.Year > hoy.Year || (afiliado.FechaBaja.Value.Year == hoy.Year && afiliado.FechaBaja.Value.Month >= hoy.Month))
+            //        {
+            //            empleado.EsAfiliado = true;
+            //        }
+            //    }
+            //}
+            empleado.EsAfiliado = empEmp.EsAfiliado;
             empleado.FechaAlta = empEmp.FechaAlta;
 
             if (empEmp.IdJornada == 2)
