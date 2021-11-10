@@ -31,7 +31,7 @@ namespace SecSisBoletas.Areas.Empresas.Controllers
                                                                 Titulo = oNotificaciones.Titulo,
                                                                 Visto = oNotificacionesEmpresa.Visto,
                                                                 FechaVisto = oNotificacionesEmpresa.FechaVisto
-                                                            }).ToList();
+                                                            }).OrderByDescending(x => x.Fecha).ToList();
 
             return View(notificaciones);
         }
