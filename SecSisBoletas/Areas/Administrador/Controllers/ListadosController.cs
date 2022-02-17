@@ -3205,7 +3205,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                         //var empleado = db.Empleado.Where(x => x.IdEmpleado == empEmp.idEmpleado).FirstOrDefault();
 
                         VmEmpleados vmEmp = new VmEmpleados();
-                        vmEmp.NombreEmpleado = empEmp.Empleado.Apellido + " " + empEmp.Empleado.Nombre;
+                        vmEmp.NombreEmpleado = (empEmp.Empleado.Apellido).Trim() + " " + (empEmp.Empleado.Nombre).Trim();
                         vmEmp.CalleEmpleado = empEmp.Empleado.Calle + " " + empEmp.Empleado.Altura;
                         vmEmp.CuilEmpleado = empEmp.Empleado.Cuil;
                         vmEmp.LocalidadEmpleado = empEmp.Empleado.Localidad.Nombre;
@@ -3221,7 +3221,7 @@ namespace SecSisBoletas.Areas.Administrador.Controllers
                 }
             }
             ViewBag.TotalAfiliados = listaEmpleados.Count;
-            return View(listaEmpleados.OrderBy(x => x.LocalidadEmpleado).ThenBy(x => x.NombreEmpleado));
+            return View(listaEmpleados.OrderBy(x => x.NombreEmpleado).ThenBy(x => x.LocalidadEmpleado));
         }
 
         [AllowAnonymous]
